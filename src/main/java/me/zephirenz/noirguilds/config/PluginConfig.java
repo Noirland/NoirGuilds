@@ -5,7 +5,7 @@ public class PluginConfig extends Config {
     private static PluginConfig instance;
 
     private PluginConfig() {
-        super("plugin.yml");
+        super("config.yml");
     }
 
     public static PluginConfig getInstance() {

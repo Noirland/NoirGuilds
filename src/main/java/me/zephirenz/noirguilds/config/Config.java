@@ -26,14 +26,12 @@ public abstract class Config {
     public Config(String file) {
         this.file = file;
         configFile = new File(plugin.getDataFolder(), file);
+        loadFile();
     }
 
     protected void loadFile() {
         if(!configFile.exists()) {
-            plugin.debug("Creating file " + file);
             createFile();
-        }else {
-            plugin.debug("Loading file " + file);
         }
         config = YamlConfiguration.loadConfiguration(configFile);
     }
