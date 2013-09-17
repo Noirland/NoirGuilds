@@ -1,0 +1,96 @@
+### Commands ###
+
+/guild - holds commands for creating, disbanding, guild info, etc
+
+- /guilds info [guild]/[tag]
+- /guilds list
+
+- /guild create [guild] [tag] (leader)
+- /guild invite [player]
+- /guild kick [player]
+- /guild edit [option] [value]
+  - name | string
+  - tag | string (<= 4 chars)
+  - friendlyfire | boolean
+- /guild disband (guild)
+
+- /guild accept
+- /guild deny
+
+- /grank create [rank]
+- /grank delete [rank]
+- /grank edit [rank] [option] [value]
+  - colour | enum
+  - name | string
+  - invite | boolean
+  - kick | boolean
+  - adminchat | boolean
+  - tp | boolean
+  - tphere | boolean
+  - default | boolean
+
+- /grank set [player] [rank]
+- /grank list
+
+/g [msg] - Guild chat
+/ga [msg] - 'guild admin' chat for 'admins' in guilds
+
+/gtp - Teleport to guild member
+/gtphere - Teleport guildmember here
+
+### Config ###
+noirguilds:
+  friendlyfire: false # If false, overrides all guild settings. If true or not set, allows group control (can be per player/area with flag)
+  database:
+    type: flatfile/mysql
+    mysql:
+      hostname: localhost
+      port: 3306
+      username: herp
+      password: 'derp'
+      database: foo
+      prefix: bar_
+
+
+### Bukkit Perms ###
+noirguilds.create # Ability to create guild (under own name)
+noirguilds.create.other # Can create guild under another's name
+noirguilds.disband.other # Can disband another guild
+noirguilds.reload # Reload plugin and config files
+
+### MySQL Database Structure ###
+-- guild_guilds --
+g_id | SMALLINT PRIMARY
+name | VARCHAR(32)
+tag  | VARCHAR(4)
+
+-- players --
+player | VARCHAR PRIMARY
+g_id
+r_id
+
+-- guild_ranks --
+r_id
+g_id
+name
+colour
+invite
+kick
+adminchat
+tp
+tphere
+default
+
+### Flatfile Database Structure ###
+guildname.yml:
+  name: guildname
+  tag: TAGS
+  members:
+    thatplayer: rank
+    thisplayer: otherrank
+  ranks:
+    arank:
+      default: true
+      name: blah
+      colour: DARK_RED
+      nondefaultperm: true

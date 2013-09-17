@@ -1,0 +1,35 @@
+author: ZephireNZ
+database: false
+main: me.zephirenz.noirguilds.NoirGuilds
+name: NoirGuilds
+startup: postworld
+version: {version}
+commands:
+    guild:
+        description: Commands relating to NoirGuilds
+        usage: See /guild help for help
+    guilds:
+        description: Guild information and statistics
+        usage: See /guilds help for more
+    grank:
+            description: Create/edit/delete guild ranks
+            usage: See /grank help for help
+    g:
+            description: Private guild chat
+            usage: /g your message here
+    ga:
+                description: Private guild admin chat
+                usage: /ga your message here
+permissions:
+    noirguilds.create:
+        description: Create a guild under own name
+        default: op
+    noirguilds.create.other:
+        description: Create guild under anothers name
+        default: op
+    noirguilds.disband.other:
+        description: Can disband another guild
+        default: op
+    noirguilds.reload:
+        description: Reload plugin and config files
+        default: op
