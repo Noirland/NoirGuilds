@@ -10,6 +10,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 public class GuildChatCommand implements CommandExecutor {
 
     NoirGuilds plugin;
@@ -21,6 +23,7 @@ public class GuildChatCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        plugin.debug("Command /g | " + Arrays.toString(args));
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, "Consoles cannot send messages in guild chat.");
             return false;

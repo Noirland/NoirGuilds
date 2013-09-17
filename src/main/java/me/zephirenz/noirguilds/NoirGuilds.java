@@ -7,7 +7,6 @@ import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.objects.GuildPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class NoirGuilds extends JavaPlugin {
@@ -54,6 +53,6 @@ public class NoirGuilds extends JavaPlugin {
     }
 
     public GuildPlayer toGuildPlayer(String player) {
-        return dbManager.getPlayerByGuild(player);
+        return new GuildPlayer(player, dbManager.getGuildByPlayer(player), dbManager.getPlayerRank(player));
     }
 }
