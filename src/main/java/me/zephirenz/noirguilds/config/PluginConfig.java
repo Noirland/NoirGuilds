@@ -27,4 +27,6 @@ public class PluginConfig extends Config {
     public String  getMySQLServerAddr()   { return config.getString("noirguilds.database.mysql.hostname", "localhost"); }
 
     public boolean getFriendlyFire()      { return config.getBoolean(("noirguilds.friendlyfire"), true); }
+
+    public boolean getDebug()             { return config.getBoolean("noirguilds.debug", false);}
 }

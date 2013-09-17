@@ -41,6 +41,7 @@
 ### Config ###
 noirguilds:
   friendlyfire: false # If false, overrides all guild settings. If true or not set, allows group control (can be per player/area with flag)
+  debug: false
   database:
     type: flatfile/mysql
     mysql:

@@ -1,6 +1,7 @@
 package me.zephirenz.noirguilds;
 
 import me.zephirenz.noirguilds.commands.*;
+import me.zephirenz.noirguilds.config.PluginConfig;
 import me.zephirenz.noirguilds.database.DatabaseManager;
 import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.objects.GuildPlayer;
@@ -19,9 +20,8 @@ public class NoirGuilds extends JavaPlugin {
     public void onEnable() {
         inst = this;
         this.dbManager = DatabaseManagerFactory.getDatabaseManager();
-
-        addCommands();
         guildsHandler = new GuildsHandler();
+        addCommands();
 
     }
 
@@ -39,9 +39,9 @@ public class NoirGuilds extends JavaPlugin {
     }
 
     public void debug(String msg) {
-
-        getLogger().info("[DEBUG] " + msg);
-
+        if(PluginConfig.getInstance().getDebug()) {
+            getLogger().info("[DEBUG] " + msg);
+        }
     }
 
     private void addCommands() {
