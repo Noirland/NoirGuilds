@@ -28,6 +28,13 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>lib.PatPeter</groupId>
+            <artifactId>SQLibrary</artifactId>
+            <version>6.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
