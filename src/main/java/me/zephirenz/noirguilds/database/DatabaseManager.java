@@ -12,7 +12,7 @@ public interface DatabaseManager {
 
     public Guild getGuildByPlayer(String player);
 
-    public GuildPlayer getPlayerByGuild(String guild);
+    public GuildPlayer getGPlayerByGuild(String guild);
 
     public GuildRank getPlayerRank(String player);
 
