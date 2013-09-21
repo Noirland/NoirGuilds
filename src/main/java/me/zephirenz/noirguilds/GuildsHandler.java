@@ -6,7 +6,7 @@ import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
-import me.zephirenz.noirguilds.objects.InviteData;
+import me.zephirenz.noirguilds.tasks.GuildInviteTask;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class GuildsHandler {
     private NoirGuilds plugin;
     private DatabaseManager dbManager;
     ArrayList<Guild> guilds = new ArrayList<Guild>();
-    ArrayList<InviteData> invites = new ArrayList<InviteData>();
+    ArrayList<GuildInviteTask> invites = new ArrayList<GuildInviteTask>();
 
     public GuildsHandler() {
         this.plugin = NoirGuilds.inst();
@@ -49,11 +49,10 @@ public class GuildsHandler {
     }
 
     public void addRank(GuildRank rank) {
-
     }
 
     public void addMember(GuildMember member) {
-
+        dbManager.addMember(member);
     }
 
     public void removeGuild(Guild guild) {
@@ -119,5 +118,17 @@ public class GuildsHandler {
         }else{
             return rank.hasPerm(perm);
         }
+    }
+
+    public ArrayList<GuildInviteTask> getInvites() {
+        return invites;
+    }
+
+    public void addInvite(GuildInviteTask task) {
+        invites.add(task);
+    }
+
+    public void removeInvite(GuildInviteTask task) {
+        invites.remove(task);
     }
 }

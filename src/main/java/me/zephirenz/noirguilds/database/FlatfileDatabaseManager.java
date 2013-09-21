@@ -42,6 +42,8 @@ public class FlatfileDatabaseManager implements DatabaseManager {
             for(Map.Entry<RankPerm, Boolean> rankPerm : rank.getPerms().entrySet()) {
                 config.setRankPerm(rank.getName(), rankPerm.getKey(), rankPerm.getValue());
             }
+            if(rank.isLeader()) config.setRankLeader(rank.getName(), true);
+            if(rank.isDefault()) config.setRankDefault(rank.getName(), true);
 
         }
         for(GuildMember member : guild.getMembers()) {
@@ -52,6 +54,18 @@ public class FlatfileDatabaseManager implements DatabaseManager {
 
     public void removeGuild(Guild guild) {
         GuildConfig.getInstance(guild).deleteFile();
+        GuildConfig.removeInstance(GuildConfig.getInstance(guild));
+    }
+
+    public void addMember(GuildMember member) {
+        Guild guild = member.getGuild();
+        GuildConfig config = GuildConfig.getInstance(guild);
+        config.addMember(member.getPlayer(), member.getRank().getName());
+
+    }
+
+    public void removeMember(GuildMember member) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void saveAll() {

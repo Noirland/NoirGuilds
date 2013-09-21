@@ -49,9 +49,9 @@ public class GuildCommand implements CommandExecutor {
             case create:
                 new GuildCreateCommandlet().run(sender, cmdletArgs);
                 break;
-//            case invite:
-//                inviteCommandlet(sender, cmdletArgs);
-//                break;
+            case invite:
+                new GuildInviteCommandlet().run(sender, cmdletArgs);
+                break;
 //            case kick:
 //                kickCommandlet(sender, cmdletArgs);
 //                break;
@@ -61,9 +61,13 @@ public class GuildCommand implements CommandExecutor {
             case disband:
                 new GuildDisbandCommandlet().run(sender, cmdletArgs);
                 break;
-//            default:
-//                helpCommandlet(sender, cmdletArgs, null);
-//                break;
+            case accept:
+                new GuildAcceptCommandlet().run(sender, cmdletArgs);
+            case deny:
+                new GuildDenyCommandlet().run(sender, cmdletArgs);
+            default:
+                //helpCommandlet(sender, cmdletArgs, null);
+                break;
         }
         return true;
     }

@@ -38,6 +38,12 @@ public class GuildConfig extends Config {
         return instances.get(guildToFile(guild));
     }
 
+    public static void removeInstance(GuildConfig config) {
+        if(instances.containsValue(config)) {
+            instances.remove(config.configFile);
+        }
+    }
+
     public GuildConfig(File file) {
         super(file);
     }

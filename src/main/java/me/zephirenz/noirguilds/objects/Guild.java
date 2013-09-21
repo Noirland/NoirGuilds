@@ -45,8 +45,7 @@ public class Guild {
 
     public void addGuildMember(GuildMember member) {
 
-          members.add(member);
-        save();
+        members.add(member);
 
     }
 
@@ -100,6 +99,15 @@ public class Guild {
 
     public void setLeader(String leader) {
         this.leader = leader;
+    }
+
+    public GuildRank getDefaultRank() {
+        for(GuildRank rank : getRanks()) {
+            if(rank.isDefault()) {
+                return rank;
+            }
+        }
+        return null;
     }
 
     public void save() {
