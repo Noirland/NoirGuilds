@@ -2,6 +2,7 @@ package me.zephirenz.noirguilds.objects;
 
 import org.bukkit.ChatColor;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class GuildRank {
@@ -14,8 +15,12 @@ public class GuildRank {
     public GuildRank(Guild guild, String name, Map<String, Boolean> perms, ChatColor colour) {
         this.guild = guild;
         this.name = name;
-        this.perms = perms;
         this.colour = colour;
+        if(perms != null) {
+            this.perms = perms;
+        }else{
+            this.perms = new HashMap<String, Boolean>();
+        }
     }
 
     public String getName() {
@@ -42,6 +47,10 @@ public class GuildRank {
         return colour;
     }
 
+    public void setPerm(String perm, boolean val) {
+        perms.put(perm, val);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof GuildRank)) return false;
@@ -49,6 +58,10 @@ public class GuildRank {
         if(!rank.getName().equals(this.name)) return false;
 
         return true;
+    }
+
+    public void save() {
+
     }
 
 

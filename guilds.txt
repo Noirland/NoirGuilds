@@ -1,7 +1,5 @@
 ### Commands ###
 
-/guild - holds commands for creating, disbanding, guild info, etc
-
 - /guilds info [guild]/[tag]
 - /guilds list
 
@@ -32,8 +30,8 @@
 - /grank set [player] [rank]
 - /grank list
 
-/g [msg] - Guild chat
-/ga [msg] - 'guild admin' chat for 'admins' in guilds
+- /g [msg] - Guild chat                                         DONE
+- /ga [msg] - 'guild admin' chat for 'admins' in guilds         DONE
 
 /gtp - Teleport to guild member
 /gtphere - Teleport guildmember here
@@ -83,15 +81,20 @@ tphere
 default
 
 ### Flatfile Database Structure ###
-guildname.yml:
+TAGG.yml:
   name: guildname
-  tag: TAGS
+  tag: TAGG
+  leader: CoolPlayer
   members:
     thatplayer: rank
     thisplayer: otherrank
+    CoolPlayer: SuperAwesomeLeader
   ranks:
     arank:
       default: true
-      name: blah
       colour: DARK_RED
       nondefaultperm: true
+    SuperAwesomeLeader:
+      default: true
+      colour: DARK_RED
+      leader: true

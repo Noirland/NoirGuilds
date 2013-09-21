@@ -2,7 +2,7 @@ package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.objects.GuildPlayer;
+import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -26,10 +26,10 @@ public class GuildChatCommand implements CommandExecutor {
         plugin.debug("Command /g | " + Arrays.toString(args));
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, "Consoles cannot send messages in guild chat.");
-            return false;
+            return true;
         }
         Player player = (Player) sender;
-        GuildPlayer gPlayer = plugin.toGuildPlayer(player.getName());
+        GuildMember gPlayer = gHandler.getGuildPlayer(player.getName());
         if(gPlayer == null || gPlayer.getGuild() == null || gPlayer.getRank() == null) {
             //TODO: Error
             return false;
@@ -44,9 +44,10 @@ public class GuildChatCommand implements CommandExecutor {
         String prefix = ChatColor.RED + "[G]" + ChatColor.GRAY + " [" + rank.getColour() + rank.getName() + ChatColor.GRAY + "] "
                             + ChatColor.RESET + player.getName() + ChatColor.RED + ": " + ChatColor.RESET;
         String msg = prefix + buffer.toString();
-
-        gHandler.sendMessageToGuild(gPlayer.getGuild(), msg);
-
+        if(!(buffer.toString().length() == 0)) {
+            gHandler.sendMessageToGuild(gPlayer.getGuild(), msg);
+            return true;
+        }
 
         return false;
     }

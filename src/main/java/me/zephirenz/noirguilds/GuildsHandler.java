@@ -3,7 +3,7 @@ package me.zephirenz.noirguilds;
 import me.zephirenz.noirguilds.database.DatabaseManager;
 import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.objects.Guild;
-import me.zephirenz.noirguilds.objects.GuildPlayer;
+import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import org.bukkit.entity.Player;
 
@@ -26,7 +26,7 @@ public class GuildsHandler {
          for(Guild guildA : dbManager.getGuilds()) {
              boolean inArray = false;
              for(Guild guildB : guilds) {
-                 if(guildA.getGuildName().equalsIgnoreCase(guildB.getGuildName())) {
+                 if(guildA.equals(guildB)) {
                      inArray = true;
                  }
              }
@@ -36,12 +36,36 @@ public class GuildsHandler {
          }
     }
 
-    public Guild getGuildByPlayer(String player) {
-        return dbManager.getGuildByPlayer(player);
+    public ArrayList<Guild> getGuilds() {
+        return guilds;
+    }
+
+    public void addGuild(Guild guild) {
+        guilds.add(guild);
+        dbManager.createGuild(guild);
+    }
+
+    public void addRank(GuildRank rank) {
+
+    }
+
+    public void addMember(GuildMember member) {
+
+    }
+
+    public GuildMember getGuildPlayer(String player) {
+        for(Guild guild : guilds) {
+            for(GuildMember member : guild.getMembers()) {
+                if(member.getPlayer().equals(player)) {
+                    return member;
+                }
+            }
+        }
+        return null;
     }
 
     public void sendMessageToGuild(Guild guild, String msg) {
-        for(GuildPlayer gPlayer : guild.getGuildMemebers()) {
+        for(GuildMember gPlayer : guild.getMembers()) {
             Player player = plugin.getServer().getPlayer(gPlayer.getPlayer());
             if(player != null) {
                 player.sendMessage(msg);
@@ -50,7 +74,7 @@ public class GuildsHandler {
     }
 
     public void sendMessageToRank(Guild guild, GuildRank rank, String msg) {
-        for(GuildPlayer gPlayer : guild.getGuildMemebers()) {
+        for(GuildMember gPlayer : guild.getMembers()) {
             if(!(gPlayer.getRank().equals(rank))) {
                 return;
             }

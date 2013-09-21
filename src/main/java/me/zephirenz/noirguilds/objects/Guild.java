@@ -4,29 +4,34 @@ import java.util.ArrayList;
 
 public class Guild {
 
-    private String guild;
+    private String name;
+    private String tag;
+    private String leader;
 
-    private ArrayList<GuildRank> ranks;
-    private ArrayList<GuildPlayer> members;
+    private ArrayList<GuildRank> ranks = new ArrayList<GuildRank>();
+    private ArrayList<GuildMember> members = new ArrayList<GuildMember>();
 
-    public Guild(String name, String tag) {
-
+    public Guild(String name, String tag, String leader) {
+        this.name = name;
+        this.tag = tag;
+        this.leader = leader;
     }
 
     public void setGuildName(String name) {
-        this.guild = name;
+        this.name = name;
+        save();
     }
 
     public String getGuildName() {
-        return guild;
+        return name;
     }
 
-    public GuildPlayer[] getGuildMemebers() {
-        return null;
+    public ArrayList<GuildMember> getMembers() {
+        return members;
     }
 
     public boolean isMember(String player) {
-        for(GuildPlayer gPlayer: members) {
+        for(GuildMember gPlayer: members) {
             if(gPlayer.getPlayer() == player) {
                 return true;
             }
@@ -34,43 +39,70 @@ public class Guild {
         return false;
     }
 
-    public boolean isMember(GuildPlayer gPlayer) {
+    public boolean isMember(GuildMember gPlayer) {
         return isMember(gPlayer.getPlayer());
     }
 
-    public void addGuildMember(GuildPlayer member) {
+    public void addGuildMember(GuildMember member) {
 
           members.add(member);
+        save();
 
     }
 
-    public void removeGuildMember(GuildPlayer member) {
+    public void removeGuildMember(GuildMember member) {
 
         if(members.contains(member)) {
             members.remove(member);
+            save();
         }
 
     }
 
-    public void setMembers(ArrayList<GuildPlayer> members) {
+    public void setMembers(ArrayList<GuildMember> members) {
         this.members = members;
+        save();
     }
 
     public void addRank(GuildRank rank) {
         ranks.add(rank);
+        save();
     }
 
     public void removeRank(GuildRank rank) {
         if(ranks.contains(rank)) {
             ranks.remove(rank);
+            save();
         }
     }
 
     public void setRanks(ArrayList<GuildRank> ranks) {
         this.ranks = ranks;
+        save();
     }
 
-    public void saveGuild() {
+    public ArrayList<GuildRank> getRanks() {
+        return ranks;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+        save();
+    }
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader;
+    }
+
+    public void save() {
 
 
 
@@ -84,5 +116,4 @@ public class Guild {
 
         return true;
     }
-
 }

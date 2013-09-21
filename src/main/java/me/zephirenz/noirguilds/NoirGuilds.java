@@ -4,7 +4,6 @@ import me.zephirenz.noirguilds.commands.*;
 import me.zephirenz.noirguilds.config.PluginConfig;
 import me.zephirenz.noirguilds.database.DatabaseManager;
 import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
-import me.zephirenz.noirguilds.objects.GuildPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,6 +13,8 @@ public class NoirGuilds extends JavaPlugin {
     private static NoirGuilds inst;
     private GuildsHandler guildsHandler;
     private DatabaseManager dbManager;
+
+    public static final String[] RANKPERMS = new String[] {"invite","kick","adminchat","tp","tphere","default"};
 
     @Override
     public void onEnable() {
@@ -37,6 +38,10 @@ public class NoirGuilds extends JavaPlugin {
         sender.sendMessage(ChatColor.RED + "[NoirGuilds] " + ChatColor.RESET + msg);
     }
 
+    public void sendGlobalMessage(String msg) {
+        getServer().broadcastMessage(ChatColor.RED + "[NoirGuilds] " + ChatColor.RESET + msg);
+    }
+
     public void debug(String msg) {
         if(PluginConfig.getInstance().getDebug()) {
             getLogger().info("[DEBUG] " + msg);
@@ -48,11 +53,7 @@ public class NoirGuilds extends JavaPlugin {
         getCommand("guilds").setExecutor(new GuildsCommand());
         getCommand("ga").setExecutor(new GuildAdminChatCommand());
         getCommand("g").setExecutor(new GuildChatCommand());
-        getCommand("gtp").setExecutor(new GuildTpCommand());
+//        getCommand("gtp").setExecutor(new GuildTpCommand());
         getCommand("grank").setExecutor(new GuildRankCommand());
-    }
-
-    public GuildPlayer toGuildPlayer(String player) {
-        return new GuildPlayer(player, dbManager.getGuildByPlayer(player), dbManager.getPlayerRank(player));
     }
 }
