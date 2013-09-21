@@ -3,6 +3,7 @@ package me.zephirenz.noirguilds.commands;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.commands.guild.*;
+import me.zephirenz.noirguilds.enums.GuildCommandlet;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,7 +16,7 @@ public class GuildCommand implements CommandExecutor {
     - /guilds info [guild]/[tag]
     - /guilds list
 
-    - /guild create [guild] [tag] (leader)
+    X /guild create [guild] [tag] (leader)
     - /guild invite [player]
     - /guild kick [player]
     - /guild edit [option] [value]
@@ -33,22 +34,12 @@ public class GuildCommand implements CommandExecutor {
         this.gHandler = plugin.getGuildsHandler();
     }
 
-    private enum GuildCommandlets {
-        info,
-        list,
-        create,
-        invite,
-        kick,
-        edit,
-        disband
-    }
-
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         if(args.length == 0) {
 //            helpCommandlet();
         }
         String[] cmdletArgs = Arrays.copyOfRange(args, 1, args.length);
-        switch(GuildCommandlets.valueOf(args[0].toLowerCase())) {
+        switch(GuildCommandlet.valueOf(args[0].toLowerCase())) {
 //            case info:
 //                infoCommandlet(sender, cmdletArgs);
 //                break;
@@ -56,7 +47,7 @@ public class GuildCommand implements CommandExecutor {
 //                listCommandlet();
 //                break;
             case create:
-                new CreateCommandlet().run(sender, cmdletArgs);
+                new GuildCreateCommandlet().run(sender, cmdletArgs);
                 break;
 //            case invite:
 //                inviteCommandlet(sender, cmdletArgs);
@@ -67,9 +58,9 @@ public class GuildCommand implements CommandExecutor {
 //            case edit:
 //                editCommandlet(sender, cmdletArgs);
 //                break;
-//            case disband:
-//                disbandCommandlet(sender, cmdletArgs);
-//                break;
+            case disband:
+                new GuildDisbandCommandlet().run(sender, cmdletArgs);
+                break;
 //            default:
 //                helpCommandlet(sender, cmdletArgs, null);
 //                break;
