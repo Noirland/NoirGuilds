@@ -33,7 +33,7 @@ public class GuildDisbandCommandlet {
             guild = gHandler.getGuild(name);
         }else{
             if(sender instanceof Player) {
-                GuildMember gMember = gHandler.getGuildPlayer(sender.getName());
+                GuildMember gMember = gHandler.getGuildMember(sender.getName());
                 if (gMember == null) {
                     plugin.sendMessage(sender, "You must be in a guild to leave it.");
                     return;

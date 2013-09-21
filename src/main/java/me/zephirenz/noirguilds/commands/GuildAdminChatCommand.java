@@ -31,7 +31,7 @@ public class GuildAdminChatCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        GuildMember gPlayer = gHandler.getGuildPlayer(player.getName());
+        GuildMember gPlayer = gHandler.getGuildMember(player.getName());
         if(gPlayer == null || gPlayer.getGuild() == null || gPlayer.getRank() == null) {
             plugin.sendMessage(sender, "You are not currently in a guild.");
             return true;

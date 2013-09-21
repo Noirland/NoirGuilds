@@ -76,7 +76,7 @@ public class GuildsHandler {
         return null;
     }
 
-    public GuildMember getGuildPlayer(String player) {
+    public GuildMember getGuildMember(String player) {
         for(Guild guild : guilds) {
             for(GuildMember member : guild.getMembers()) {
                 if(member.getPlayer().equals(player)) {

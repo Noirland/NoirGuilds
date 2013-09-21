@@ -48,7 +48,7 @@ public class GuildCreateCommandlet {
                 return;
             }
         }
-        if(gHandler.getGuildPlayer(leader) != null) {
+        if(gHandler.getGuildMember(leader) != null) {
             plugin.sendMessage(sender, "Already in a guild!");
             return;
         }

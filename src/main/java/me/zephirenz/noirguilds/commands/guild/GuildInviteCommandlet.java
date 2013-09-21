@@ -38,8 +38,8 @@ public class GuildInviteCommandlet {
         }
         String inviter = sender.getName();
         String invitee = args[0];
-        GuildMember inviterMember = gHandler.getGuildPlayer(inviter);
-        GuildMember inviteeMember = gHandler.getGuildPlayer(invitee);
+        GuildMember inviterMember = gHandler.getGuildMember(inviter);
+        GuildMember inviteeMember = gHandler.getGuildMember(invitee);
         if(plugin.getServer().getPlayer(invitee) == null) {
             plugin.sendMessage(sender, "You can only invite online players.");
             return;
