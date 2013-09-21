@@ -3,6 +3,7 @@ package me.zephirenz.noirguilds.commands;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Util;
+import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import org.bukkit.ChatColor;
@@ -37,7 +38,7 @@ public class GuildAdminChatCommand implements CommandExecutor {
         }
 
         GuildRank rank = gPlayer.getRank();
-        if(!gHandler.hasPerm(gPlayer, "adminchat")) {
+        if(!gHandler.hasPerm(gPlayer, RankPerm.ADMINCHAT)) {
             plugin.sendMessage(sender, "You haven't got permission to use Guild Admin chat.");
             return true;
         }
@@ -48,7 +49,7 @@ public class GuildAdminChatCommand implements CommandExecutor {
         if(!(msg.length() == prefix.length())) {
 
             for(GuildRank r : gPlayer.getGuild().getRanks()) {
-                if(gHandler.hasPerm(r, "adminchat")) {
+                if(gHandler.hasPerm(r, RankPerm.ADMINCHAT)) {
                     gHandler.sendMessageToRank(gPlayer.getGuild(), r, msg);
                 }
 

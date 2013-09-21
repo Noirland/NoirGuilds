@@ -76,7 +76,7 @@ public class GuildConfig extends Config {
 
         for(String rank : ranks.getKeys(false)) {
             ConfigurationSection rankInfo = ranks.getConfigurationSection(rank);
-            Map<String, Boolean> permsList = getPerms(rankInfo);
+            Map<RankPerm, Boolean> permsList = getPerms(rankInfo);
             GuildRank grank = new GuildRank(guild, rankInfo.getName(), permsList, ChatColor.valueOf(rankInfo.getString("colour")));
             grank.setDefault(rankInfo.getBoolean("default", false));
             grank.setLeader(rankInfo.getBoolean("leader", false));
@@ -120,8 +120,8 @@ public class GuildConfig extends Config {
         saveFile();
     }
 
-    public void setRankPerm(String rank, String perm, boolean val) {
-        config.set("ranks." + rank + "." + perm, val);
+    public void setRankPerm(String rank, RankPerm perm, boolean val) {
+        config.set("ranks." + rank + "." + perm.getPerm(), val);
         saveFile();
     }
 
@@ -144,12 +144,12 @@ public class GuildConfig extends Config {
         return new File(new File(NoirGuilds.inst().getDataFolder(), "guilds"), guild.getTag() + ".yml");
     }
 
-    private Map<String, Boolean> getPerms(ConfigurationSection rank) {
-        Map<String, Boolean> ret = new HashMap<String, Boolean>();
+    private Map<RankPerm, Boolean> getPerms(ConfigurationSection rank) {
+        Map<RankPerm, Boolean> ret = new HashMap<RankPerm, Boolean>();
         for(RankPerm perm : RankPerm.values()) {
             String pName = perm.getPerm();
             if(rank.contains(pName)) {
-                ret.put(pName, rank.getBoolean(pName));
+                ret.put(perm, rank.getBoolean(pName));
             }
         }
         return ret;

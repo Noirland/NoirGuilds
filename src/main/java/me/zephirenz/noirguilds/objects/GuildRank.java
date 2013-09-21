@@ -1,5 +1,6 @@
 package me.zephirenz.noirguilds.objects;
 
+import me.zephirenz.noirguilds.enums.RankPerm;
 import org.bukkit.ChatColor;
 
 import java.util.HashMap;
@@ -11,17 +12,17 @@ public class GuildRank {
     private String name;
     private boolean leader = false;
     private boolean def = false;
-    private Map<String, Boolean> perms;
+    private Map<RankPerm, Boolean> perms;
     private ChatColor colour;
 
-    public GuildRank(Guild guild, String name, Map<String, Boolean> perms, ChatColor colour) {
+    public GuildRank(Guild guild, String name, Map<RankPerm, Boolean> perms, ChatColor colour) {
         this.guild = guild;
         this.name = name;
         this.colour = colour;
         if(perms != null) {
             this.perms = perms;
         }else{
-            this.perms = new HashMap<String, Boolean>();
+            this.perms = new HashMap<RankPerm, Boolean>();
         }
     }
 
@@ -33,11 +34,11 @@ public class GuildRank {
         return guild;
     }
 
-    public Map<String, Boolean> getPerms() {
+    public Map<RankPerm, Boolean> getPerms() {
         return perms;
     }
 
-    public Boolean getPerm(String perm) {
+    public Boolean hasPerm(RankPerm perm) {
         if(perms.containsKey(perm)) {
             return perms.get(perm);
         }else{
@@ -57,7 +58,7 @@ public class GuildRank {
         return def;
     }
 
-    public void setPerm(String perm, boolean val) {
+    public void setPerm(RankPerm perm, boolean val) {
         perms.put(perm, val);
     }
 

@@ -2,6 +2,7 @@ package me.zephirenz.noirguilds.database;
 
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.config.GuildConfig;
+import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
@@ -38,7 +39,7 @@ public class FlatfileDatabaseManager implements DatabaseManager {
         config.setLeader(guild.getLeader());
         for(GuildRank rank : guild.getRanks()) {
             config.setRankColour(rank.getName(), rank.getColour());
-            for(Map.Entry<String, Boolean> rankPerm : rank.getPerms().entrySet()) {
+            for(Map.Entry<RankPerm, Boolean> rankPerm : rank.getPerms().entrySet()) {
                 config.setRankPerm(rank.getName(), rankPerm.getKey(), rankPerm.getValue());
             }
 

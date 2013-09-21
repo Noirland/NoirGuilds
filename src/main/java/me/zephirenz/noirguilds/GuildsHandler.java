@@ -2,9 +2,11 @@ package me.zephirenz.noirguilds;
 
 import me.zephirenz.noirguilds.database.DatabaseManager;
 import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
+import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
+import me.zephirenz.noirguilds.objects.InviteData;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class GuildsHandler {
     private NoirGuilds plugin;
     private DatabaseManager dbManager;
     ArrayList<Guild> guilds = new ArrayList<Guild>();
+    ArrayList<InviteData> invites = new ArrayList<InviteData>();
 
     public GuildsHandler() {
         this.plugin = NoirGuilds.inst();
@@ -106,15 +109,15 @@ public class GuildsHandler {
         }
     }
 
-    public boolean hasPerm(GuildMember member, String perm) {
+    public boolean hasPerm(GuildMember member, RankPerm perm) {
         return hasPerm(member.getRank(), perm);
     }
 
-    public boolean hasPerm(GuildRank rank, String perm) {
+    public boolean hasPerm(GuildRank rank, RankPerm perm) {
         if(rank.isLeader()) {
             return true;
         }else{
-            return rank.getPerm(perm);
+            return rank.hasPerm(perm);
         }
     }
 }
