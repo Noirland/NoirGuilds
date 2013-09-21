@@ -29,11 +29,25 @@ public abstract class Config {
         loadFile();
     }
 
+    public Config(File file) {
+        this.file = file.getName();
+        configFile = file;
+        loadFile();
+    }
+
     protected void loadFile() {
         if(!configFile.exists()) {
             createFile();
         }
         config = YamlConfiguration.loadConfiguration(configFile);
+    }
+
+    protected void saveFile() {
+        try{
+            config.save(configFile);
+        }catch(IOException e) {
+            plugin.getLogger().severe("Unable to write to file " + configFile.getPath());
+        }
     }
 
     protected void createFile() {
