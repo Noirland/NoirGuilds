@@ -17,6 +17,13 @@ public class GuildDisbandCommandlet {
         this.gHandler = plugin.getGuildsHandler();
     }
 
+    /**
+     * The commandlet for disbanding a guild.
+     * Usage: /guild disband (guild)
+     *
+     * @param sender the sender of the command
+     * @param args   commandlet-specific args
+     */
     public void run(CommandSender sender, String[] args) {
 
         String name;
