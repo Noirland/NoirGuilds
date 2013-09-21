@@ -3,17 +3,16 @@
 - /guilds info [guild]/[tag]
 - /guilds list
 
-- /guild create [guild] [tag] (leader)
-- /guild invite [player]
+X /guild create [guild] [tag] (leader)
+X /guild invite [player]
 - /guild kick [player]
 - /guild edit [option] [value]
   - name | string
   - tag | string (<= 4 chars)
-  - friendlyfire | boolean
-- /guild disband (guild)
+X /guild disband (guild)
 
-- /guild accept
-- /guild deny
+X /guild accept
+X /guild deny
 
 - /grank create [rank]
 - /grank delete [rank]
@@ -30,15 +29,17 @@
 - /grank set [player] [rank]
 - /grank list
 
-- /g [msg] - Guild chat                                         DONE
-- /ga [msg] - 'guild admin' chat for 'admins' in guilds         DONE
+X /g [msg] - Guild chat
+X /ga [msg] - 'guild admin' chat for 'admins' in guilds
 
-/gtp - Teleport to guild member
-/gtphere - Teleport guildmember here
+- /hq set
+- /hq
+
+- /gtp - Teleport to guild member
+- /gtphere - Teleport guildmember here
 
 ### Config ###
 noirguilds:
-  friendlyfire: false # If false, overrides all guild settings. If true or not set, allows group control (can be per player/area with flag)
   debug: false
   database:
     type: flatfile/mysql
@@ -98,3 +99,9 @@ TAGG.yml:
       default: true
       colour: DARK_RED
       leader: true
+
+
+### TODO ###
+
+Move guild send message to guild/rank classes
+Remove populateGuild from FlatfileDatabaseManager
