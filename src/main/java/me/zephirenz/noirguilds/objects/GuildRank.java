@@ -36,10 +36,12 @@ public class GuildRank {
     }
 
     public Boolean getPerm(String perm) {
-        if(perms.containsKey(perm)) {
+        if(perms.containsKey("leader") && perms.get("leader")) {
+            return true;
+        }else if(perms.containsKey(perm)) {
             return perms.get(perm);
         }else{
-            return null;
+            return false;
         }
     }
 
