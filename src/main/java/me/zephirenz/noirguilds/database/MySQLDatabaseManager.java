@@ -14,5 +14,13 @@ public class MySQLDatabaseManager implements DatabaseManager {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    public void saveAll() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void close() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     // -- PRIVATE DATABASE FUNCTIONS --
 }

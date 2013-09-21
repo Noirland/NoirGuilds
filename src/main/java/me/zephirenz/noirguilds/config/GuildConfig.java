@@ -26,6 +26,10 @@ public class GuildConfig extends Config {
         return instances.get(file);
     }
 
+    public static Map<File, GuildConfig> getInstances() {
+        return instances;
+    }
+
     public static GuildConfig getInstance(Guild guild) {
         if(!instances.containsKey(guildToFile(guild))) {
             instances.put(guildToFile(guild), new GuildConfig(guildToFile(guild)));

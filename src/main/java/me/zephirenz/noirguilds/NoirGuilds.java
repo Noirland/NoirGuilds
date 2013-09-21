@@ -25,6 +25,12 @@ public class NoirGuilds extends JavaPlugin {
 
     }
 
+    @Override
+    public void onDisable() {
+        dbManager.saveAll();
+        dbManager.close();
+    }
+
     public static NoirGuilds inst() {
         return inst;
     }

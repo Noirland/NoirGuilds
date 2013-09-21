@@ -10,5 +10,9 @@ public interface DatabaseManager {
 
     public void createGuild(Guild guild);
 
+    public void saveAll();
+
+    public void close();
+
 
 }

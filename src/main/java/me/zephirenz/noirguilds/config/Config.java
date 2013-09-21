@@ -42,7 +42,7 @@ public abstract class Config {
         config = YamlConfiguration.loadConfiguration(configFile);
     }
 
-    protected void saveFile() {
+    public void saveFile() {
         try{
             config.save(configFile);
         }catch(IOException e) {

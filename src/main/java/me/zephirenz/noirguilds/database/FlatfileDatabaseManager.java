@@ -9,6 +9,7 @@ import me.zephirenz.noirguilds.objects.GuildRank;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class FlatfileDatabaseManager implements DatabaseManager {
 
@@ -46,6 +47,17 @@ public class FlatfileDatabaseManager implements DatabaseManager {
             config.addMember(member.getPlayer(), member.getRank().getName());
         }
 
+    }
+
+    public void saveAll() {
+        for(Entry conf : GuildConfig.getInstances().entrySet()) {
+            GuildConfig config = (GuildConfig) conf.getValue();
+            config.saveFile();
+        }
+    }
+
+    public void close() {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     // -- PRIVATE DATABASE FUNCTIONS --
