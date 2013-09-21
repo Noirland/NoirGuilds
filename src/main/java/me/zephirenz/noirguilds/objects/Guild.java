@@ -22,7 +22,7 @@ public class Guild {
         save();
     }
 
-    public String getGuildName() {
+    public String getName() {
         return name;
     }
 
@@ -112,7 +112,7 @@ public class Guild {
     public boolean equals(Object obj) {
         if(!(obj instanceof Guild)) return false;
         Guild guild = (Guild) obj;
-        if(!guild.getGuildName().equals(this.getGuildName())) return false;
+        if(!guild.getName().equals(this.getName())) return false;
 
         return true;
     }

@@ -50,6 +50,12 @@ public abstract class Config {
         }
     }
 
+    public void deleteFile() {
+        if(!configFile.delete()) {
+            plugin.getLogger().warning("config file " + configFile.getPath() + "could not be deleted!");
+        }
+    }
+
     protected void createFile() {
         configFile.getParentFile().mkdirs();
 

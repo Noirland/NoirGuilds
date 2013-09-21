@@ -10,12 +10,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CreateCommandlet {
+public class GuildCreateCommandlet {
 
     NoirGuilds plugin;
     GuildsHandler gHandler;
 
-    public CreateCommandlet() {
+    public GuildCreateCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
     }
@@ -32,7 +32,7 @@ public class CreateCommandlet {
 
         if(args.length < 2) {
             plugin.sendMessage(sender, "Not enough arguments!");
-//            helpCommandlet(sender, args, GuildCommandlets.create);
+//            helpCommandlet(sender, args, GuildCommandlet.create);
             return;
         }
         String name = args[0];
@@ -61,7 +61,7 @@ public class CreateCommandlet {
         }
 
         for(Guild g : gHandler.getGuilds()) {
-            if(g.getGuildName().equals(name)) {
+            if(g.getName().equals(name)) {
                 plugin.sendMessage(sender, "A guild with that name already exists.");
                 return;
             }

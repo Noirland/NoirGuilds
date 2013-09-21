@@ -10,9 +10,10 @@ public interface DatabaseManager {
 
     public void createGuild(Guild guild);
 
+    void removeGuild(Guild guild);
+
     public void saveAll();
 
+
     public void close();
-
-
 }

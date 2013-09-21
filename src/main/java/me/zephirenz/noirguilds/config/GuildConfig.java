@@ -1,6 +1,7 @@
 package me.zephirenz.noirguilds.config;
 
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
@@ -145,9 +146,10 @@ public class GuildConfig extends Config {
 
     private Map<String, Boolean> getPerms(ConfigurationSection rank) {
         Map<String, Boolean> ret = new HashMap<String, Boolean>();
-        for(String perm : NoirGuilds.RANKPERMS) {
-            if(rank.contains(perm)) {
-                ret.put(perm, rank.getBoolean(perm));
+        for(RankPerm perm : RankPerm.values()) {
+            String pName = perm.getPerm();
+            if(rank.contains(pName)) {
+                ret.put(pName, rank.getBoolean(pName));
             }
         }
         return ret;

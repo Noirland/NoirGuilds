@@ -53,6 +53,27 @@ public class GuildsHandler {
 
     }
 
+    public void removeGuild(Guild guild) {
+        guilds.remove(guild);
+        for(GuildMember gMember : guild.getMembers()) {
+            Player player = plugin.getServer().getPlayer(gMember.getPlayer());
+            if(player != null) {
+                plugin.sendMessage(player, "Your guild has been disbanded.");
+            }
+        }
+        plugin.sendGlobalMessage(guild.getName() + " has been disbanded.");
+        dbManager.removeGuild(guild);
+    }
+
+    public Guild getGuild(String name) {
+        for(Guild guild : guilds) {
+            if(guild.getName().equalsIgnoreCase(name)) {
+                return guild;
+            }
+        }
+        return null;
+    }
+
     public GuildMember getGuildPlayer(String player) {
         for(Guild guild : guilds) {
             for(GuildMember member : guild.getMembers()) {

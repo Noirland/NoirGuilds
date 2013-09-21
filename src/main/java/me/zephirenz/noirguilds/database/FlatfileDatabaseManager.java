@@ -33,7 +33,7 @@ public class FlatfileDatabaseManager implements DatabaseManager {
     public void createGuild(Guild guild) {
         GuildConfig config = GuildConfig.getInstance(guild); // Creates new config file for guild
         config.setGuild(guild);
-        config.setName(guild.getGuildName());
+        config.setName(guild.getName());
         config.setTag(guild.getTag());
         config.setLeader(guild.getLeader());
         for(GuildRank rank : guild.getRanks()) {
@@ -47,6 +47,10 @@ public class FlatfileDatabaseManager implements DatabaseManager {
             config.addMember(member.getPlayer(), member.getRank().getName());
         }
 
+    }
+
+    public void removeGuild(Guild guild) {
+        GuildConfig.getInstance(guild).deleteFile();
     }
 
     public void saveAll() {
