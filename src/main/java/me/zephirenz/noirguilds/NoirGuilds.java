@@ -14,8 +14,6 @@ public class NoirGuilds extends JavaPlugin {
     private GuildsHandler guildsHandler;
     private DatabaseManager dbManager;
 
-    public static final String[] RANKPERMS = new String[] {"invite","kick","adminchat","tp","tphere"};
-
     @Override
     public void onEnable() {
         inst = this;
