@@ -9,6 +9,7 @@ X /guild invite [player]
 - /guild edit [option] [value]
   - name | string
   - tag | string (<= 4 chars)
+- /guild leave
 X /guild disband (guild)
 
 X /guild accept
