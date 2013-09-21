@@ -31,12 +31,12 @@ public class GuildAdminChatCommand implements CommandExecutor {
         Player player = (Player) sender;
         GuildMember gPlayer = gHandler.getGuildPlayer(player.getName());
         if(gPlayer == null || gPlayer.getGuild() == null || gPlayer.getRank() == null) {
-            //TODO: Error
+            plugin.sendMessage(sender, "You are not currently in a guild.");
             return false;
         }
 
         GuildRank rank = gPlayer.getRank();
-        if(!rank.getPerm("adminchat")) {
+        if(gHandler.hasPerm(gPlayer, "adminchat")) {
             plugin.sendMessage(sender, "You haven't got permission to use Guild Admin chat.");
         }
 

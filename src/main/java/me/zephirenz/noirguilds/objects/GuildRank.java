@@ -9,6 +9,8 @@ public class GuildRank {
 
     private Guild guild;
     private String name;
+    private boolean leader = false;
+    private boolean def = false;
     private Map<String, Boolean> perms;
     private ChatColor colour;
 
@@ -36,9 +38,7 @@ public class GuildRank {
     }
 
     public Boolean getPerm(String perm) {
-        if(perms.containsKey("leader") && perms.get("leader")) {
-            return true;
-        }else if(perms.containsKey(perm)) {
+        if(perms.containsKey(perm)) {
             return perms.get(perm);
         }else{
             return false;
@@ -49,8 +49,24 @@ public class GuildRank {
         return colour;
     }
 
+    public boolean isLeader() {
+        return leader;
+    }
+
+    public boolean isDefault() {
+        return def;
+    }
+
     public void setPerm(String perm, boolean val) {
         perms.put(perm, val);
+    }
+
+    public void setLeader(boolean val) {
+        leader = val;
+    }
+
+    public void setDefault(boolean val) {
+        def = val;
     }
 
     @Override

@@ -132,11 +132,11 @@ public class GuildCommand implements CommandExecutor {
         Guild guild = new Guild(name, tag, leader);
 
         GuildRank leaderRank = new GuildRank(guild, "Leader", null, ChatColor.DARK_RED);
-        leaderRank.setPerm("leader", true);
+        leaderRank.setLeader(true);
         guild.addRank(leaderRank);
 
         GuildRank defRank = new GuildRank(guild, "Default", null, ChatColor.BLUE);
-        defRank.setPerm("default", true);
+        defRank.setDefault(true);
         guild.addRank(defRank);
 
         GuildMember leaderMember = new GuildMember(leader, guild, leaderRank);

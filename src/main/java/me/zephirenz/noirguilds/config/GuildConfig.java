@@ -50,6 +50,9 @@ public class GuildConfig extends Config {
     public String getTag()    { return config.getString("tag");    }
     public String getLeader() { return config.getString("leader"); }
 
+    public boolean isRankLeader(String rank)  { return config.getBoolean("ranks." + rank + ".leader", false); }
+    public boolean isRankDefault(String rank) { return config.getBoolean("ranks." + rank + ".default", false); }
+
     public ArrayList<GuildMember> getMembers() {
 
         Map<String, Object> members = config.getConfigurationSection("members").getValues(false);
@@ -63,15 +66,6 @@ public class GuildConfig extends Config {
         }
         return ret;
 
-    }
-
-    public GuildRank getMemberRank(GuildMember player) {
-        return getMemberRank(player.getPlayer());
-    }
-
-    public GuildRank getMemberRank(String player) {
-        String rank = config.getString("members." + player);
-        return getRank(rank);
     }
 
     public ArrayList<GuildRank> getRanks() {
@@ -125,6 +119,16 @@ public class GuildConfig extends Config {
 
     public void setRankPerm(String rank, String perm, boolean val) {
         config.set("ranks." + rank + "." + perm, val);
+        saveFile();
+    }
+
+    public void setRankDefault(String rank, boolean val) {
+        config.set("ranks." + rank + ".default", val);
+        saveFile();
+    }
+
+    public void setRankLeader(String rank, boolean val) {
+        config.set("ranks." + rank + ".leader", val);
         saveFile();
     }
 
