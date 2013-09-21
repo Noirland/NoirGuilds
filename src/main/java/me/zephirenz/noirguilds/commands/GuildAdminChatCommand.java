@@ -2,6 +2,7 @@ package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.Util;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import org.bukkit.ChatColor;
@@ -41,14 +42,10 @@ public class GuildAdminChatCommand implements CommandExecutor {
             return true;
         }
 
-        StringBuilder buffer = new StringBuilder();
-        for (String arg : args) {
-            buffer.append(' ').append(arg);
-        }
         String prefix = ChatColor.GREEN + "[A]" + ChatColor.GRAY + " [" + rank.getColour() + rank.getName() + ChatColor.GRAY + "] "
-                + ChatColor.RESET + player.getName() + ChatColor.GREEN + ": " + ChatColor.RESET;
-        String msg = prefix + buffer.toString();
-        if(!(buffer.toString().length() == 0)) {
+                + ChatColor.RESET + player.getName() + ChatColor.GRAY + ":" + ChatColor.RESET;
+        String msg = prefix + Util.arrayToString(args, 0, args.length-1, " ");
+        if(!(msg.length() == prefix.length())) {
 
             for(GuildRank r : gPlayer.getGuild().getRanks()) {
                 if(gHandler.hasPerm(r, "adminchat")) {
