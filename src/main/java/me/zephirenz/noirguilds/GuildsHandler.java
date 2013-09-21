@@ -86,10 +86,14 @@ public class GuildsHandler {
     }
 
     public boolean hasPerm(GuildMember member, String perm) {
-        if(member.getRank().isLeader()) {
+        return hasPerm(member.getRank(), perm);
+    }
+
+    public boolean hasPerm(GuildRank rank, String perm) {
+        if(rank.isLeader()) {
             return true;
         }else{
-            return member.getRank().getPerm(perm);
+            return rank.getPerm(perm);
         }
     }
 }

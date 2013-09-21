@@ -77,6 +77,8 @@ public class GuildConfig extends Config {
             ConfigurationSection rankInfo = ranks.getConfigurationSection(rank);
             Map<String, Boolean> permsList = getPerms(rankInfo);
             GuildRank grank = new GuildRank(guild, rankInfo.getName(), permsList, ChatColor.valueOf(rankInfo.getString("colour")));
+            grank.setDefault(rankInfo.getBoolean("default", false));
+            grank.setLeader(rankInfo.getBoolean("leader", false));
             ret.add(grank);
         }
         return ret;
