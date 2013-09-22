@@ -68,6 +68,24 @@ public class FlatfileDatabaseManager implements DatabaseManager {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    public void addRank(GuildRank rank) {
+        Guild guild = rank.getGuild();
+        GuildConfig config = GuildConfig.getInstance(guild);
+//        config.addRank(rank.getName(), rank.getColour(), rank.getPerms());
+        config.setRankColour(rank.getName(), rank.getColour());
+        for(Map.Entry<RankPerm, Boolean> rankPerm : rank.getPerms().entrySet()) {
+            config.setRankPerm(rank.getName(), rankPerm.getKey(), rankPerm.getValue());
+        }
+        if(rank.isLeader()) config.setRankLeader(rank.getName(), true);
+        if(rank.isDefault()) config.setRankDefault(rank.getName(), true);
+    }
+
+    public void removeRank(GuildRank rank) {
+        Guild guild = rank.getGuild();
+        GuildConfig config = GuildConfig.getInstance(guild);
+        config.removeRank(rank.getName());
+    }
+
     public void saveAll() {
         for(Entry conf : GuildConfig.getInstances().entrySet()) {
             GuildConfig config = (GuildConfig) conf.getValue();

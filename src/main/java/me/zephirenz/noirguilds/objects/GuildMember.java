@@ -33,6 +33,10 @@ public class GuildMember {
         return rank;
     }
 
+    public void setRank(GuildRank rank) {
+        this.rank = rank;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof GuildMember)) return false;

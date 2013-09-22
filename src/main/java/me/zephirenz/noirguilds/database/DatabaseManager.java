@@ -2,6 +2,7 @@ package me.zephirenz.noirguilds.database;
 
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
+import me.zephirenz.noirguilds.objects.GuildRank;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,10 @@ public interface DatabaseManager {
     public void addMember(GuildMember member);
 
     public void removeMember(GuildMember member);
+
+    public void addRank(GuildRank rank);
+
+    public void removeRank(GuildRank rank);
 
     public void saveAll();
 

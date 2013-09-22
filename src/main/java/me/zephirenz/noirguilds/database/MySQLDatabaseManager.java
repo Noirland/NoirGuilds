@@ -2,6 +2,7 @@ package me.zephirenz.noirguilds.database;
 
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
+import me.zephirenz.noirguilds.objects.GuildRank;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,14 @@ public class MySQLDatabaseManager implements DatabaseManager {
     }
 
     public void removeMember(GuildMember member) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void addRank(GuildRank rank) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void removeRank(GuildRank rank) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 

@@ -146,6 +146,11 @@ public class GuildConfig extends Config {
         saveFile();
     }
 
+    public void removeRank(String rank) {
+        config.getConfigurationSection("ranks").set(rank, null);
+        saveFile();
+    }
+
     private static File guildToFile(Guild guild) {
         return new File(new File(NoirGuilds.inst().getDataFolder(), "guilds"), guild.getTag() + ".yml");
     }

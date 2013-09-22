@@ -49,6 +49,7 @@ public class GuildsHandler {
     }
 
     public void addRank(GuildRank rank) {
+        dbManager.addRank(rank);
     }
 
     public void addMember(GuildMember member) {
@@ -65,6 +66,19 @@ public class GuildsHandler {
         }
         plugin.sendGlobalMessage(guild.getName() + " has been disbanded.");
         dbManager.removeGuild(guild);
+    }
+
+    public void removeRank(GuildRank rank) {
+        for(GuildMember member : rank.getGuild().getMembers()) {
+            if(member.getRank() == rank){
+                member.setRank(rank.getGuild().getDefaultRank());
+                Player p = plugin.getServer().getPlayer(member.getPlayer());
+                if(p != null) {
+                    plugin.sendMessage(p, "Your rank has been deleted, you are now " + member.getRank().getColour() + member.getRank().getName());
+                }
+            }
+        }
+        dbManager.removeRank(rank);
     }
 
     public Guild getGuild(String name) {

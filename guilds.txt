@@ -15,8 +15,10 @@ X /guild disband (guild)
 X /guild accept
 X /guild deny
 
-- /grank create [rank]
-- /grank delete [rank]
+- /guild reload
+
+X /grank create [rank]
+X /grank delete [rank]
 - /grank edit [rank] [option] [value]
   - colour | enum
   - name | string
@@ -28,7 +30,8 @@ X /guild deny
   - default | boolean
 
 - /grank set [player] [rank]
-- /grank list
+- /grank info [rank]
+X /grank list
 
 X /g [msg] - Guild chat
 X /ga [msg] - 'guild admin' chat for 'admins' in guilds
@@ -38,6 +41,8 @@ X /ga [msg] - 'guild admin' chat for 'admins' in guilds
 
 - /gtp - Teleport to guild member
 - /gtphere - Teleport guildmember here
+
+X Guild Tags in chat
 
 ### Config ###
 noirguilds:
@@ -97,7 +102,6 @@ TAGG.yml:
       colour: DARK_RED
       nondefaultperm: true
     SuperAwesomeLeader:
-      default: true
       colour: DARK_RED
       leader: true
 
