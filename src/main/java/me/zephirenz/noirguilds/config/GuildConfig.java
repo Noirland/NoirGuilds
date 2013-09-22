@@ -94,7 +94,7 @@ public class GuildConfig extends Config {
 
     public GuildRank getRank(String rank) {
         ConfigurationSection rankInfo = config.getConfigurationSection("ranks." + rank);
-        for(GuildRank gRank : guild.getRanks()) {
+        for(GuildRank gRank : getRanks()) {
             if(gRank.getName().equals(rank)) {
                 return gRank;
             }
