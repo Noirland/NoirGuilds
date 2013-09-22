@@ -37,6 +37,7 @@ public class GuildCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         if(args.length == 0) {
 //            helpCommandlet();
+            return true;
         }
         String[] cmdletArgs = Arrays.copyOfRange(args, 1, args.length);
         switch(GuildCommandlet.valueOf(args[0].toLowerCase())) {
