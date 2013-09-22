@@ -17,14 +17,4 @@ public enum RankPerm {
     public String getPerm() {
         return perm;
     }
-
-    public static RankPerm get(String perm) {
-        for(RankPerm rp : values()) {
-            if(rp.getPerm().equals(perm)) {
-                return rp;
-            }
-        }
-        return null;
-    }
-
 }
