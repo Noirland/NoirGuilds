@@ -64,6 +64,12 @@ public class GuildsHandler {
                 plugin.sendMessage(player, "Your guild has been disbanded.");
             }
         }
+        for(GuildInviteTask task : getInvites()) {
+            if(task.getData().getGuild() == guild) {
+                task.run();
+                task.cancel();
+            }
+        }
         plugin.sendGlobalMessage(guild.getName() + " has been disbanded.");
         dbManager.removeGuild(guild);
     }
