@@ -22,7 +22,7 @@ public class RankListCommandlet {
 
     /**
      *  The commandlet for listing all ranks.
-     *  Usage: /guild list
+     *  Usage: /grank list
      *
      *  @param sender the sender of the command
      *  @param args   commandlet-specific args
