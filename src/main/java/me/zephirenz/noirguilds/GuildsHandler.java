@@ -87,6 +87,11 @@ public class GuildsHandler {
         dbManager.removeRank(rank);
     }
 
+    public void removeGuildMember(GuildMember member) {
+        dbManager.removeMember(member);
+
+    }
+
     public Guild getGuild(String name) {
         for(Guild guild : guilds) {
             if(guild.getName().equalsIgnoreCase(name)) {

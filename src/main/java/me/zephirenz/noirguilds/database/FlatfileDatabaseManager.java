@@ -65,7 +65,9 @@ public class FlatfileDatabaseManager implements DatabaseManager {
     }
 
     public void removeMember(GuildMember member) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        Guild guild = member.getGuild();
+        GuildConfig config = GuildConfig.getInstance(guild);
+        config.removeMember(member.getPlayer());
     }
 
     public void addRank(GuildRank rank) {

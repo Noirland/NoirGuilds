@@ -110,3 +110,4 @@ TAGG.yml:
 
 Move guild send message to guild/rank classes
 Remove populateGuild from FlatfileDatabaseManager
+Add message to grank create
