@@ -65,6 +65,7 @@ public class GuildKickCommandlet {
 
         guild.removeGuildMember(kickeeMember);
         gHandler.removeGuildMember(kickeeMember);
+        gHandler.sendMessageToGuild(guild, kickee + " was kicked from the guild.");
 
 
     }

@@ -53,6 +53,7 @@ public class RankCreateCommandlet {
         GuildRank newRank = new GuildRank(gMember.getGuild(), name, null, ChatColor.WHITE);
         gMember.getGuild().addRank(newRank);
         gHandler.addRank(newRank);
+        plugin.sendMessage(sender, newRank.getColour() + newRank.getName() + ChatColor.RESET + " rank has been created.");
 
     }
 }
