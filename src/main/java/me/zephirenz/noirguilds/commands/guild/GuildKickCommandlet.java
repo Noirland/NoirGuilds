@@ -41,7 +41,7 @@ public class GuildKickCommandlet {
         GuildMember kickeeMember = gHandler.getGuildMember(kickee);
 
         if(senderMember == null) {
-            plugin.sendMessage(sender, "You must be in a guild to invite players.");
+            plugin.sendMessage(sender, "You must be in a guild to leave players.");
             return;
         }
         Guild guild = senderMember.getGuild();
