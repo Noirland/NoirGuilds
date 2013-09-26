@@ -7,6 +7,7 @@ public enum GuildCommandlet {
     invite,
     kick,
     edit,
+    leave,
     disband,
     accept,
     deny
