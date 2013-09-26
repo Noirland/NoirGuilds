@@ -1,15 +1,16 @@
 ### Commands ###
 
-- /guilds info [guild]/[tag]
-- /guilds list
+X /guilds
+
+- /guild info [guild]/[tag]
 
 X /guild create [guild] [tag] (leader)
 X /guild invite [player]
-- /guild kick [player]
+X /guild kick [player]
 - /guild edit [option] [value]
   - name | string
   - tag | string (<= 4 chars)
-- /guild leave
+X /guild leave
 X /guild disband (guild)
 
 X /guild accept
