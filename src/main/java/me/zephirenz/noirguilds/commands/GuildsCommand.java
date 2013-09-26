@@ -20,12 +20,14 @@ public class GuildsCommand implements CommandExecutor {
 
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-        String list = "Guilds: ";
+        StringBuilder sb = new StringBuilder("Guilds: ");
 
+        String delim = "";
         for(Guild guild : gHandler.getGuilds()) {
-            list += ChatColor.BLUE + guild.getName() + ChatColor.GRAY + " [" + guild.getTag() + "]" + ChatColor.RESET + ", ";
+            sb.append(delim).append(ChatColor.BLUE + guild.getName() + ChatColor.GRAY + " [" + guild.getTag() + "]" + ChatColor.RESET);
+            delim = ", ";
         }
-        plugin.sendMessage(sender, list);
+        plugin.sendMessage(sender, sb.toString());
         return true;
     }
 

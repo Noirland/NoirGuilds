@@ -43,12 +43,14 @@ public class RankListCommandlet {
 
         Guild guild = gMember.getGuild();
 
-        String list = "Ranks: ";
+        StringBuilder sb = new StringBuilder("Ranks: ");
 
+        String delim = "";
         for(GuildRank rank : guild.getRanks()) {
-            list += rank.getColour() + rank.getName() + ChatColor.RESET + ", ";
+            sb.append(delim).append(rank.getColour() + rank.getName() + ChatColor.RESET);
+            delim = ", ";
         }
-        plugin.sendMessage(sender, list);
+        plugin.sendMessage(sender, sb.toString());
 
 
     }
