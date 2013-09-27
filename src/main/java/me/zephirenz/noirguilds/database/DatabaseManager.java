@@ -22,6 +22,10 @@ public interface DatabaseManager {
 
     public void removeRank(GuildRank rank);
 
+    public void updateGuildTag(Guild guild, String tag);
+
+    public void updateGuildName(Guild guild, String name);
+
     public void saveAll();
 
 

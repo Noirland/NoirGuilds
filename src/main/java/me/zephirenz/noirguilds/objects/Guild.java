@@ -1,5 +1,8 @@
 package me.zephirenz.noirguilds.objects;
 
+import me.zephirenz.noirguilds.database.DatabaseManager;
+import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
+
 import java.util.ArrayList;
 
 public class Guild {
@@ -7,6 +10,7 @@ public class Guild {
     private String name;
     private String tag;
     private String leader;
+    DatabaseManager dbManager;
 
     private ArrayList<GuildRank> ranks = new ArrayList<GuildRank>();
     private ArrayList<GuildMember> members = new ArrayList<GuildMember>();
@@ -15,11 +19,11 @@ public class Guild {
         this.name = name;
         this.tag = tag;
         this.leader = leader;
+        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
     }
 
-    public void setGuildName(String name) {
+    public void setName(String name) {
         this.name = name;
-        save();
     }
 
     public String getName() {
@@ -90,7 +94,6 @@ public class Guild {
 
     public void setTag(String tag) {
         this.tag = tag;
-        save();
     }
 
     public String getLeader() {

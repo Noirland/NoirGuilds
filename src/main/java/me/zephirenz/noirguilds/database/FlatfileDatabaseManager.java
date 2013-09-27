@@ -88,6 +88,18 @@ public class FlatfileDatabaseManager implements DatabaseManager {
         config.removeRank(rank.getName());
     }
 
+    public void updateGuildTag(Guild guild, String tag) {
+        GuildConfig config = GuildConfig.getInstance(guild);
+        config.setTag(tag);
+//        config.renameFile(tag);
+
+    }
+
+    public void updateGuildName(Guild guild, String name) {
+        GuildConfig config = GuildConfig.getInstance(guild);
+        config.setName(name);
+    }
+
     public void saveAll() {
         for(Entry conf : GuildConfig.getInstances().entrySet()) {
             GuildConfig config = (GuildConfig) conf.getValue();

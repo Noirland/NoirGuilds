@@ -36,6 +36,18 @@ public class MySQLDatabaseManager implements DatabaseManager {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    public void updateGuildTag(Guild guild, String tag) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void updateGuildName(Guild guild, String name) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void updateGuildName(Guild guild) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void saveAll() {
         //To change body of implemented methods use File | Settings | File Templates.
     }

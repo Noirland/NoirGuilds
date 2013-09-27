@@ -3,6 +3,7 @@ package me.zephirenz.noirguilds.config;
 import me.zephirenz.noirguilds.NoirGuilds;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.util.FileUtil;
 
 import java.io.*;
 
@@ -54,6 +55,20 @@ public abstract class Config {
         if(!configFile.delete()) {
             plugin.getLogger().warning("config file " + configFile.getPath() + "could not be deleted!");
         }
+    }
+
+    public void renameFile(String newName) {
+
+        File oldFile = configFile;
+        File newFile = new File(configFile.getParent(), newName + ".yml");
+        FileUtil.copy(oldFile, newFile);
+        file = newFile.getName();
+        if(!oldFile.delete()) {
+            plugin.getLogger().warning("config file " + oldFile.getPath() + "could not be deleted!");
+        }
+        configFile = newFile;
+        loadFile();
+
     }
 
     protected void createFile() {

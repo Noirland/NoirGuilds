@@ -56,9 +56,9 @@ public class GuildCommand implements CommandExecutor {
             case kick:
                 new GuildKickCommandlet().run(sender, cmdletArgs);
                 break;
-//            case edit:
-//                editCommandlet(sender, cmdletArgs);
-//                break;
+            case edit:
+                new GuildEditCommandlet().run(sender, cmdletArgs);
+                break;
             case leave:
                 new GuildLeaveCommandlet().run(sender, cmdletArgs);
             case disband:
