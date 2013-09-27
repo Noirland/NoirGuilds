@@ -55,6 +55,7 @@ public class GuildEditCommandlet {
         Guild guild = gMember.getGuild();
         if(!gMember.getRank().isLeader()) {
             plugin.sendMessage(sender, "You must be the leader of your guild to edit it.");
+            return;
         }
 
         if(option.equalsIgnoreCase("name")) {
