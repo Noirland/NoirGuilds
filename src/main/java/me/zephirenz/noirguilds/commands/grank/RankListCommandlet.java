@@ -47,8 +47,8 @@ public class RankListCommandlet {
 
         String delim = "";
         for(GuildRank rank : guild.getRanks()) {
-            sb.append(delim).append(rank.getColour() + rank.getName() + ChatColor.RESET);
-            delim = ", ";
+            sb.append(delim).append(rank.getColour()).append(rank.getName());
+            delim = ChatColor.RESET + ", ";
         }
         plugin.sendMessage(sender, sb.toString());
 
