@@ -2,14 +2,14 @@
 
 X /guilds
 
-- /guild info [guild]/[tag]
+X /guild info [guild]/[tag]
 
 X /guild create [guild] [tag] (leader)
 X /guild invite [player]
 X /guild kick [player]
-- /guild edit [option] [value]
-  - name | string
-  - tag | string (<= 4 chars)
+X /guild edit [option] [value]
+  X name | string
+  ~ tag | string (<= 4 chars)
 X /guild leave
 X /guild disband (guild)
 
@@ -30,7 +30,7 @@ X /grank delete [rank]
   - tphere | boolean
   - default | boolean
 
-- /grank set [player] [rank]
+X /grank set [player] [rank]
 - /grank info [rank]
 X /grank list
 
@@ -119,13 +119,20 @@ TAGG.yml:
 
 Move guild send message to guild/rank classes
 Remove populateGuild from FlatfileDatabaseManager
-Add message to grank create
 Re-enable renaming guild config files when changing tag
 
 ### BUGS ###
 Guild tags with different caps will overwrite old guild
+Commands using enums will die if enum doesn't exist
+
 
 ### Problem Guilds ###
 PowerOverwhelming - Tag has '!'
 ლ(ಠ益ಠლ) - Ridiculous characters
 Fear - Spaces, hoooow?
+
+### Guild info ###
+====== Swagger [SWAG] ======
+Leader: ZephireNZ
+Members[5]: ZephireNZ, Shad0wofthenight, Blah, Derp, Herp
+============================
