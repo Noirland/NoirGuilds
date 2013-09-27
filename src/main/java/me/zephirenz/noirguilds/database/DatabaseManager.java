@@ -26,8 +26,9 @@ public interface DatabaseManager {
 
     public void updateGuildName(Guild guild, String name);
 
-    public void saveAll();
+    public void updateMemberRank(GuildMember mPromote, GuildRank newRank);
 
+    public void saveAll();
 
     public void close();
 }

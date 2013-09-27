@@ -44,6 +44,10 @@ public class MySQLDatabaseManager implements DatabaseManager {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    public void updateMemberRank(GuildMember mPromote, GuildRank newRank) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void updateGuildName(Guild guild) {
         //To change body of implemented methods use File | Settings | File Templates.
     }

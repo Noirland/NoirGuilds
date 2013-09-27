@@ -141,6 +141,11 @@ public class GuildConfig extends Config {
         saveFile();
     }
 
+    public void setMemberRank(String member, String rank) {
+        config.set("members." + member, rank);
+        saveFile();
+    }
+
     public void addMember(String player, String rank) {
         config.set("members." + player, rank);
         saveFile();
@@ -170,6 +175,7 @@ public class GuildConfig extends Config {
         }
         return ret;
     }
+
 
 
 }

@@ -100,6 +100,11 @@ public class FlatfileDatabaseManager implements DatabaseManager {
         config.setName(name);
     }
 
+    public void updateMemberRank(GuildMember member, GuildRank rank) {
+        GuildConfig config = GuildConfig.getInstance(member.getGuild());
+        config.setMemberRank(member.getPlayer(), rank.getName());
+    }
+
     public void saveAll() {
         for(Entry conf : GuildConfig.getInstances().entrySet()) {
             GuildConfig config = (GuildConfig) conf.getValue();
