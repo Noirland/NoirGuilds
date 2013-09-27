@@ -41,9 +41,9 @@ public class GuildCommand implements CommandExecutor {
         }
         String[] cmdletArgs = Arrays.copyOfRange(args, 1, args.length);
         switch(GuildCommandlet.valueOf(args[0].toLowerCase())) {
-//            case info:
-//                infoCommandlet(sender, cmdletArgs);
-//                break;
+            case info:
+                new GuildInfoCommandlet().run(sender, cmdletArgs);
+                break;
 //            case list:
 //                listCommandlet();
 //                break;
