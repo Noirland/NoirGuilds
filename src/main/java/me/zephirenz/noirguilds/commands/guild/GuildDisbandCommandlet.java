@@ -41,6 +41,7 @@ public class GuildDisbandCommandlet {
                 guild = gMember.getGuild();
                 if(!gMember.getRank().isLeader()) {
                     plugin.sendMessage(sender, "You must be the leader to disband your guild.");
+                    return;
                 }
             }else{
                 plugin.sendMessage(sender, "Console must specify a guild to disband.");
