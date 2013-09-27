@@ -1,4 +1,4 @@
-### Commands ###
+﻿### Commands ###
 
 X /guilds
 
@@ -93,6 +93,14 @@ TAGG.yml:
   name: guildname
   tag: TAGG
   leader: CoolPlayer
+  motd:
+    1: This is line one of the MOTD
+    2: This is line two of the MOTD
+  hq:
+    world: world
+    x: 256
+    y: 73
+    z: -5034
   members:
     thatplayer: rank
     thisplayer: otherrank
@@ -112,3 +120,12 @@ TAGG.yml:
 Move guild send message to guild/rank classes
 Remove populateGuild from FlatfileDatabaseManager
 Add message to grank create
+Re-enable renaming guild config files when changing tag
+
+### BUGS ###
+Guild tags with different caps will overwrite old guild
+
+### Problem Guilds ###
+PowerOverwhelming - Tag has '!'
+ლ(ಠ益ಠლ) - Ridiculous characters
+Fear - Spaces, hoooow?
