@@ -72,7 +72,7 @@ public class GuildEditCommandlet {
 
     public void editName(CommandSender sender, Guild guild, String name) {
         for(Guild g : gHandler.getGuilds()) {
-            if(g.getName().equals(name)) {
+            if(g.getName().equalsIgnoreCase(name)) {
                 plugin.sendMessage(sender, "A guild with that name already exists.");
                 return;
             }
@@ -93,7 +93,7 @@ public class GuildEditCommandlet {
         }
 
         for(Guild g : gHandler.getGuilds()) {
-            if(g.getTag().equals(tag)) {
+            if(g.getTag().equalsIgnoreCase(tag)) {
                 plugin.sendMessage(sender, "A guild with that tag already exists.");
                 return;
             }
