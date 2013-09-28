@@ -16,10 +16,19 @@ commands:
         usage: See /grank help for help
     g:
         description: Private guild chat
-        usage: /g your message here
+        usage: /g [your message here]
     ga:
         description: Private guild admin chat
-        usage: /ga your message here
+        usage: /ga [your message here]
+    gtp:
+        description: teleport to another guild member
+        usage: /gtp [player]
+    gtphere:
+        description: teleport another guild member to you
+        usage: /gtphere [player]
+    hq:
+        description: "teleport to  or set your guild's HQ"
+        usage: /hq (set)
 permissions:
     noirguilds.create:
         description: Create a guild under own name

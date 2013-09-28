@@ -6,6 +6,8 @@ import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
+import org.bukkit.Location;
+import org.bukkit.World;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -103,6 +105,24 @@ public class FlatfileDatabaseManager implements DatabaseManager {
     public void updateMemberRank(GuildMember member, GuildRank rank) {
         GuildConfig config = GuildConfig.getInstance(member.getGuild());
         config.setMemberRank(member.getPlayer(), rank.getName());
+    }
+
+    public Location getHq(Guild guild) {
+        GuildConfig config = GuildConfig.getInstance(guild);
+
+        World world = NoirGuilds.inst().getServer().getWorld(config.getHqWorld());
+        double x = (double) config.getHqX();
+        double y = (double) config.getHqY();
+        double z = (double) config.getHqZ();
+        float yaw = (float) config.getHqYaw();
+        float pitch = (float) config.getHqPitch();
+
+        return new Location(world, x, y, z, yaw, pitch);
+    }
+
+    public void setHq(Guild guild, Location loc) {
+        GuildConfig config = GuildConfig.getInstance(guild);
+        config.setHq(loc);
     }
 
     public void saveAll() {

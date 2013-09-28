@@ -6,6 +6,7 @@ import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.io.File;
@@ -100,6 +101,36 @@ public class GuildConfig extends Config {
             }
         }
         return null;
+    }
+
+
+    public String getHqWorld() {
+        return config.getString("hq.world");
+    }
+    public int getHqX() {
+        return config.getInt("hq.x");
+    }
+    public int getHqY() {
+        return config.getInt("hq.y");
+    }
+    public int getHqZ() {
+        return config.getInt("hq.z");
+    }
+    public double getHqYaw() {
+        return config.getDouble("hq.yaw", 0);
+    }
+    public double getHqPitch() {
+        return config.getDouble("hq.pitch", 0);
+    }
+
+    public void setHq(Location loc) {
+        config.set("hq.world", loc.getWorld().getName());
+        config.set("hq.x", (int) loc.getX());
+        config.set("hq.y", (int) loc.getY());
+        config.set("hq.z", (int) loc.getZ());
+        config.set("hq.yaw", (double) loc.getYaw());
+        config.set("hq.pitch", (double) loc.getPitch());
+        saveFile();
     }
 
     public void setGuild(Guild guild) {

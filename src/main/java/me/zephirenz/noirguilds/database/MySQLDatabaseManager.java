@@ -3,6 +3,7 @@ package me.zephirenz.noirguilds.database;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
+import org.bukkit.Location;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,14 @@ public class MySQLDatabaseManager implements DatabaseManager {
     }
 
     public void updateMemberRank(GuildMember mPromote, GuildRank newRank) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public Location getHq(Guild guild) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void setHq(Guild guild, Location loc) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
