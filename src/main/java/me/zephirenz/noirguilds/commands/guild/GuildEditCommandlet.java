@@ -61,7 +61,9 @@ public class GuildEditCommandlet {
         if(option.equalsIgnoreCase("name")) {
             editName(sender, guild, value);
         } else if (option.equalsIgnoreCase("tag")) {
-            editTag(sender, guild, value);
+            //editTag(sender, guild, value);
+            plugin.sendMessage(sender, "Changing tags is currently disbled. (Sorry!)");
+
         }
 
 
