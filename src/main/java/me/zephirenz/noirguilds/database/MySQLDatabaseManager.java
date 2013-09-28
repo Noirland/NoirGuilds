@@ -1,8 +1,10 @@
 package me.zephirenz.noirguilds.database;
 
+import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
@@ -66,6 +68,18 @@ public class MySQLDatabaseManager implements DatabaseManager {
     }
 
     public void close() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void updateRankColour(GuildRank rank, ChatColor colour) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void updateRankName(GuildRank rank, String value) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void updateRankPerm(GuildRank rank, RankPerm perm, boolean val) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 

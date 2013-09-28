@@ -1,8 +1,10 @@
 package me.zephirenz.noirguilds.database;
 
+import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
@@ -36,4 +38,10 @@ public interface DatabaseManager {
     public void saveAll();
 
     public void close();
+
+    public void updateRankColour(GuildRank rank, ChatColor colour);
+
+    public void updateRankName(GuildRank rank, String value);
+
+    public void updateRankPerm(GuildRank rank, RankPerm perm, boolean val);
 }

@@ -70,6 +70,14 @@ public class GuildRank {
         def = val;
     }
 
+    public void setColour(ChatColor colour) {
+        this.colour = colour;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof GuildRank)) return false;
@@ -82,6 +90,4 @@ public class GuildRank {
     public void save() {
 
     }
-
-
 }

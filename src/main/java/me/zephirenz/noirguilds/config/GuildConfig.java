@@ -158,7 +158,11 @@ public class GuildConfig extends Config {
     }
 
     public void setRankPerm(String rank, RankPerm perm, boolean val) {
-        config.set("ranks." + rank + "." + perm.getPerm(), val);
+        if(val) {
+            config.set("ranks." + rank + "." + perm.getPerm(), val);
+        }else{
+            config.set("ranks." + rank + "." + perm.getPerm(), null);
+        }
         saveFile();
     }
 
@@ -192,9 +196,20 @@ public class GuildConfig extends Config {
         saveFile();
     }
 
+    public void setRankName(String oldName, String newName) {
+        ConfigurationSection ranks = config.getConfigurationSection("ranks");
+        for(String key : ranks.getConfigurationSection(oldName).getKeys(true)) {
+            ranks.set(newName + "." + key, ranks.get(oldName + "." + key));
+        }
+        ranks.set(oldName, null);
+        saveFile();
+
+    }
+
     private static File guildToFile(Guild guild) {
         return new File(new File(NoirGuilds.inst().getDataFolder(), "guilds"), guild.getTag() + ".yml");
     }
+
 
     private Map<RankPerm, Boolean> getPerms(ConfigurationSection rank) {
         Map<RankPerm, Boolean> ret = new HashMap<RankPerm, Boolean>();
@@ -206,7 +221,4 @@ public class GuildConfig extends Config {
         }
         return ret;
     }
-
-
-
 }

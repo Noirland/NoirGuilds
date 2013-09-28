@@ -33,9 +33,9 @@ public class GuildRankCommand implements CommandExecutor {
             case delete:
                 new RankDeleteCommandlet().run(sender, cmdletArgs);
                 break;
-//            case edit:
-//                new GuildCreateCommandlet().run(sender, cmdletArgs);
-//                break;
+            case edit:
+                new RankEditCommandlet().run(sender, cmdletArgs);
+                break;
             case set:
                 new RankSetCommandlet().run(sender, cmdletArgs);
                 break;

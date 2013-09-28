@@ -6,6 +6,7 @@ import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -123,6 +124,21 @@ public class FlatfileDatabaseManager implements DatabaseManager {
     public void setHq(Guild guild, Location loc) {
         GuildConfig config = GuildConfig.getInstance(guild);
         config.setHq(loc);
+    }
+
+    public void updateRankColour(GuildRank rank, ChatColor colour) {
+        GuildConfig config = GuildConfig.getInstance(rank.getGuild());
+        config.setRankColour(rank.getName(), colour);
+    }
+
+    public void updateRankName(GuildRank rank, String name) {
+        GuildConfig config = GuildConfig.getInstance(rank.getGuild());
+        config.setRankName(rank.getName(), name);
+    }
+
+    public void updateRankPerm(GuildRank rank, RankPerm perm, boolean val) {
+        GuildConfig config = GuildConfig.getInstance(rank.getGuild());
+            config.setRankPerm(rank.getName(), perm, val);
     }
 
     public void saveAll() {
