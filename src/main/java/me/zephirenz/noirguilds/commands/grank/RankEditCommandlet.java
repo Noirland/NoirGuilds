@@ -94,6 +94,9 @@ public class RankEditCommandlet {
         boolean val = Boolean.valueOf(value);
         rank.setPerm(perm, val);
         dbManager.updateRankPerm(rank, perm, val);
+        if(val) {
+            plugin.sendMessage(sender, rank.getName() + " no longer has " + perm.getPerm() + " permission.");
+        }
     }
 
     private void editColour(CommandSender sender, GuildRank rank, String value) {
@@ -108,6 +111,7 @@ public class RankEditCommandlet {
 
         rank.setColour(colour);
         dbManager.updateRankColour(rank, colour);
+        plugin.sendMessage(sender, "Rank's colour now set to " + colour + colour.toString());
 
     }
     private void editName(CommandSender sender, GuildRank rank, String value) {
@@ -120,6 +124,7 @@ public class RankEditCommandlet {
         }
         dbManager.updateRankName(rank, value);
         rank.setName(value);
+        plugin.sendMessage(sender, "Ranks's name now set to " + value);
 
     }
 
