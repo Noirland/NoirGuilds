@@ -58,8 +58,8 @@ public class NoirGuilds extends JavaPlugin {
         getCommand("guilds").setExecutor(new GuildsCommand());
         getCommand("ga").setExecutor(new GuildAdminChatCommand());
         getCommand("g").setExecutor(new GuildChatCommand());
-        getCommand("gtp").setExecutor(new GuildTpCommand());
-        getCommand("gtphere").setExecutor(new GuildTpHereCommand());
+//        getCommand("gtp").setExecutor(new GuildTpCommand());
+//        getCommand("gtphere").setExecutor(new GuildTpHereCommand());
         getCommand("grank").setExecutor(new GuildRankCommand());
         getCommand("hq").setExecutor(new HQCommand());
     }
