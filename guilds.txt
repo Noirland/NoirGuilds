@@ -44,7 +44,7 @@ X /hq
 X /gtp - Teleport to guild member
 X /gtphere - Teleport guildmember here
 
-X Guild Tags in chat
+X Guild Tags in chat | REQIRES Ess 1.12.8!
 
 ### Config ###
 noirguilds:
@@ -125,8 +125,6 @@ Remove populateGuild from FlatfileDatabaseManager
 Re-enable renaming guild config files when changing tag
 
 ### BUGS ###
-Guild tags with different caps will overwrite old guild
-Commands using enums will die if enum doesn't exist
 
 
 ### Problem Guilds ###
