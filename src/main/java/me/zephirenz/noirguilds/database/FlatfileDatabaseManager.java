@@ -111,6 +111,10 @@ public class FlatfileDatabaseManager implements DatabaseManager {
     public Location getHq(Guild guild) {
         GuildConfig config = GuildConfig.getInstance(guild);
 
+        if(!config.hasHq()) {
+            return null;
+        }
+
         World world = NoirGuilds.inst().getServer().getWorld(config.getHqWorld());
         double x = (double) config.getHqX();
         double y = (double) config.getHqY();

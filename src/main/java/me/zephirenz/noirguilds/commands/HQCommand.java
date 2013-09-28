@@ -67,6 +67,10 @@ public class HQCommand implements CommandExecutor {
 
     private void teleport(Guild guild, Player player) {
         Location loc = dbManager.getHq(guild);
+        if(loc == null) {
+            plugin.sendMessage(player, "No HQ set for guild.");
+            return;
+        }
         player.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
         plugin.sendMessage(player, ChatColor.GOLD + "Teleporting to HQ...");
     }

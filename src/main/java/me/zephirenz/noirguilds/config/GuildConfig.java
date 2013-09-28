@@ -206,6 +206,12 @@ public class GuildConfig extends Config {
 
     }
 
+    public boolean hasHq() {
+
+        return config.getKeys(false).contains("hq");
+
+    }
+
     private static File guildToFile(Guild guild) {
         return new File(new File(NoirGuilds.inst().getDataFolder(), "guilds"), guild.getTag() + ".yml");
     }
@@ -221,4 +227,6 @@ public class GuildConfig extends Config {
         }
         return ret;
     }
+
+
 }
