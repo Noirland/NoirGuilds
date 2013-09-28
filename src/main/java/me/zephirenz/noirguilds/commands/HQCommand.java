@@ -4,6 +4,7 @@ import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.database.DatabaseManager;
 import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
+import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.ChatColor;
@@ -42,6 +43,10 @@ public class HQCommand implements CommandExecutor {
         Guild guild = gMember.getGuild();
 
         if(args.length == 0) {
+            if(!gHandler.hasPerm(gMember, RankPerm.HQ)) {
+                plugin.sendMessage(sender, "You don't have permission to teleport.");
+                return true;
+            }
             teleport(guild, (Player) sender);
             return true;
         }

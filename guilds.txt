@@ -12,6 +12,7 @@ X /guild edit [option] [value]
   ~ tag | string (<= 4 chars)
 X /guild leave
 X /guild disband (guild)
+- /guild motd [num/rank] [string]
 
 X /guild accept
 X /guild deny
@@ -20,15 +21,15 @@ X /guild deny
 
 X /grank create [rank]
 X /grank delete [rank]
-- /grank edit [rank] [option] [value]
-  - colour | enum
-  - name | string
-  - invite | boolean
-  - kick | boolean
-  - adminchat | boolean
-  - tp | boolean
-  - tphere | boolean
-  - default | boolean
+X /grank edit [rank] [option] [value]
+  X colour | enum
+  X name | string
+  X invite | boolean
+  X kick | boolean
+  X adminchat | boolean
+  X tp | boolean
+  X tphere | boolean
+  X hq | boolean
 
 X /grank set [player] [rank]
 - /grank info [rank]
@@ -37,11 +38,11 @@ X /grank list
 X /g [msg] - Guild chat
 X /ga [msg] - 'guild admin' chat for 'admins' in guilds
 
-- /hq set
-- /hq
+X /hq set
+X /hq
 
-- /gtp - Teleport to guild member
-- /gtphere - Teleport guildmember here
+X /gtp - Teleport to guild member
+X /gtphere - Teleport guildmember here
 
 X Guild Tags in chat
 
@@ -101,6 +102,8 @@ TAGG.yml:
     x: 256
     y: 73
     z: -5034
+    yaw: 0
+    pitch: 0
   members:
     thatplayer: rank
     thisplayer: otherrank
