@@ -58,12 +58,6 @@ public class GuildsHandler {
 
     public void removeGuild(Guild guild) {
         guilds.remove(guild);
-        for(GuildMember gMember : guild.getMembers()) {
-            Player player = plugin.getServer().getPlayer(gMember.getPlayer());
-            if(player != null) {
-                plugin.sendMessage(player, "Your guild has been disbanded.");
-            }
-        }
         for(GuildInviteTask task : getInvites()) {
             if(task.getData().getGuild() == guild) {
                 task.run();
