@@ -4,6 +4,7 @@ import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.commands.guild.*;
 import me.zephirenz.noirguilds.enums.GuildCommandlet;
+import me.zephirenz.noirguilds.enums.GuildRankCommandlet;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,8 +40,17 @@ public class GuildCommand implements CommandExecutor {
 //            helpCommandlet();
             return true;
         }
+
+        GuildCommandlet cmd;
+        try{
+            cmd = GuildCommandlet.valueOf(args[0].toLowerCase());
+        }catch(IllegalArgumentException e) {
+            plugin.sendMessage(sender, "Command not found.");
+            return true;
+        }
+
         String[] cmdletArgs = Arrays.copyOfRange(args, 1, args.length);
-        switch(GuildCommandlet.valueOf(args[0].toLowerCase())) {
+        switch(cmd) {
             case info:
                 new GuildInfoCommandlet().run(sender, cmdletArgs);
                 break;

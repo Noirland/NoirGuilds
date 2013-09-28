@@ -25,8 +25,17 @@ public class GuildRankCommand implements CommandExecutor {
 //            helpCommandlet();
             return true;
         }
+        GuildRankCommandlet cmd;
+        try{
+            cmd = GuildRankCommandlet.valueOf(args[0].toLowerCase());
+        }catch(IllegalArgumentException e) {
+            plugin.sendMessage(sender, "Command not found.");
+            return true;
+        }
+
+
         String[] cmdletArgs = Arrays.copyOfRange(args, 1, args.length);
-        switch(GuildRankCommandlet.valueOf(args[0].toLowerCase())) {
+        switch(cmd) {
             case create:
                 new RankCreateCommandlet().run(sender, cmdletArgs);
                 break;
