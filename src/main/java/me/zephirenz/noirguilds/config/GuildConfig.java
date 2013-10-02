@@ -68,8 +68,15 @@ public class GuildConfig extends Config {
 
         for(Map.Entry<String, Object> entry : members.entrySet()) {
             if(entry.getValue() instanceof String) {
-                String rank = (String) entry.getValue() ;
-                ret.add(new GuildMember(entry.getKey(), guild, getRank(rank)));
+                String rankName = (String) entry.getValue() ;
+                GuildRank rank = guild.getDefaultRank();
+                for(GuildRank r : guild.getRanks()) {
+                    if(r.getName().equals(rankName)) {
+                        rank = r;
+                    }
+                }
+
+                ret.add(new GuildMember(entry.getKey(), guild, rank));
             }
         }
         return ret;
@@ -200,6 +207,12 @@ public class GuildConfig extends Config {
         ConfigurationSection ranks = config.getConfigurationSection("ranks");
         for(String key : ranks.getConfigurationSection(oldName).getKeys(true)) {
             ranks.set(newName + "." + key, ranks.get(oldName + "." + key));
+        }
+        ConfigurationSection members = config.getConfigurationSection("members");
+        for(String key : members.getKeys(false)) {
+            if(members.get(key).equals(oldName)) {
+                members.set(key, newName);
+            }
         }
         ranks.set(oldName, null);
         saveFile();
