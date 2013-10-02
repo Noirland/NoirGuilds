@@ -6,7 +6,7 @@
 
     <groupId>me.zephirenz</groupId>
     <artifactId>noirguilds</artifactId>
-    <version>1.0</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <repositories>
