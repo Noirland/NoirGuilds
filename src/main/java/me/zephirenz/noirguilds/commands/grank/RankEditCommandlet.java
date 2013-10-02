@@ -94,8 +94,10 @@ public class RankEditCommandlet {
         boolean val = Boolean.valueOf(value);
         rank.setPerm(perm, val);
         dbManager.updateRankPerm(rank, perm, val);
-        if(val) {
+        if(!val) {
             plugin.sendMessage(sender, rank.getName() + " no longer has " + perm.getPerm() + " permission.");
+        }else{
+            plugin.sendMessage(sender, rank.getName() + " now has " + perm.getPerm() + " permission.");
         }
     }
 
@@ -124,7 +126,7 @@ public class RankEditCommandlet {
         }
         dbManager.updateRankName(rank, value);
         rank.setName(value);
-        plugin.sendMessage(sender, "Ranks's name now set to " + value);
+        plugin.sendMessage(sender, "Rank's name now set to " + value);
 
     }
 
