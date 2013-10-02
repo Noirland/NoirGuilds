@@ -38,6 +38,8 @@ public class GuildCreateCommandlet {
         String name = args[0];
         String tag = args[1];
         String leader;
+
+
         if(args.length == 3 && sender.hasPermission("noirguilds.create.other")) {
             leader = args[2];
         }else{
@@ -48,6 +50,12 @@ public class GuildCreateCommandlet {
                 return;
             }
         }
+
+        if(!sender.hasPermission("noirguilds.create")) {
+            plugin.sendMessage(sender, "You don't have permission to create guilds.");
+            return;
+        }
+
         if(gHandler.getGuildMember(leader) != null) {
             plugin.sendMessage(sender, "Already in a guild!");
             return;
