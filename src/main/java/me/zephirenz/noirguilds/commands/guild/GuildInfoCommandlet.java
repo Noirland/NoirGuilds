@@ -8,8 +8,6 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
-
 public class GuildInfoCommandlet {
 
     NoirGuilds plugin;

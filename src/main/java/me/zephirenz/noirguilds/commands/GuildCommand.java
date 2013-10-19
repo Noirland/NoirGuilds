@@ -4,7 +4,6 @@ import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.commands.guild.*;
 import me.zephirenz.noirguilds.enums.GuildCommandlet;
-import me.zephirenz.noirguilds.enums.GuildRankCommandlet;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
