@@ -59,6 +59,14 @@ public class MySQLDatabaseManager implements DatabaseManager {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    public void setMOTDLine(Guild guild, int line, String val) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public String[] getMOTD(Guild guild) {
+        return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void updateGuildName(Guild guild) {
         //To change body of implemented methods use File | Settings | File Templates.
     }

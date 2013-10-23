@@ -80,6 +80,8 @@ public class GuildCommand implements CommandExecutor {
             case deny:
                 new GuildDenyCommandlet().run(sender, cmdletArgs);
                 break;
+            case motd:
+                new GuildMOTDCommandlet().run(sender, cmdletArgs);
             default:
                 //helpCommandlet(sender, cmdletArgs, null);
                 break;

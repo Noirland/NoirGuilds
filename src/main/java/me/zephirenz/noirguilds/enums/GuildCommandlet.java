@@ -10,5 +10,6 @@ public enum GuildCommandlet {
     leave,
     disband,
     accept,
-    deny
+    deny,
+    motd
 }

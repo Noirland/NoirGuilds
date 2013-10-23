@@ -12,7 +12,7 @@ X /guild edit [option] [value]
   ~ tag | string (<= 4 chars)
 X /guild leave
 X /guild disband (guild)
-- /guild motd [num/rank] [string]
+X /guild motd [num] [string]
 
 X /guild accept
 X /guild deny

@@ -5,6 +5,7 @@ import me.zephirenz.noirguilds.config.PluginConfig;
 import me.zephirenz.noirguilds.database.DatabaseManager;
 import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.listeners.PlayerChatListener;
+import me.zephirenz.noirguilds.listeners.PlayerJoinListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,6 +23,7 @@ public class NoirGuilds extends JavaPlugin {
         guildsHandler = new GuildsHandler();
         addCommands();
         getServer().getPluginManager().registerEvents(new PlayerChatListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     }
 
     @Override

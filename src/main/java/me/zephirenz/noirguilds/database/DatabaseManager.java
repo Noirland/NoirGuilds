@@ -35,6 +35,10 @@ public interface DatabaseManager {
 
     public void setHq(Guild guild, Location loc);
 
+    public void setMOTDLine(Guild guild, int line, String val);
+
+    public String[] getMOTD(Guild guild);
+
     public void saveAll();
 
     public void close();

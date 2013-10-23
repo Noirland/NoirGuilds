@@ -15,6 +15,8 @@ public class Guild {
     private ArrayList<GuildRank> ranks = new ArrayList<GuildRank>();
     private ArrayList<GuildMember> members = new ArrayList<GuildMember>();
 
+    private String[] motd;
+
     public Guild(String name, String tag, String leader) {
         this.name = name;
         this.tag = tag;
@@ -111,6 +113,14 @@ public class Guild {
             }
         }
         return null;
+    }
+
+    public String[] getMotd() {
+        return motd;
+    }
+
+    public void setMotd(String[] motd) {
+        this.motd = motd;
     }
 
     public void save() {

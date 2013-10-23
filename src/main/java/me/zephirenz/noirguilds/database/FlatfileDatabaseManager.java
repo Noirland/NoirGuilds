@@ -152,8 +152,17 @@ public class FlatfileDatabaseManager implements DatabaseManager {
         }
     }
 
+    public void setMOTDLine(Guild guild, int line, String val) {
+        GuildConfig config = GuildConfig.getInstance(guild);
+        config.setMOTDLine(line, val);
+    }
+
+    public String[] getMOTD(Guild guild) {
+        GuildConfig config = GuildConfig.getInstance(guild);
+        return config.getMOTD();
+    }
+
     public void close() {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     // -- PRIVATE DATABASE FUNCTIONS --
@@ -161,5 +170,6 @@ public class FlatfileDatabaseManager implements DatabaseManager {
         GuildConfig config = GuildConfig.getInstance(guild);
         guild.setRanks(config.getRanks());
         guild.setMembers(config.getMembers());
+        guild.setMotd(config.getMOTD());
     }
 }

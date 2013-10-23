@@ -11,9 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GuildConfig extends Config {
 
@@ -223,6 +221,37 @@ public class GuildConfig extends Config {
 
         return config.getKeys(false).contains("hq");
 
+    }
+
+    public String[] getMOTD() {
+
+        ConfigurationSection motdSection = config.getConfigurationSection("motd");
+        if(motdSection == null) {
+            return new String[0];
+        }
+
+        SortedMap<Integer, String> motd = new TreeMap<Integer, String>();
+
+        for(String key : motdSection.getKeys(false)) {
+            int line;
+            try {
+                line = Integer.parseInt(key);
+            } catch (NumberFormatException e) {
+                continue;
+            }
+            motd.put(line, motdSection.getString(key));
+        }
+        Collection<String> values = motd.values();
+        return values.toArray(new String[values.size()]);
+
+    }
+
+    public void setMOTDLine(int line, String value) {
+        if(value.equals("")) {
+            value = null;
+        }
+        config.set("motd." + line, value);
+        saveFile();
     }
 
     private static File guildToFile(Guild guild) {

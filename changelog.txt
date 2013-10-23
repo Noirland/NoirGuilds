@@ -1,2 +1,4 @@
 - Added guild member limit, disabled by default
 - Online members now show in green in /guild info GUILD
+- Added Guild MOTD's, using /guild motd [line] [text]
+  - includes colours with ampersand
