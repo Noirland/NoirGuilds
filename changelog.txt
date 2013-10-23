@@ -1,0 +1,1 @@
+- Added guild member limit, disabled by default

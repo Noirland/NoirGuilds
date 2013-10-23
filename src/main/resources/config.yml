@@ -1,5 +1,6 @@
 noirguilds:
   debug: false
+  member-limit: 25
   database:
     type: flatfile
     mysql:

@@ -28,5 +28,7 @@ public class PluginConfig extends Config {
 
     public boolean getFriendlyFire()      { return config.getBoolean(("noirguilds.friendlyfire"), true); }
 
+    public int     getMemberLimit()       { return config.getInt("noirguilds.member-limit", 0); }
+
     public boolean getDebug()             { return config.getBoolean("noirguilds.debug", false);}
 }

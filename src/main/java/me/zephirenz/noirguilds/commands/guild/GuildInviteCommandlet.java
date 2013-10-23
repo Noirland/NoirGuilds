@@ -2,6 +2,7 @@ package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.config.PluginConfig;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.InviteData;
@@ -13,10 +14,12 @@ public class GuildInviteCommandlet {
 
     NoirGuilds plugin;
     GuildsHandler gHandler;
+    PluginConfig pConfig;
 
     public GuildInviteCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
+        this.pConfig = PluginConfig.getInstance();
     }
 
     /**
@@ -56,12 +59,12 @@ public class GuildInviteCommandlet {
             plugin.sendMessage(sender, "You do not have permission to invite players.");
             return;
         }
+        if(inviterMember.getGuild().getMembers().size() >= pConfig.getMemberLimit() && pConfig.getMemberLimit() > 0) {
+            plugin.sendMessage(sender, "You guild has the maximum number of members.");
+            return;
+        }
         InviteData inviteData = new InviteData(inviter, invitee, inviterMember.getGuild());
         new GuildInviteTask(inviteData).runTaskLater(plugin, 60 * 20);
-
-
-
-
     }
 
 }
