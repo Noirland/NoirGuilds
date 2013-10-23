@@ -6,8 +6,9 @@
 
     <groupId>me.zephirenz</groupId>
     <artifactId>noirguilds</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <name>NoirGuilds</name>
 
     <repositories>
         <repository>
@@ -58,6 +59,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.name}-${project.version}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
