@@ -47,11 +47,12 @@ public class GuildInfoCommandlet {
             return;
         }
 
-        StringBuilder memberString = new StringBuilder(ChatColor.BLUE + "Members" + ChatColor.GRAY + "[" + guild.getMembers().size() + "]" + ChatColor.BLUE + ": ");
+        StringBuilder membersString = new StringBuilder(ChatColor.BLUE + "Members" + ChatColor.GRAY + "[" + guild.getMembers().size() + "]" + ChatColor.BLUE + ": ");
 
         String delim = ChatColor.RESET.toString();
         for(GuildMember member : guild.getMembers()) {
-            memberString.append(delim).append(member.getPlayer());
+            String memberString = (plugin.getServer().getOfflinePlayer(member.getPlayer()).isOnline() ? ChatColor.GREEN : "") + member.getPlayer();
+            membersString.append(delim).append(memberString);
             delim = ChatColor.WHITE + ", ";
         }
 
@@ -60,10 +61,8 @@ public class GuildInfoCommandlet {
 
         sender.sendMessage(titleString);
         sender.sendMessage(ChatColor.BLUE + "Leader: " + ChatColor.WHITE + guild.getLeader());
-        sender.sendMessage(memberString.toString());
+        sender.sendMessage(membersString.toString());
         sender.sendMessage(ChatColor.RED + StringUtils.repeat("=", ChatColor.stripColor(titleString).length()-3));
-
-
     }
 
 }
