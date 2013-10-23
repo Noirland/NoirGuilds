@@ -1,6 +1,5 @@
 package me.zephirenz.noirguilds.commands;
 
-import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.commands.grank.*;
 import me.zephirenz.noirguilds.enums.GuildRankCommandlet;
@@ -12,12 +11,10 @@ import java.util.Arrays;
 
 public class GuildRankCommand implements CommandExecutor {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
 
     public GuildRankCommand() {
         this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
     }
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {

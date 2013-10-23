@@ -2,8 +2,8 @@ package me.zephirenz.noirguilds.objects;
 
 public class GuildMember {
 
-    private String player;
-    private Guild guild;
+    private final String player;
+    private final Guild guild;
     private GuildRank rank;
 
     public GuildMember(String player) {
@@ -41,9 +41,8 @@ public class GuildMember {
     public boolean equals(Object obj) {
         if(!(obj instanceof GuildMember)) return false;
         GuildMember gPlayer = (GuildMember) obj;
-        if(!(gPlayer.getPlayer().equals(this.getPlayer()))) return false;
+        return gPlayer.getPlayer().equals(this.getPlayer());
 
-        return true;
     }
 
 }

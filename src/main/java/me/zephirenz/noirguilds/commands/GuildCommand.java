@@ -1,6 +1,5 @@
 package me.zephirenz.noirguilds.commands;
 
-import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.commands.guild.*;
 import me.zephirenz.noirguilds.enums.GuildCommandlet;
@@ -12,26 +11,10 @@ import java.util.Arrays;
 
 public class GuildCommand implements CommandExecutor {
 
-    /*
-    - /guilds info [guild]/[tag]
-    - /guilds list
-
-    X /guild create [guild] [tag] (leader)
-    - /guild invite [player]
-    - /guild kick [player]
-    - /guild edit [option] [value]
-        - name | string
-        - tag | string (<= 4 chars)
-        - friendlyfire | boolean
-    - /guild disband (guild)
-    */
-
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
 
     public GuildCommand() {
         this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
     }
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {

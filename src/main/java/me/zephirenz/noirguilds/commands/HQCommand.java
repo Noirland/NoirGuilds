@@ -17,9 +17,9 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class HQCommand implements CommandExecutor {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
-    DatabaseManager dbManager;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
+    private final DatabaseManager dbManager;
 
     public HQCommand() {
         this.plugin = NoirGuilds.inst();

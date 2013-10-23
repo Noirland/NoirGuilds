@@ -11,8 +11,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class PlayerChatListener implements Listener {
 
-    private NoirGuilds plugin;
-    private GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public PlayerChatListener() {
         this.plugin = NoirGuilds.inst();

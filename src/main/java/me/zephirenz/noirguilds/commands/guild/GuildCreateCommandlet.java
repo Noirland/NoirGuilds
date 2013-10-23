@@ -12,8 +12,8 @@ import org.bukkit.entity.Player;
 
 public class GuildCreateCommandlet {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public GuildCreateCommandlet() {
         this.plugin = NoirGuilds.inst();

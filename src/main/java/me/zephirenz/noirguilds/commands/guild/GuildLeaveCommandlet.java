@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 
 public class GuildLeaveCommandlet {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public GuildLeaveCommandlet() {
         this.plugin = NoirGuilds.inst();

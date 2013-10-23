@@ -1,8 +1,5 @@
 package me.zephirenz.noirguilds.objects;
 
-import me.zephirenz.noirguilds.database.DatabaseManager;
-import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
-
 import java.util.ArrayList;
 
 public class Guild {
@@ -10,7 +7,6 @@ public class Guild {
     private String name;
     private String tag;
     private String leader;
-    DatabaseManager dbManager;
 
     private ArrayList<GuildRank> ranks = new ArrayList<GuildRank>();
     private ArrayList<GuildMember> members = new ArrayList<GuildMember>();
@@ -21,7 +17,6 @@ public class Guild {
         this.name = name;
         this.tag = tag;
         this.leader = leader;
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
     }
 
     public void setName(String name) {
@@ -38,7 +33,7 @@ public class Guild {
 
     public boolean isMember(String player) {
         for(GuildMember gPlayer: members) {
-            if(gPlayer.getPlayer() == player) {
+            if(gPlayer.getPlayer().equals(player)) {
                 return true;
             }
         }
@@ -133,8 +128,7 @@ public class Guild {
     public boolean equals(Object obj) {
         if(!(obj instanceof Guild)) return false;
         Guild guild = (Guild) obj;
-        if(!guild.getName().equals(this.getName())) return false;
+        return guild.getName().equals(this.getName());
 
-        return true;
     }
 }

@@ -9,9 +9,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class GuildInviteTask extends BukkitRunnable {
 
-    private NoirGuilds plugin;
-    private GuildsHandler gHandler;
-    private InviteData data;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
+    private final InviteData data;
 
     public GuildInviteTask(InviteData data) {
         this.plugin = NoirGuilds.inst();

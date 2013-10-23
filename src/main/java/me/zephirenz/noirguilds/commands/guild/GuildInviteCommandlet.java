@@ -12,9 +12,9 @@ import org.bukkit.entity.Player;
 
 public class GuildInviteCommandlet {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
-    PluginConfig pConfig;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
+    private final PluginConfig pConfig;
 
     public GuildInviteCommandlet() {
         this.plugin = NoirGuilds.inst();

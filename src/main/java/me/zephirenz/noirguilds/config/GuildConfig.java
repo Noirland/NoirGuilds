@@ -17,7 +17,7 @@ public class GuildConfig extends Config {
 
     private Guild guild;
 
-    private static Map<File, GuildConfig> instances = new HashMap<File, GuildConfig>();
+    private static final Map<File, GuildConfig> instances = new HashMap<File, GuildConfig>();
 
     public static GuildConfig getInstance(File file) {
         if(!instances.containsKey(file)) {
@@ -99,7 +99,6 @@ public class GuildConfig extends Config {
     }
 
     public GuildRank getRank(String rank) {
-        ConfigurationSection rankInfo = config.getConfigurationSection("ranks." + rank);
         for(GuildRank gRank : getRanks()) {
             if(gRank.getName().equals(rank)) {
                 return gRank;

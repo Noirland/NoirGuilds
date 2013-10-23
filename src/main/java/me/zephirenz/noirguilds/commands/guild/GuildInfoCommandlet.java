@@ -10,8 +10,8 @@ import org.bukkit.command.CommandSender;
 
 public class GuildInfoCommandlet {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public GuildInfoCommandlet() {
         this.plugin = NoirGuilds.inst();

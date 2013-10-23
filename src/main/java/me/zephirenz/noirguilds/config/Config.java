@@ -11,10 +11,10 @@ public abstract class Config {
 
     // Config setup borrowed from mcMMO - Thanks!
 
-    protected static final NoirGuilds plugin = NoirGuilds.inst();
-    protected String file;
-    protected File configFile;
-    protected FileConfiguration config;
+    static final NoirGuilds plugin = NoirGuilds.inst();
+    String file;
+    File configFile;
+    FileConfiguration config;
 
 
     public Config(String path, String file) {
@@ -24,19 +24,19 @@ public abstract class Config {
 
     }
 
-    public Config(String file) {
+    Config(String file) {
         this.file = file;
         configFile = new File(plugin.getDataFolder(), file);
         loadFile();
     }
 
-    public Config(File file) {
+    Config(File file) {
         this.file = file.getName();
         configFile = file;
         loadFile();
     }
 
-    protected void loadFile() {
+    void loadFile() {
         if(!configFile.exists()) {
             createFile();
         }
@@ -71,7 +71,7 @@ public abstract class Config {
 
     }
 
-    protected void createFile() {
+    void createFile() {
         configFile.getParentFile().mkdirs();
 
         InputStream iStream = getResource();
@@ -116,7 +116,7 @@ public abstract class Config {
 
     }
 
-    protected InputStream getResource() {
+    InputStream getResource() {
 
         return plugin.getResource(file);
 

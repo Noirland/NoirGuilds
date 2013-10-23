@@ -11,8 +11,8 @@ import org.bukkit.entity.Player;
 
 public class RankDeleteCommandlet {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public RankDeleteCommandlet() {
         this.plugin = NoirGuilds.inst();

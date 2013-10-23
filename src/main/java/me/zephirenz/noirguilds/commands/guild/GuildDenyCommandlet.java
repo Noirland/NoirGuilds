@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 
 public class GuildDenyCommandlet {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public GuildDenyCommandlet() {
         this.plugin = NoirGuilds.inst();

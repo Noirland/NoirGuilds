@@ -15,8 +15,8 @@ import java.util.Arrays;
 
 public class GuildChatCommand implements CommandExecutor {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public GuildChatCommand() {
         this.plugin = NoirGuilds.inst();

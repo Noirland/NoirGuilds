@@ -13,8 +13,8 @@ import org.bukkit.entity.Player;
 
 public class GuildAcceptCommandlet {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public GuildAcceptCommandlet() {
         this.plugin = NoirGuilds.inst();

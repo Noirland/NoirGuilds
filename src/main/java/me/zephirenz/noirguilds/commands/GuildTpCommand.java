@@ -14,8 +14,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class GuildTpCommand implements CommandExecutor {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public GuildTpCommand() {
         this.plugin = NoirGuilds.inst();

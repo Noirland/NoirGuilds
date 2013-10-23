@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 
 public class GuildKickCommandlet {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public GuildKickCommandlet() {
         this.plugin = NoirGuilds.inst();

@@ -11,8 +11,8 @@ import org.bukkit.entity.Player;
 
 public class RankListCommandlet {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
 
     public RankListCommandlet() {
         this.plugin = NoirGuilds.inst();

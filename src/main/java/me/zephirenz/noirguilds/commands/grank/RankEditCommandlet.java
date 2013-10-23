@@ -13,9 +13,9 @@ import org.bukkit.entity.Player;
 
 public class RankEditCommandlet {
 
-    NoirGuilds plugin;
-    GuildsHandler gHandler;
-    DatabaseManager dbManager;
+    private final NoirGuilds plugin;
+    private final GuildsHandler gHandler;
+    private final DatabaseManager dbManager;
 
     public RankEditCommandlet() {
         this.plugin = NoirGuilds.inst();
@@ -71,10 +71,8 @@ public class RankEditCommandlet {
 
         if(option.equalsIgnoreCase("colour")) {
             editColour(sender, rank, value);
-            return;
         }else if(option.equalsIgnoreCase("name")) {
             editName(sender, rank, value);
-            return;
         }else{
             editPerm(sender, rank, option, value);
         }

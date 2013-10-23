@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class GuildRank {
 
-    private Guild guild;
+    private final Guild guild;
     private String name;
     private boolean leader = false;
     private boolean def = false;
-    private Map<RankPerm, Boolean> perms;
+    private final Map<RankPerm, Boolean> perms;
     private ChatColor colour;
 
     public GuildRank(Guild guild, String name, Map<RankPerm, Boolean> perms, ChatColor colour) {
@@ -82,9 +82,8 @@ public class GuildRank {
     public boolean equals(Object obj) {
         if(!(obj instanceof GuildRank)) return false;
         GuildRank rank = (GuildRank) obj;
-        if(!rank.getName().equals(this.name)) return false;
+        return rank.getName().equals(this.name);
 
-        return true;
     }
 
     public void save() {

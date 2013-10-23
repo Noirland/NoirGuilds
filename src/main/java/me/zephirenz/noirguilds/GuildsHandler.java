@@ -13,10 +13,10 @@ import java.util.ArrayList;
 
 public class GuildsHandler {
 
-    private NoirGuilds plugin;
-    private DatabaseManager dbManager;
-    ArrayList<Guild> guilds = new ArrayList<Guild>();
-    ArrayList<GuildInviteTask> invites = new ArrayList<GuildInviteTask>();
+    private final NoirGuilds plugin;
+    private final DatabaseManager dbManager;
+    private final ArrayList<Guild> guilds = new ArrayList<Guild>();
+    private final ArrayList<GuildInviteTask> invites = new ArrayList<GuildInviteTask>();
 
     public GuildsHandler() {
         this.plugin = NoirGuilds.inst();
