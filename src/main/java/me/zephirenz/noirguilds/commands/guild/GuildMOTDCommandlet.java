@@ -37,8 +37,8 @@ public class GuildMOTDCommandlet {
             return;
         }
 
-        if (args.length < 2) {
-            plugin.sendMessage(sender, "You must specify an line and a value.");
+        if (args.length < 1) {
+            plugin.sendMessage(sender, "You must specify a line and text to set the MOTD.");
             return;
         }
         GuildMember gMember = gHandler.getGuildMember(sender.getName());
@@ -61,7 +61,10 @@ public class GuildMOTDCommandlet {
             plugin.sendMessage(sender, "Not a valid line number.");
             return;
         }
-        String motd = Util.arrayToString(args, 1, args.length - 1, " ");
+        String motd = "";
+        if(args.length > 1) {
+            motd = Util.arrayToString(args, 1, args.length - 1, " ");
+        }
 
         dbManager.setMOTDLine(guild, line, motd);
         guild.setMotd(dbManager.getMOTD(guild));
