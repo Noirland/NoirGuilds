@@ -46,6 +46,7 @@ public class GuildAdminChatCommand implements CommandExecutor {
         String prefix = ChatColor.GREEN + "[A]" + ChatColor.GRAY + " [" + rank.getColour() + rank.getName() + ChatColor.GRAY + "] "
                 + ChatColor.RESET + player.getName() + ChatColor.GRAY + ":" + ChatColor.RESET;
         String msg = prefix + Util.arrayToString(args, 0, args.length-1, " ");
+        msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
         if(!(msg.length() == prefix.length())) {
 
             for(GuildRank r : gPlayer.getGuild().getRanks()) {

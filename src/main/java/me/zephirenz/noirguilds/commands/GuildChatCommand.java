@@ -40,6 +40,7 @@ public class GuildChatCommand implements CommandExecutor {
         String prefix = ChatColor.RED + "[G]" + ChatColor.GRAY + " [" + rank.getColour() + rank.getName() + ChatColor.GRAY + "] "
                             + ChatColor.RESET + player.getName() + ChatColor.RED + ":" + ChatColor.RESET;
         String msg = prefix + Util.arrayToString(args, 0, args.length - 1, " ");
+        msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
         if(!(msg.length() == prefix.length())) {
             gHandler.sendMessageToGuild(gPlayer.getGuild(), msg);
             return true;

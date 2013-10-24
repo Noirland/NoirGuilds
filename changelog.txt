@@ -2,3 +2,4 @@
 - Online members now show in green in /guild info GUILD
 - Added Guild MOTD's, using /guild motd [line] [text]
   - includes colours with ampersand
+- allow colour using ampersands in /g and /ga
