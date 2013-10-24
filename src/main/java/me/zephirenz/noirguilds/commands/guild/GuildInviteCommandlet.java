@@ -60,7 +60,7 @@ public class GuildInviteCommandlet {
             return;
         }
         if(inviterMember.getGuild().getMembers().size() >= pConfig.getMemberLimit() && pConfig.getMemberLimit() > 0) {
-            plugin.sendMessage(sender, "You guild has the maximum number of members.");
+            plugin.sendMessage(sender, "Your guild has the maximum number of members.");
             return;
         }
         InviteData inviteData = new InviteData(inviter, invitee, inviterMember.getGuild());
