@@ -11,7 +11,7 @@ public class Guild {
     private ArrayList<GuildRank> ranks = new ArrayList<GuildRank>();
     private ArrayList<GuildMember> members = new ArrayList<GuildMember>();
 
-    private String[] motd;
+    private String[] motd = new String[0];
 
     public Guild(String name, String tag, String leader) {
         this.name = name;
