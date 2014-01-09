@@ -122,6 +122,11 @@ public class RankEditCommandlet {
                 return;
             }
         }
+        if(value.contains(".")) {
+            plugin.sendMessage(sender, "Rank names may not contain full stops.");
+            return;
+        }
+
         dbManager.updateRankName(rank, value);
         rank.setName(value);
         plugin.sendMessage(sender, "Rank's name now set to " + value);
