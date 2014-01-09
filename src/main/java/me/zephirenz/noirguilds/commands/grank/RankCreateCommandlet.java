@@ -21,7 +21,7 @@ public class RankCreateCommandlet {
 
     /**
      *  The commandlet for creating a rank.
-     *  Usage: /guild create [rank]
+     *  Usage: /grank create [rank]
      *
      *  @param sender the sender of the command
      *  @param args   commandlet-specific args
@@ -49,6 +49,10 @@ public class RankCreateCommandlet {
             return;
         }
         String name = args[0];
+        if(name.contains(".")) {
+            plugin.sendMessage(sender, "Rank names may not contain full stops.");
+            return;
+        }
 
         GuildRank newRank = new GuildRank(gMember.getGuild(), name, null, ChatColor.WHITE);
         gMember.getGuild().addRank(newRank);

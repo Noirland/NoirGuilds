@@ -19,7 +19,7 @@ public class GuildDenyCommandlet {
 
     /**
      *  The commandlet for denying invites.
-     *  Usage: /guild deny [player]
+     *  Usage: /guild deny
      *
      *  @param sender the sender of the command
      *  @param args   commandlet-specific args

@@ -26,7 +26,7 @@ public class GuildAcceptCommandlet {
 
     /**
      *  The commandlet for accepting invites.
-     *  Usage: /guild accept [player]
+     *  Usage: /guild accept
      *
      *  @param sender the sender of the command
      *  @param args   commandlet-specific args

@@ -7,6 +7,7 @@ import me.zephirenz.noirguilds.objects.GuildMember;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class GuildInfoCommandlet {
 
@@ -20,31 +21,41 @@ public class GuildInfoCommandlet {
 
     /**
      *  The commandlet for showing guild info.
-     *  Usage: /guild accept [player]
+     *  Usage: /guild info (guild)
      *
      *  @param sender the sender of the command
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
 
-        if(args.length != 1) {
-            plugin.sendMessage(sender, "You must specify a guild name or tag to inspect.");
-            return;
-        }
-
-        String gName = args[0];
-
         Guild guild = null;
-        for(Guild g : gHandler.getGuilds()) {
-            if(g.getTag().equalsIgnoreCase(gName) || g.getName().equalsIgnoreCase(gName)) {
-                guild = g;
-                break;
-            }
-        }
 
-        if(guild == null) {
-            plugin.sendMessage(sender, "That guild does not exist.");
-            return;
+        if(args.length >= 1) {
+            String gName = args[0];
+
+            for(Guild g : gHandler.getGuilds()) {
+                if(g.getTag().equalsIgnoreCase(gName) || g.getName().equalsIgnoreCase(gName)) {
+                    guild = g;
+                    break;
+                }
+
+            }
+            if(guild == null) {
+                plugin.sendMessage(sender, "That guild does not exist.");
+                return;
+            }
+        }else{
+            if(!(sender instanceof Player)) {
+                plugin.sendMessage(sender, "Consoles cannot see their guild's info");
+                return;
+            }
+            Player player = (Player) sender;
+            GuildMember gMember = gHandler.getGuildMember(player.getName());
+            if(gMember == null) {
+                plugin.sendMessage(sender, "You are not in a Guild, please use " + ChatColor.DARK_GRAY + "/guild info [guild]");
+                return;
+            }
+            guild = gMember.getGuild();
         }
 
         StringBuilder membersString = new StringBuilder(ChatColor.BLUE + "Members" + ChatColor.GRAY + "[" + guild.getMembers().size() + "]" + ChatColor.BLUE + ": ");

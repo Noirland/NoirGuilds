@@ -25,7 +25,7 @@ public class RankSetCommandlet {
 
     /**
      *  The commandlet for changing a member's rank.
-     *  Usage: /guild set [player] [rank]
+     *  Usage: /grank set [player] [rank]
      *
      *  @param sender the sender of the command
      *  @param args   commandlet-specific args
