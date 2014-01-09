@@ -21,7 +21,7 @@ public class RankCreateCommandlet {
 
     /**
      *  The commandlet for creating a rank.
-     *  Usage: /guild create [rank]
+     *  Usage: /grank create [rank]
      *
      *  @param sender the sender of the command
      *  @param args   commandlet-specific args

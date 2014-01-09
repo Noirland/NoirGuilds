@@ -20,7 +20,7 @@ public class GuildInfoCommandlet {
 
     /**
      *  The commandlet for showing guild info.
-     *  Usage: /guild accept [player]
+     *  Usage: /guild info (guild)
      *
      *  @param sender the sender of the command
      *  @param args   commandlet-specific args
