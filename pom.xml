@@ -6,7 +6,7 @@
 
     <groupId>me.zephirenz</groupId>
     <artifactId>noirguilds</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <packaging>jar</packaging>
     <name>NoirGuilds</name>
 
@@ -17,7 +17,7 @@
         </repository>
         <repository>
             <id>brynley-repo</id>
-            <url>http://repo.brynley.tk/content/groups/public/</url>
+            <url>http://repo.arcadium.net.nz/content/groups/public/</url>
         </repository>
     </repositories>
 
@@ -83,12 +83,12 @@
         <repository>
             <id>brynley-repo</id>
             <name>Releases</name>
-            <url>http://repo.brynley.tk/content/repositories/releases</url>
+            <url>http://repo.arcadium.net.nz/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
             <id>brynley-repo</id>
             <name>Snapshots</name>
-            <url>http://repo.brynley.tk/content/repositories/snapshots/</url>
+            <url>http://repo.arcadium.net.nz/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 

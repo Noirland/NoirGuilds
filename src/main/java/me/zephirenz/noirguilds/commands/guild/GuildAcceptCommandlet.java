@@ -41,7 +41,7 @@ public class GuildAcceptCommandlet {
         GuildInviteTask inviteTask = null;
         for(GuildInviteTask task : gHandler.getInvites()) {
             InviteData id = task.getData();
-            if(id.getInvitee().equals(sender.getName())) {
+            if(id.getInvitee().equalsIgnoreCase(sender.getName())) {
                 data = id;
                 inviteTask = task;
             }
