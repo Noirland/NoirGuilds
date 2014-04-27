@@ -1,8 +1,8 @@
 package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
+import me.zephirenz.noirguilds.GuildsUtil;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.Util;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
@@ -60,7 +60,7 @@ public class GuildCreateCommandlet {
             plugin.sendMessage(sender, "Already in a guild!");
             return;
         }
-        if(!Util.isValidTag(tag)) {
+        if(!GuildsUtil.isValidTag(tag)) {
             if(tag.length() <= 4) {
                 plugin.sendMessage(sender, "Tags must be a maximum of 4 characters.");
             }

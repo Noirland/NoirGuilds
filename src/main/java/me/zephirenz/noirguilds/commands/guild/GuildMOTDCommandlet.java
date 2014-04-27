@@ -1,8 +1,8 @@
 package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
+import me.zephirenz.noirguilds.GuildsUtil;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.Util;
 import me.zephirenz.noirguilds.database.DatabaseManager;
 import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.objects.Guild;
@@ -63,7 +63,7 @@ public class GuildMOTDCommandlet {
         }
         String motd = "";
         if(args.length > 1) {
-            motd = Util.arrayToString(args, 1, args.length - 1, " ");
+            motd = GuildsUtil.arrayToString(args, 1, args.length - 1, " ");
         }
 
         dbManager.setMOTDLine(guild, line, motd);
