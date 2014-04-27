@@ -13,6 +13,9 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 
+import static me.zephirenz.noirguilds.Strings.GUILD_CHAT_NO_GUILD;
+import static me.zephirenz.noirguilds.Strings.NO_CONSOLE;
+
 public class GuildChatCommand implements CommandExecutor {
 
     private final NoirGuilds plugin;
@@ -26,13 +29,13 @@ public class GuildChatCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         plugin.debug("Command /g | " + Arrays.toString(args));
         if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Consoles cannot send messages in guild chat.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return true;
         }
         Player player = (Player) sender;
         GuildMember gPlayer = gHandler.getGuildMember(player.getName());
         if(gPlayer == null || gPlayer.getGuild() == null || gPlayer.getRank() == null) {
-            plugin.sendMessage(sender, "You are not currently in a guild.");
+            plugin.sendMessage(sender, GUILD_CHAT_NO_GUILD);
             return false;
         }
 

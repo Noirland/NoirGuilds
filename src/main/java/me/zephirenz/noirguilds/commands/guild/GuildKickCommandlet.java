@@ -8,6 +8,8 @@ import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static me.zephirenz.noirguilds.Strings.*;
+
 public class GuildKickCommandlet {
 
     private final NoirGuilds plugin;
@@ -29,11 +31,11 @@ public class GuildKickCommandlet {
     public void run(CommandSender sender, String[] args) {
 
         if(args.length != 1) {
-            plugin.sendMessage(sender, "You must specify a player to kick.");
+            plugin.sendMessage(sender, GUILD_KICK_WRONG_ARGS);
             return;
         }
         if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Console can not kick players from guilds.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
         String kickee = args[0];
@@ -41,7 +43,7 @@ public class GuildKickCommandlet {
         GuildMember kickeeMember = gHandler.getGuildMember(kickee);
 
         if(senderMember == null) {
-            plugin.sendMessage(sender, "You must be in a guild to leave players.");
+            plugin.sendMessage(sender, GUILD_KICK_NO_GUILD);
             return;
         }
         Guild guild = senderMember.getGuild();
@@ -51,23 +53,21 @@ public class GuildKickCommandlet {
                 inGuild = true;
         }
         if(!inGuild) {
-            plugin.sendMessage(sender, "Player must be in your guild to kick.");
+            plugin.sendMessage(sender, GUILD_KICK_BAD_TAGET);
             return;
         }
         if(kickeeMember.getRank().isLeader()) {
-            plugin.sendMessage(sender, "You can't kick the guild leader.");
+            plugin.sendMessage(sender, GUILD_KICK_LEADER);
             return;
         }
         if(!gHandler.hasPerm(senderMember, RankPerm.KICK)) {
-            plugin.sendMessage(sender, "You do not have permission to kick players.");
+            plugin.sendMessage(sender, GUILD_KICK_NO_PERMS);
             return;
         }
 
         guild.removeGuildMember(kickeeMember);
         gHandler.removeGuildMember(kickeeMember);
-        gHandler.sendMessageToGuild(guild, kickee + " was kicked from the guild.");
-
-
+        gHandler.sendMessageToGuild(guild, String.format(GUILD_KICK_KICKED, kickee));
     }
 
 }

@@ -3,12 +3,15 @@ package me.zephirenz.noirguilds.commands.guild;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.GuildsUtil;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.Perms;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildCreateCommandlet {
 
@@ -31,7 +34,7 @@ public class GuildCreateCommandlet {
     public void run(CommandSender sender, String[] args) {
 
         if(args.length < 2) {
-            plugin.sendMessage(sender, "Not enough arguments!");
+            plugin.sendMessage(sender, GUILD_CREATE_WRONG_ARGS);
 //            helpCommandlet(sender, args, GuildCommandlet.create);
             return;
         }
@@ -40,52 +43,52 @@ public class GuildCreateCommandlet {
         String leader;
 
 
-        if(args.length == 3 && sender.hasPermission("noirguilds.create.other")) {
+        if(args.length == 3 && sender.hasPermission(Perms.CREATE_OTHER)) {
             leader = args[2];
         }else{
             if(sender instanceof Player) {
                 leader = sender.getName();
             }else{
-                plugin.sendMessage(sender, "Console must specify a leader");
+                plugin.sendMessage(sender, GUILD_CREATE_CONSOLE_LEADER);
                 return;
             }
         }
 
-        if(!sender.hasPermission("noirguilds.create")) {
-            plugin.sendMessage(sender, "You don't have permission to create guilds.");
+        if(!sender.hasPermission(Perms.CREATE)) {
+            plugin.sendMessage(sender, GUILD_CREATE_NO_PERMS);
             return;
         }
 
         if(gHandler.getGuildMember(leader) != null) {
-            plugin.sendMessage(sender, "Already in a guild!");
+            plugin.sendMessage(sender, GUILD_CREATE_IN_GUILD);
             return;
         }
         if(!GuildsUtil.isValidTag(tag)) {
             if(tag.length() <= 4) {
-                plugin.sendMessage(sender, "Tags must be a maximum of 4 characters.");
+                plugin.sendMessage(sender, BIG_TAG);
             }
-            plugin.sendMessage(sender, "Tags must only contain letters, numbers, periods, dashes, and underscores.");
+            plugin.sendMessage(sender, BAD_TAG_CHARS);
             return;
         }
 
         for(Guild g : gHandler.getGuilds()) {
             if(g.getName().equalsIgnoreCase(name)) {
-                plugin.sendMessage(sender, "A guild with that name already exists.");
+                plugin.sendMessage(sender, GUILD_EXISTS);
                 return;
             }
             if(g.getTag().equalsIgnoreCase(tag)) {
-                plugin.sendMessage(sender, "A guild with that tag already exists.");
+                plugin.sendMessage(sender, TAG_EXISTS);
                 return;
             }
         }
 
         Guild guild = new Guild(name, tag, leader);
 
-        GuildRank leaderRank = new GuildRank(guild, "Leader", null, ChatColor.DARK_RED);
+        GuildRank leaderRank = new GuildRank(guild, DEFAULT_LEADER, null, ChatColor.DARK_RED);
         leaderRank.setLeader(true);
         guild.addRank(leaderRank);
 
-        GuildRank defRank = new GuildRank(guild, "Default", null, ChatColor.BLUE);
+        GuildRank defRank = new GuildRank(guild, DEFAULT_DEFAULT, null, ChatColor.BLUE);
         defRank.setDefault(true);
         guild.addRank(defRank);
 
@@ -93,7 +96,7 @@ public class GuildCreateCommandlet {
         guild.addGuildMember(leaderMember);
 
         gHandler.addGuild(guild);
-        plugin.sendGlobalMessage(guild.getLeader() + " has just founded " + name);
+        plugin.sendGlobalMessage(String.format(GUILD_CREATE_CREATED, guild.getLeader(), name));
     }
 
 }

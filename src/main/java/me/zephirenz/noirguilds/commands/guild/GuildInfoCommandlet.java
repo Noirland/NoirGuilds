@@ -9,6 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static me.zephirenz.noirguilds.Strings.*;
+
 public class GuildInfoCommandlet {
 
     private final NoirGuilds plugin;
@@ -41,18 +43,18 @@ public class GuildInfoCommandlet {
 
             }
             if(guild == null) {
-                plugin.sendMessage(sender, "That guild does not exist.");
+                plugin.sendMessage(sender, GUILD_NOT_EXISTS);
                 return;
             }
         }else{
             if(!(sender instanceof Player)) {
-                plugin.sendMessage(sender, "Consoles cannot see their guild's info");
+                plugin.sendMessage(sender, NO_CONSOLE);
                 return;
             }
             Player player = (Player) sender;
             GuildMember gMember = gHandler.getGuildMember(player.getName());
             if(gMember == null) {
-                plugin.sendMessage(sender, "You are not in a Guild, please use " + ChatColor.DARK_GRAY + "/guild info [guild]");
+                plugin.sendMessage(sender, GUILD_LIST_NO_GUILD);
                 return;
             }
             guild = gMember.getGuild();

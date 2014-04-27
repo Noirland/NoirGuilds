@@ -7,6 +7,8 @@ import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static me.zephirenz.noirguilds.Strings.*;
+
 public class GuildLeaveCommandlet {
 
     private final NoirGuilds plugin;
@@ -28,25 +30,25 @@ public class GuildLeaveCommandlet {
     public void run(CommandSender sender, String[] args) {
 
         if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Console can not leave guilds.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
         GuildMember member = gHandler.getGuildMember(sender.getName());
 
         if(member == null) {
-            plugin.sendMessage(sender, "You must be in a guild to leave it.");
+            plugin.sendMessage(sender, GUILD_LEAVE_NO_GUILD);
             return;
         }
         Guild guild = member.getGuild();
         if(member.getRank().isLeader()) {
-            plugin.sendMessage(sender, "Leaders cannot leave their own guild.");
+            plugin.sendMessage(sender, GUILD_LEAVE_LEADER);
             return;
         }
 
         guild.removeGuildMember(member);
         gHandler.removeGuildMember(member);
-        gHandler.sendMessageToGuild(guild, member.getPlayer() + " left the guild.");
-        plugin.sendMessage(sender, "You have left " + guild.getName());
+        gHandler.sendMessageToGuild(guild, String.format(GUILD_LEAVE_GUILD_LEFT, member.getPlayer()));
+        plugin.sendMessage(sender, String.format(GUILD_LEAVE_PLAYER_LEFT, guild.getName()));
 
     }
 

@@ -11,6 +11,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static me.zephirenz.noirguilds.Strings.*;
+
 public class RankEditCommandlet {
 
     private final NoirGuilds plugin;
@@ -35,12 +37,12 @@ public class RankEditCommandlet {
 
         if(!(sender instanceof Player)) {
 
-            plugin.sendMessage(sender, "Console cannot edit guild ranks.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
 
         if(args.length != 3) {
-            plugin.sendMessage(sender, "You must specify a rank, option and a value.");
+            plugin.sendMessage(sender, RANK_EDIT_WRONG_ARGS);
             return;
         }
         String rankName = args[0];
@@ -49,11 +51,11 @@ public class RankEditCommandlet {
 
         GuildMember mSender = gHandler.getGuildMember(sender.getName());
         if(mSender == null) {
-            plugin.sendMessage(sender, "You must be in a guild to edit ranks.");
+            plugin.sendMessage(sender, RANK_EDIT_NO_GUILD);
             return;
         }
         if(!mSender.getRank().isLeader()) {
-            plugin.sendMessage(sender, "Only guild leaders can edit ranks.");
+            plugin.sendMessage(sender, RANK_EDIT_NOT_LEADER);
             return;
         }
 
@@ -65,7 +67,7 @@ public class RankEditCommandlet {
             }
         }
         if(rank == null) {
-            plugin.sendMessage(sender, "That rank doesn't exist.");
+            plugin.sendMessage(sender, RANK_NOT_EXISTS);
             return;
         }
 
@@ -85,7 +87,7 @@ public class RankEditCommandlet {
         try{
             perm = RankPerm.get(permName);
         }catch(IllegalArgumentException e) {
-            plugin.sendMessage(sender, "Option doesn't exist.");
+            plugin.sendMessage(sender, RANK_EDIT_BAD_OPTION);
             return;
         }
 
@@ -93,9 +95,9 @@ public class RankEditCommandlet {
         rank.setPerm(perm, val);
         dbManager.updateRankPerm(rank, perm, val);
         if(!val) {
-            plugin.sendMessage(sender, rank.getName() + " no longer has " + perm.getPerm() + " permission.");
+            plugin.sendMessage(sender, String.format(RANK_EDIT_NO_PERM, rank.getName(), perm.getPerm()));
         }else{
-            plugin.sendMessage(sender, rank.getName() + " now has " + perm.getPerm() + " permission.");
+            plugin.sendMessage(sender, String.format(RANK_EDIT_PERM, rank.getName(), perm.getPerm()));
         }
     }
 
@@ -105,31 +107,31 @@ public class RankEditCommandlet {
         try{
             colour = ChatColor.valueOf(value);
         }catch(IllegalArgumentException e) {
-            plugin.sendMessage(sender, "Not a valid colour code.");
+            plugin.sendMessage(sender, RANK_EDIT_BAD_COLOUR);
             return;
         }
 
         rank.setColour(colour);
         dbManager.updateRankColour(rank, colour);
-        plugin.sendMessage(sender, "Rank's colour now set to " + colour + colour.toString());
+        plugin.sendMessage(sender, String.format(RANK_EDIT_SET_COLOUR, colour + colour.toString()));
 
     }
     private void editName(CommandSender sender, GuildRank rank, String value) {
 
         for(GuildRank r : rank.getGuild().getRanks()) {
             if(r.getName().equalsIgnoreCase(value)) {
-                plugin.sendMessage(sender, "A rank by that name already exists.");
+                plugin.sendMessage(sender, RANK_EXISTS);
                 return;
             }
         }
         if(value.contains(".")) {
-            plugin.sendMessage(sender, "Rank names may not contain full stops.");
+            plugin.sendMessage(sender, RANK_NO_PERIODS);
             return;
         }
 
         dbManager.updateRankName(rank, value);
         rank.setName(value);
-        plugin.sendMessage(sender, "Rank's name now set to " + value);
+        plugin.sendMessage(sender, RANK_EDIT_SET_NAME);
 
     }
 

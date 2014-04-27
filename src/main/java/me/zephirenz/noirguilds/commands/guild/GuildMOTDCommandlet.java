@@ -10,6 +10,8 @@ import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static me.zephirenz.noirguilds.Strings.*;
+
 public class GuildMOTDCommandlet {
 
     private final NoirGuilds plugin;
@@ -33,23 +35,23 @@ public class GuildMOTDCommandlet {
     public void run(CommandSender sender, String[] args) {
 
         if (!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Console cannot edit guild MOTD.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
 
         if (args.length < 1) {
-            plugin.sendMessage(sender, "You must specify a line and text to set the MOTD.");
+            plugin.sendMessage(sender, GUILD_MOTD_WRONG_ARGS);
             return;
         }
         GuildMember gMember = gHandler.getGuildMember(sender.getName());
         if (gMember == null) {
-            plugin.sendMessage(sender, "You must be in a guild to edit the MOTD.");
+            plugin.sendMessage(sender, GUILD_MOTD_NO_GUILD);
             return;
         }
 
         Guild guild = gMember.getGuild();
         if (!gMember.getRank().isLeader()) {
-            plugin.sendMessage(sender, "You must be the leader of your guild to edit the MOTD.");
+            plugin.sendMessage(sender, GUILD_MOTD_NOT_LEADER);
             return;
         }
 
@@ -58,7 +60,7 @@ public class GuildMOTDCommandlet {
         try {
             line = Integer.parseInt(sLine);
         } catch (NumberFormatException e) {
-            plugin.sendMessage(sender, "Not a valid line number.");
+            plugin.sendMessage(sender, GUILD_MOTD_BAD_LINE);
             return;
         }
         String motd = "";
@@ -68,7 +70,7 @@ public class GuildMOTDCommandlet {
 
         dbManager.setMOTDLine(guild, line, motd);
         guild.setMotd(dbManager.getMOTD(guild));
-        plugin.sendMessage(sender, "Updated guild MOTD.");
+        plugin.sendMessage(sender, GUILD_MOTD_UPDATED);
     }
 
 }

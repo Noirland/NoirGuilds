@@ -64,7 +64,6 @@ public class GuildsHandler {
                 task.cancel();
             }
         }
-        plugin.sendGlobalMessage(guild.getName() + " has been disbanded.");
         dbManager.removeGuild(guild);
     }
 
@@ -74,7 +73,7 @@ public class GuildsHandler {
                 member.setRank(rank.getGuild().getDefaultRank());
                 Player p = plugin.getServer().getPlayer(member.getPlayer());
                 if(p != null) {
-                    plugin.sendMessage(p, "Your rank has been deleted, you are now " + member.getRank().getColour() + member.getRank().getName());
+                    plugin.sendMessage(p, String.format(Strings.RANK_DELETE_RANK_DELETED, member.getRank().getColour() + member.getRank().getName()));
                 }
             }
         }

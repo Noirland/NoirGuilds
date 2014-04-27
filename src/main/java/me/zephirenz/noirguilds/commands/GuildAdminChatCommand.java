@@ -12,7 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildAdminChatCommand implements CommandExecutor {
 
@@ -25,21 +25,20 @@ public class GuildAdminChatCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        plugin.debug("Command /ga | " + Arrays.toString(args));
         if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Consoles cannot send messages in guild admin chat.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return true;
         }
         Player player = (Player) sender;
         GuildMember gPlayer = gHandler.getGuildMember(player.getName());
         if(gPlayer == null || gPlayer.getGuild() == null || gPlayer.getRank() == null) {
-            plugin.sendMessage(sender, "You are not currently in a guild.");
+            plugin.sendMessage(sender, GUILD_CHAT_NO_GUILD);
             return true;
         }
 
         GuildRank rank = gPlayer.getRank();
         if(!gHandler.hasPerm(gPlayer, RankPerm.ADMINCHAT)) {
-            plugin.sendMessage(sender, "You haven't got permission to use Guild Admin chat.");
+            plugin.sendMessage(sender, GUILD_ACHAT_NO_PERMS);
             return true;
         }
 

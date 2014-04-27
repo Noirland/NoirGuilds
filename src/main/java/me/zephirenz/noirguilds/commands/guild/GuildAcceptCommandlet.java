@@ -2,15 +2,17 @@ package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.config.PluginConfig;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import me.zephirenz.noirguilds.objects.InviteData;
 import me.zephirenz.noirguilds.tasks.GuildInviteTask;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildAcceptCommandlet {
 
@@ -34,7 +36,7 @@ public class GuildAcceptCommandlet {
     public void run(CommandSender sender, String[] args) {
 
         if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Console can not accept invites.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
         InviteData data = null;
@@ -48,7 +50,7 @@ public class GuildAcceptCommandlet {
         }
 
         if(data == null) {
-            plugin.sendMessage(sender, "You have no pending guild invite.");
+            plugin.sendMessage(sender, NO_INVITE);
             return;
         }
 
@@ -56,7 +58,7 @@ public class GuildAcceptCommandlet {
         gHandler.removeInvite(inviteTask);
 
         if(data.getGuild().getMembers().size() >= pConfig.getMemberLimit() && pConfig.getMemberLimit() > 0) {
-            plugin.sendMessage(sender, "The guild has the maximum number of members.");
+            plugin.sendMessage(sender, GUILD_AT_MAX);
             return;
         }
 
@@ -66,7 +68,7 @@ public class GuildAcceptCommandlet {
         guild.addGuildMember(gMember);
         gHandler.addMember(gMember);
 
-        gHandler.sendMessageToGuild(guild, rank.getColour() + data.getInvitee() + ChatColor.RESET + " has joined the guild!");
+        gHandler.sendMessageToGuild(guild, String.format(Strings.GUILD_ACCEPT_JOINED, rank.getColour() + data.getInvitee()));
 
     }
 

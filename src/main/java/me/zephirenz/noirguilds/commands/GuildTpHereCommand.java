@@ -2,15 +2,17 @@ package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
+
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildTpHereCommand implements CommandExecutor {
 
@@ -26,35 +28,35 @@ public class GuildTpHereCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
 
         if(args.length != 1) {
-            plugin.sendMessage(sender, "Must specify a player to teleport.");
+            plugin.sendMessage(sender, TPHERE_NO_PLAYER);
             return true;
         }
         String tele = args[0];
         GuildMember mTele = gHandler.getGuildMember(tele);
         Player pTele = plugin.getServer().getPlayer(tele);
         if(pTele == null) {
-            plugin.sendMessage(sender, "Player does not exist or is not online.");
+            plugin.sendMessage(sender, PLAYER_NOT_ONLINE);
             return true;
         }
 
         if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Console can not teleport guild members.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return true;
         }
 
         GuildMember mSender = gHandler.getGuildMember(sender.getName());
         if (mSender == null) {
-            plugin.sendMessage(sender, "You must be in a guild to teleport.");
+            plugin.sendMessage(sender, TP_NO_GUILD);
             return true;
         }
 
         if(mTele == null || !mTele.getGuild().equals(mSender.getGuild())) {
-            plugin.sendMessage(sender, "Player is not in your guild.");
+            plugin.sendMessage(sender, TP_NOT_IN_GUILD);
             return true;
         }
 
         if(!gHandler.hasPerm(mSender, RankPerm.TPHERE)) {
-            plugin.sendMessage(sender, "You don't have permission to teleport.");
+            plugin.sendMessage(sender, TP_NO_PERMS);
             return true;
         }
 
@@ -62,7 +64,7 @@ public class GuildTpHereCommand implements CommandExecutor {
         Location loc = pSender.getLocation();
 
         pTele.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
-        plugin.sendMessage(pSender, ChatColor.GOLD + "Teleporting " + pTele.getName() + " to you...");
+        plugin.sendMessage(pSender, String.format(Strings.TPHERE_TELEPORTING, pTele.getName()));
 
         return true;
     }

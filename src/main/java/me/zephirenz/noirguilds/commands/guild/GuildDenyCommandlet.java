@@ -2,10 +2,14 @@ package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.objects.InviteData;
 import me.zephirenz.noirguilds.tasks.GuildInviteTask;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static me.zephirenz.noirguilds.Strings.NO_CONSOLE;
+import static me.zephirenz.noirguilds.Strings.NO_INVITE;
 
 public class GuildDenyCommandlet {
 
@@ -27,7 +31,7 @@ public class GuildDenyCommandlet {
     public void run(CommandSender sender, String[] args) {
 
         if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Console can not deny invites.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
 
@@ -42,7 +46,7 @@ public class GuildDenyCommandlet {
         }
 
         if(data == null) {
-            plugin.sendMessage(sender, "You have no pending guild invite.");
+            plugin.sendMessage(sender, NO_INVITE);
             return;
         }
 
@@ -51,9 +55,9 @@ public class GuildDenyCommandlet {
 
         Player pSender = plugin.getServer().getPlayer(data.getSender());
         if(pSender != null) {
-            plugin.sendMessage(pSender, "Your invite to " + data.getInvitee() + "  has been denied.");
+            plugin.sendMessage(pSender, String.format(Strings.GUILD_DENY_DENIED, data.getInvitee()));
         }
-        plugin.sendMessage(sender, "Your invite to " + data.getGuild().getName() + " has been denied.");
+        plugin.sendMessage(sender, String.format(Strings.GUILD_DENY_DENIED, data.getGuild().getName()));
 
     }
 
