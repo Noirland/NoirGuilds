@@ -1,8 +1,8 @@
 package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.GuildsHandler;
+import me.zephirenz.noirguilds.GuildsUtil;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.Util;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import org.bukkit.ChatColor;
@@ -39,7 +39,7 @@ public class GuildChatCommand implements CommandExecutor {
         GuildRank rank = gPlayer.getRank();
         String prefix = ChatColor.RED + "[G]" + ChatColor.GRAY + " [" + rank.getColour() + rank.getName() + ChatColor.GRAY + "] "
                             + ChatColor.RESET + player.getName() + ChatColor.RED + ":" + ChatColor.RESET;
-        String msg = prefix + Util.arrayToString(args, 0, args.length - 1, " ");
+        String msg = prefix + GuildsUtil.arrayToString(args, 0, args.length - 1, " ");
         msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
         if(!(msg.length() == prefix.length())) {
             gHandler.sendMessageToGuild(gPlayer.getGuild(), msg);

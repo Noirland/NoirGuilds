@@ -1,6 +1,6 @@
 package me.zephirenz.noirguilds;
 
-public class Util {
+public class GuildsUtil {
 
     /**
      * Check whether a tag is valid (ie on alphanumeric, period, dash or underscore)
