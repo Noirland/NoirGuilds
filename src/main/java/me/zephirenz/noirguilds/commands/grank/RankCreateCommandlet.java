@@ -53,6 +53,12 @@ public class RankCreateCommandlet {
             plugin.sendMessage(sender, "Rank names may not contain full stops.");
             return;
         }
+        for(GuildRank rank : gMember.getGuild().getRanks()) {
+            if(rank.getName().equalsIgnoreCase(name)) {
+                plugin.sendMessage(sender, RANK_EXISTS);
+                return;
+            }
+        }
 
         GuildRank newRank = new GuildRank(gMember.getGuild(), name, null, ChatColor.WHITE);
         gMember.getGuild().addRank(newRank);
