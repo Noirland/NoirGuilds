@@ -11,8 +11,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-
 import static me.zephirenz.noirguilds.Strings.GUILD_CHAT_NO_GUILD;
 import static me.zephirenz.noirguilds.Strings.NO_CONSOLE;
 
@@ -27,7 +25,6 @@ public class GuildChatCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        plugin.debug("Command /g | " + Arrays.toString(args));
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);
             return true;

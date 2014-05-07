@@ -1,11 +1,11 @@
 package me.zephirenz.noirguilds;
 
 import me.zephirenz.noirguilds.commands.*;
-import me.zephirenz.noirguilds.config.PluginConfig;
 import me.zephirenz.noirguilds.database.DatabaseManager;
 import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.listeners.PlayerChatListener;
 import me.zephirenz.noirguilds.listeners.PlayerJoinListener;
+import nz.co.noirland.zephcore.Debug;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,10 +15,12 @@ public class NoirGuilds extends JavaPlugin {
     private static NoirGuilds inst;
     private GuildsHandler guildsHandler;
     private DatabaseManager dbManager;
+    private static Debug debug;
 
     @Override
     public void onEnable() {
         inst = this;
+        debug = new Debug(this);
         this.dbManager = DatabaseManagerFactory.getDatabaseManager();
         guildsHandler = new GuildsHandler();
         addCommands();
@@ -36,6 +38,8 @@ public class NoirGuilds extends JavaPlugin {
         return inst;
     }
 
+    public static Debug debug() { return debug; }
+
     public GuildsHandler getGuildsHandler() {
         return guildsHandler;
     }
@@ -47,12 +51,6 @@ public class NoirGuilds extends JavaPlugin {
 
     public void sendGlobalMessage(String msg) {
         getServer().broadcastMessage(ChatColor.RED + "[NoirGuilds] " + ChatColor.RESET + msg);
-    }
-
-    public void debug(String msg) {
-        if(PluginConfig.getInstance().getDebug()) {
-            getLogger().info("[DEBUG] " + msg);
-        }
     }
 
     private void addCommands() {

@@ -14,13 +14,11 @@ public class DatabaseManagerFactory {
             try {
                 return createCustomDatabaseManager(dbManager);
             } catch (Exception e) {
-                NoirGuilds.inst().debug("Could not create database manager");
-                e.printStackTrace();
+                NoirGuilds.debug().debug("Could not create database manager", e);
             } catch (Throwable e) {
-                NoirGuilds.inst().debug("Failed to create database manager");
-                e.printStackTrace();
+                NoirGuilds.debug().debug("Failed to create database manager", e);
             }
-            NoirGuilds.inst().debug("Falling back on " + (PluginConfig.getInstance().getDatabaseType().equalsIgnoreCase("mysql") ? "MySQL" : "Flatfile") + " database");
+            NoirGuilds.debug().debug("Falling back on " + (PluginConfig.getInstance().getDatabaseType().equalsIgnoreCase("mysql") ? "MySQL" : "Flatfile") + " database");
         }
         return PluginConfig.getInstance().getDatabaseType().equalsIgnoreCase("mysql") ? new MySQLDatabaseManager() : new FlatfileDatabaseManager();
     }
