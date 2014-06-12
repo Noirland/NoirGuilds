@@ -4,6 +4,8 @@ main: me.zephirenz.noirguilds.NoirGuilds
 name: NoirGuilds
 startup: postworld
 version: ${version}
+depend: [ZephCore]
+softdepend: [BankOfNoir]
 commands:
     guild:
         description: Commands relating to NoirGuilds
