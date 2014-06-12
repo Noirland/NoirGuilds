@@ -145,6 +145,12 @@ public class FlatfileDatabaseManager implements DatabaseManager {
             config.setRankPerm(rank.getName(), perm, val);
     }
 
+    @Override
+    public void setBalance(Guild guild, Double balance) {
+        GuildConfig config = GuildConfig.getInstance(guild);
+        config.setBalance(balance);
+    }
+
     public void saveAll() {
         for(Entry conf : GuildConfig.getInstances().entrySet()) {
             GuildConfig config = (GuildConfig) conf.getValue();
@@ -171,5 +177,6 @@ public class FlatfileDatabaseManager implements DatabaseManager {
         guild.setRanks(config.getRanks());
         guild.setMembers(config.getMembers());
         guild.setMotd(config.getMOTD());
+        guild.setBalance(config.getBalance());
     }
 }

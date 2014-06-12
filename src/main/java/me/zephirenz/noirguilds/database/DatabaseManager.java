@@ -48,4 +48,6 @@ public interface DatabaseManager {
     public void updateRankName(GuildRank rank, String value);
 
     public void updateRankPerm(GuildRank rank, RankPerm perm, boolean val);
+
+    public void setBalance(Guild guild, Double balance);
 }
