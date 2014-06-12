@@ -13,6 +13,8 @@ public class Guild {
 
     private String[] motd = new String[0];
 
+    private Double balance = 0D;
+
     public Guild(String name, String tag, String leader) {
         this.name = name;
         this.tag = tag;
@@ -116,6 +118,14 @@ public class Guild {
 
     public void setMotd(String[] motd) {
         this.motd = motd;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 
     public void save() {
