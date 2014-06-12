@@ -52,9 +52,10 @@ public class GuildConfig extends Config {
         return plugin.getResource("guild.yml");
     }
 
-    public String getName()   { return config.getString("name");   }
-    public String getTag()    { return config.getString("tag");    }
-    public String getLeader() { return config.getString("leader"); }
+    public String getName()    { return config.getString("name");       }
+    public String getTag()     { return config.getString("tag");        }
+    public String getLeader()  { return config.getString("leader");     }
+    public Double getBalance() { return config.getDouble("balance", 0); }
 
     public boolean isRankLeader(String rank)  { return config.getBoolean("ranks." + rank + ".leader", false); }
     public boolean isRankDefault(String rank) { return config.getBoolean("ranks." + rank + ".default", false); }
@@ -153,6 +154,11 @@ public class GuildConfig extends Config {
 
     public void setLeader(String leader) {
         config.set("leader", leader);
+        saveFile();
+    }
+
+    public void setBalance(Double balance) {
+        config.set("balance", balance);
         saveFile();
     }
 
