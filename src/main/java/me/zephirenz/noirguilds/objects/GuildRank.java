@@ -22,7 +22,7 @@ public class GuildRank {
         if(perms != null) {
             this.perms = perms;
         }else{
-            this.perms = new HashMap<RankPerm, Boolean>();
+            this.perms = new HashMap<RankPerm, Boolean>(RankPerm.defaults);
         }
     }
 
@@ -39,11 +39,10 @@ public class GuildRank {
     }
 
     public Boolean hasPerm(RankPerm perm) {
-        if(perms.containsKey(perm)) {
-            return perms.get(perm);
-        }else{
+        if(!perms.containsKey(perm)) {
             return false;
         }
+        return perms.get(perm);
     }
 
     public ChatColor getColour() {
