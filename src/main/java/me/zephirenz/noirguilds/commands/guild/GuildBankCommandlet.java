@@ -42,7 +42,7 @@ public class GuildBankCommandlet {
 
         Guild guild;
         if(args.length > 0 && sender.hasPermission(Perms.BANK_OTHER)) {
-            guild = gHandler.getGuild(args[0]);
+            guild = gHandler.getGuildByName(args[0]);
             if(guild == null) {
                 plugin.sendMessage(sender, GUILD_NOT_EXISTS);
                 return;

@@ -68,7 +68,7 @@ public class GuildPayCommandlet {
             return;
         }
 
-        Guild toGuild = gHandler.getGuild(args[0]);
+        Guild toGuild = gHandler.getGuildByName(args[0]);
         if(toGuild == null) {
             plugin.sendMessage(sender, GUILD_NOT_EXISTS);
             return;
