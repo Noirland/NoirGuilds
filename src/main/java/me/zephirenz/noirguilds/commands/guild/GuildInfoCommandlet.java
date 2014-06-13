@@ -4,6 +4,8 @@ import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
+import nz.co.noirland.bankofnoir.BankOfNoir;
+import nz.co.noirland.bankofnoir.EcoManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -72,6 +74,11 @@ public class GuildInfoCommandlet {
 
         sender.sendMessage(titleString);
         sender.sendMessage(ChatColor.BLUE + "Leader: " + ChatColor.WHITE + guild.getLeader());
+        if(plugin.getBankManager().isEnabled()) {
+            EcoManager eco = BankOfNoir.getEco();
+            String bal = eco.format(guild.getBalance());
+            sender.sendMessage(ChatColor.BLUE + "Bank: " + ChatColor.WHITE + bal);
+        }
         sender.sendMessage(membersString.toString());
         sender.sendMessage(ChatColor.RED + StringUtils.repeat("=", ChatColor.stripColor(titleString).length()-3));
     }
