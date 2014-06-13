@@ -132,7 +132,7 @@ public class BankManager implements Listener {
             BankOfNoir.sendMessage(player, String.format(action, eco.format(Math.abs(newBalance - balance))));
 
             OfflinePlayer pOwner = Util.player(owner.getLeader());
-            if(!pOwner.equals(player) && pOwner.hasPlayedBefore() && pOwner.isOnline()) {
+            if(!pOwner.equals(player) && pOwner.isOnline()) {
                 BankOfNoir.sendMessage(pOwner.getPlayer(), String.format(action, eco.format(Math.abs(newBalance - balance))));
             }
         }
