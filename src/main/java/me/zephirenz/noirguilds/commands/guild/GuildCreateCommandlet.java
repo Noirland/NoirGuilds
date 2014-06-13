@@ -72,11 +72,11 @@ public class GuildCreateCommandlet {
         }
 
         for(Guild g : gHandler.getGuilds()) {
-            if(g.getName().equalsIgnoreCase(name)) {
+            if(g.getName().equalsIgnoreCase(name) || g.getTag().equalsIgnoreCase(name)) {
                 plugin.sendMessage(sender, GUILD_EXISTS);
                 return;
             }
-            if(g.getTag().equalsIgnoreCase(tag)) {
+            if(g.getTag().equalsIgnoreCase(tag) || g.getName().equals(tag)) {
                 plugin.sendMessage(sender, TAG_EXISTS);
                 return;
             }
