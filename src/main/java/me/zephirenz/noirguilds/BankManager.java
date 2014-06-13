@@ -6,7 +6,6 @@ import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildBankInventory;
 import nz.co.noirland.bankofnoir.BankOfNoir;
 import nz.co.noirland.bankofnoir.EcoManager;
-import nz.co.noirland.bankofnoir.MoneyDenomination;
 import nz.co.noirland.zephcore.UpdateInventoryTask;
 import nz.co.noirland.zephcore.Util;
 import org.bukkit.ChatColor;
@@ -76,30 +75,17 @@ public class BankManager implements Listener {
     public GuildBankInventory createBank(Guild guild) {
         Inventory bank = BankOfNoir.inst().getServer().createInventory(null, EcoManager.BANK_SIZE, "Bank: " + ChatColor.GOLD + guild.getName());
 
-        Double remainder = setBankContents(bank, guild.getBalance());
+        Double remainder = eco.setBankContents(bank, guild.getBalance());
 
         return new GuildBankInventory(guild, bank, remainder);
     }
 
-    /**
-     * @return Remainder + overflow after inventory is loaded
-     */
-    private Double setBankContents(Inventory bank, Double balance) {
-        bank.clear();
-
-        HashMap<Integer, ItemStack> leftover = bank.addItem(eco.balanceToItems(balance));
-
-        double remainder = 0.0;
-        if(!leftover.isEmpty()) {
-            for(ItemStack item : leftover.values()) {
-                if(item == null) continue;
-                if(!eco.isDenomination(item.getType())) continue;
-                MoneyDenomination denom = eco.getDenomination(item.getType());
-                remainder += item.getAmount() * denom.getValue();
-            }
-        }
-        remainder += eco.getRemainder(balance);
-        return remainder;
+    public void updateBalance(Guild guild, double balance) {
+        Double diff = balance - guild.getBalance();
+        if(!openBanks.containsKey(guild)) return;
+        GuildBankInventory bank = openBanks.get(guild);
+        Double bankBal = eco.itemsToBalance(bank.getBank().getContents()) + bank.getRemainder();
+        bank.setRemainder(eco.setBankContents(bank.getBank(), bankBal + diff));
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
