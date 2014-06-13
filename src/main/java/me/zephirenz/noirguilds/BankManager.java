@@ -18,7 +18,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -143,7 +142,7 @@ public class BankManager implements Listener {
 
         Inventory inv = event.getInventory();
         GuildBankInventory bank = getOpenBank(inv);
-        if(inv.getType() != InventoryType.CHEST || bank == null) {
+        if(bank == null) {
             return;
         }
 
