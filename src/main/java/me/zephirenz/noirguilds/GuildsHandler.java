@@ -85,9 +85,18 @@ public class GuildsHandler {
 
     }
 
-    public Guild getGuild(String name) {
+    public Guild getGuildByName(String name) {
         for(Guild guild : guilds) {
             if(guild.getName().equalsIgnoreCase(name)) {
+                return guild;
+            }
+        }
+        return null;
+    }
+
+    public Guild getGuildByTag(String tag) {
+        for(Guild guild : guilds) {
+            if(guild.getTag().equalsIgnoreCase(tag)) {
                 return guild;
             }
         }

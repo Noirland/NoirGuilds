@@ -33,7 +33,7 @@ public class GuildDisbandCommandlet {
         Guild guild;
         if(args.length == 1 && sender.hasPermission(Perms.DISBAND_OTHER)) {
             name = args[0];
-            guild = gHandler.getGuild(name);
+            guild = gHandler.getGuildByName(name);
         }else{
             if(sender instanceof Player) {
                 GuildMember gMember = gHandler.getGuildMember(sender.getName());

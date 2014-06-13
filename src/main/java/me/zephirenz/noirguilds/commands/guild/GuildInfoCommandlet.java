@@ -35,13 +35,11 @@ public class GuildInfoCommandlet {
         if(args.length >= 1) {
             String gName = args[0];
 
-            for(Guild g : gHandler.getGuilds()) {
-                if(g.getTag().equalsIgnoreCase(gName) || g.getName().equalsIgnoreCase(gName)) {
-                    guild = g;
-                    break;
-                }
-
+            guild = gHandler.getGuildByName(gName);
+            if(guild == null) {
+                guild = gHandler.getGuildByTag(gName);
             }
+
             if(guild == null) {
                 plugin.sendMessage(sender, GUILD_NOT_EXISTS);
                 return;
