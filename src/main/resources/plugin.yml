@@ -44,3 +44,6 @@ permissions:
     noirguilds.reload:
         description: Reload plugin and config files
         default: op
+    noirguilds.bank.other:
+        description: Ability to see and edit other banks
+        default: op

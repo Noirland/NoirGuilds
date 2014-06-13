@@ -20,6 +20,7 @@ public class Strings {
     public static final String BAD_TAG_CHARS = "Tags must only contain letters, numbers, periods, dashes, and underscores.";
     public static final String PLAYER_NOT_ONLINE = "Player does not exist or is not online.";
     public static final String NO_COMMAND = "Command not found.";
+    public static final String BANKS_NOT_ENABLED = "Guild Banks are not enabled.";
 
     public static final String RANK_CREATE_NO_GUILD = "You must be in a guild to create ranks.";
     public static final String RANK_CREATE_NOT_LEADER = "Only guild leaders can create ranks.";
@@ -58,6 +59,20 @@ public class Strings {
     public static final String GUILD_ACCEPT_JOINED = "%s" + ChatColor.RESET + " has joined the guild!";
 
     public static final String GUILD_DENY_DENIED = "Your invite to %s has been denied.";
+
+    public static final String GUILD_BANK_NO_GUILD = "You must be in a guild to see its Bank.";
+    public static final String GUILD_BANK_DEPOSITED = "Deposited %s into guild bank.";
+    public static final String GUILD_BANK_WITHDREW = "Withdrew %s from guild bank.";
+
+    public static final String GUILD_PAY_NO_GUILD = "You must be in a guild to pay another guild.";
+    public static final String GUILD_PAY_NO_PERMS = "You don't have permission to pay another guild.";
+    public static final String GUILD_PAY_WRONG_ARGS = "You must specify a guild's name and amount to pay.";
+    public static final String GUILD_PAY_SUCCESSFUL = "Sent %s to %s.";
+    public static final String GUILD_PAY_RECIEVED = "Recieved %s from %s.";
+    public static final String GUILD_PAY_INSUFFICIENT_BALANCE = "Your guild doesn't have enough money, you need %s.";
+    public static final String GUILD_PAY_SELF = "You can't pay your own guild!";
+    public static final String GUILD_PAY_NEGATIVE_AMOUNT = "You cannot 'pay' a guild a negative amount!";
+    public static final String GUILD_PAY_ZERO_AMOUNT = "You cannot 'pay' a guild a zero amount!";
 
     public static final String GUILD_CREATE_WRONG_ARGS = "You must specify a guild name and guild tag (of up to 4 characters).";
     public static final String GUILD_CREATE_CONSOLE_LEADER = "Console must specify a leader";

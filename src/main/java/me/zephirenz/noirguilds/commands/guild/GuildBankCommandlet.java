@@ -4,7 +4,6 @@ import me.zephirenz.noirguilds.BankManager;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
-import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
@@ -53,10 +52,6 @@ public class GuildBankCommandlet {
             GuildMember member = gHandler.getGuildMember(player);
             if(member == null) {
                 plugin.sendMessage(sender, GUILD_BANK_NO_GUILD);
-                return;
-            }
-            if(!gHandler.hasPerm(member, RankPerm.BANK_VIEW)) {
-                plugin.sendMessage(sender, GUILD_BANK_NO_PERMS);
                 return;
             }
             guild = member.getGuild();

@@ -10,5 +10,7 @@ public enum GuildCommandlet {
     disband,
     accept,
     deny,
-    motd
+    motd,
+    bank,
+    pay
 }
