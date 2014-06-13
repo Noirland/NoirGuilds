@@ -2,8 +2,10 @@ package me.zephirenz.noirguilds;
 
 import me.zephirenz.noirguilds.database.DatabaseManager;
 import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
+import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildBankInventory;
+import me.zephirenz.noirguilds.objects.GuildMember;
 import nz.co.noirland.bankofnoir.BankOfNoir;
 import nz.co.noirland.bankofnoir.EcoManager;
 import nz.co.noirland.zephcore.UpdateInventoryTask;
@@ -14,8 +16,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -27,6 +30,7 @@ public class BankManager implements Listener {
 
     private EcoManager eco;
     private DatabaseManager dbManager;
+    private GuildsHandler gHandler;
 
     private final Map<Guild, GuildBankInventory> openBanks = new HashMap<Guild, GuildBankInventory>();
 
@@ -38,6 +42,7 @@ public class BankManager implements Listener {
             return;
         }
         this.dbManager = DatabaseManagerFactory.getDatabaseManager();
+        this.gHandler = NoirGuilds.inst().getGuildsHandler();
         this.eco = BankOfNoir.getEco();
     }
 
@@ -57,14 +62,12 @@ public class BankManager implements Listener {
     }
 
     public GuildBankInventory getOpenBank(Inventory inv) {
-        GuildBankInventory bank = null;
-        for(Map.Entry<Guild, GuildBankInventory> entry : openBanks.entrySet()) {
-            if(entry.getValue().getBank().equals(inv)) {
-                bank = entry.getValue();
-                break;
+        for(GuildBankInventory entry : openBanks.values()) {
+            if(entry.getBank().equals(inv)) {
+                return entry;
             }
         }
-        return bank;
+        return null;
     }
 
     public void removeOpenBank(GuildBankInventory bank) {
@@ -136,8 +139,60 @@ public class BankManager implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onMoveItem(InventoryMoveItemEvent event) {
-        NoirGuilds.debug().debug("Moved!");
+    public void onPickupItem(InventoryClickEvent event) {
+
+        Inventory inv = event.getInventory();
+        GuildBankInventory bank = getOpenBank(inv);
+        if(inv.getType() != InventoryType.CHEST || bank == null) {
+            return;
+        }
+
+        boolean topClicked = event.getView().convertSlot(event.getRawSlot()) == event.getRawSlot();
+
+        switch(event.getAction()) {
+            case PICKUP_ALL:
+            case PICKUP_SOME:
+            case PICKUP_HALF:
+            case PICKUP_ONE:
+            case SWAP_WITH_CURSOR:
+            case DROP_ALL_SLOT:
+            case DROP_ONE_SLOT:
+            case HOTBAR_MOVE_AND_READD:
+            case HOTBAR_SWAP:
+            case MOVE_TO_OTHER_INVENTORY:
+            case CLONE_STACK:
+            if(!topClicked) return; // Doesn't take things from bank
+            break;
+
+            case COLLECT_TO_CURSOR:
+            case UNKNOWN:
+            break;
+
+            case NOTHING:
+            case DROP_ALL_CURSOR:
+            case DROP_ONE_CURSOR:
+            case PLACE_ALL:
+            case PLACE_SOME:
+            case PLACE_ONE:
+                return; //Ignore these, as they won't take things from the bank
+        }
+
+        boolean enabled;
+        GuildMember member = gHandler.getGuildMember(event.getWhoClicked().getName());
+        if((member != null && member.getGuild() != null && member.getGuild().equals(bank.getOwner()))) {
+            // If member is part of guild's bank, check if they have withdraw perms
+            enabled = gHandler.hasPerm(member, RankPerm.BANK_WITHDRAW);
+        }else{
+            // Otherwise, check if they have override perms
+            enabled = event.getWhoClicked().hasPermission(Perms.BANK_OTHER);
+        }
+
+        if(enabled) return;
+
+        // Player doesn't have permission to move item, cancel it.
+        Player player = (Player) event.getWhoClicked();
+        event.setCancelled(true);
+        new UpdateInventoryTask(player);
     }
 
 }
