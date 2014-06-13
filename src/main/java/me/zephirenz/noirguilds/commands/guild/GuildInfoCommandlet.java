@@ -4,8 +4,8 @@ import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
-import nz.co.noirland.bankofnoir.BankOfNoir;
 import nz.co.noirland.bankofnoir.EcoManager;
+import nz.co.noirland.zephcore.Util;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -32,7 +32,7 @@ public class GuildInfoCommandlet {
      */
     public void run(CommandSender sender, String[] args) {
 
-        Guild guild = null;
+        Guild guild;
 
         if(args.length >= 1) {
             String gName = args[0];
@@ -64,7 +64,7 @@ public class GuildInfoCommandlet {
 
         String delim = ChatColor.RESET.toString();
         for(GuildMember member : guild.getMembers()) {
-            String memberString = (plugin.getServer().getOfflinePlayer(member.getPlayer()).isOnline() ? ChatColor.GREEN : "") + member.getPlayer();
+            String memberString = (Util.player(member.getPlayer()).isOnline() ? ChatColor.GREEN : "") + member.getPlayer();
             membersString.append(delim).append(memberString);
             delim = ChatColor.WHITE + ", ";
         }
@@ -75,7 +75,7 @@ public class GuildInfoCommandlet {
         sender.sendMessage(titleString);
         sender.sendMessage(ChatColor.BLUE + "Leader: " + ChatColor.WHITE + guild.getLeader());
         if(plugin.getBankManager().isEnabled()) {
-            EcoManager eco = BankOfNoir.getEco();
+            EcoManager eco = EcoManager.inst();
             String bal = eco.format(guild.getBalance());
             sender.sendMessage(ChatColor.BLUE + "Bank: " + ChatColor.WHITE + bal);
         }

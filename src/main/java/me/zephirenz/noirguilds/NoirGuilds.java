@@ -14,7 +14,7 @@ public class NoirGuilds extends JavaPlugin {
 
     private static NoirGuilds inst;
     private GuildsHandler guildsHandler;
-    private BankManager bankManager;
+    private GuildBankManager bankManager;
     private DatabaseManager dbManager;
     private static Debug debug;
 
@@ -24,7 +24,7 @@ public class NoirGuilds extends JavaPlugin {
         debug = new Debug(this);
         this.dbManager = DatabaseManagerFactory.getDatabaseManager();
         guildsHandler = new GuildsHandler();
-        bankManager = new BankManager();
+        bankManager = new GuildBankManager();
         addCommands();
         getServer().getPluginManager().registerEvents(new PlayerChatListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -47,7 +47,7 @@ public class NoirGuilds extends JavaPlugin {
         return guildsHandler;
     }
 
-    public BankManager getBankManager() {
+    public GuildBankManager getBankManager() {
         return bankManager;
     }
 

@@ -1,6 +1,6 @@
 package me.zephirenz.noirguilds.commands.guild;
 
-import me.zephirenz.noirguilds.BankManager;
+import me.zephirenz.noirguilds.GuildBankManager;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
@@ -15,7 +15,7 @@ public class GuildBankCommandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
-    private final BankManager bManager;
+    private final GuildBankManager bManager;
 
     public GuildBankCommandlet() {
         this.plugin = NoirGuilds.inst();
