@@ -5,6 +5,8 @@ import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.objects.InviteData;
 import me.zephirenz.noirguilds.tasks.GuildInviteTask;
+import nz.co.noirland.zephcore.Util;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -53,9 +55,9 @@ public class GuildDenyCommandlet {
         inviteTask.cancel();
         gHandler.removeInvite(inviteTask);
 
-        Player pSender = plugin.getServer().getPlayer(data.getSender());
-        if(pSender != null) {
-            plugin.sendMessage(pSender, String.format(Strings.GUILD_DENY_DENIED, data.getInvitee()));
+        OfflinePlayer pSender = Util.player(data.getSender());
+        if(pSender.isOnline()) {
+            plugin.sendMessage(pSender.getPlayer(), String.format(Strings.GUILD_DENY_DENIED, data.getInvitee()));
         }
         plugin.sendMessage(sender, String.format(Strings.GUILD_DENY_DENIED, data.getGuild().getName()));
 

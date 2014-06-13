@@ -7,7 +7,8 @@ import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import me.zephirenz.noirguilds.tasks.GuildInviteTask;
-import org.bukkit.entity.Player;
+import nz.co.noirland.zephcore.Util;
+import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
 
@@ -71,9 +72,9 @@ public class GuildsHandler {
         for(GuildMember member : rank.getGuild().getMembers()) {
             if(member.getRank() == rank){
                 member.setRank(rank.getGuild().getDefaultRank());
-                Player p = plugin.getServer().getPlayer(member.getPlayer());
-                if(p != null) {
-                    plugin.sendMessage(p, String.format(Strings.RANK_DELETE_RANK_DELETED, member.getRank().getColour() + member.getRank().getName()));
+                OfflinePlayer p = Util.player(member.getPlayer());
+                if(p.isOnline()) {
+                    plugin.sendMessage(p.getPlayer(), String.format(Strings.RANK_DELETE_RANK_DELETED, member.getRank().getColour() + member.getRank().getName()));
                 }
             }
         }
@@ -115,22 +116,22 @@ public class GuildsHandler {
     }
 
     public void sendMessageToGuild(Guild guild, String msg) {
-        for(GuildMember gPlayer : guild.getMembers()) {
-            Player player = plugin.getServer().getPlayer(gPlayer.getPlayer());
-            if(player != null) {
-                player.sendMessage(msg);
+        for(GuildMember member : guild.getMembers()) {
+            OfflinePlayer player = Util.player(member.getPlayer());
+            if(player.isOnline()) {
+                player.getPlayer().sendMessage(msg);
             }
         }
     }
 
     public void sendMessageToRank(Guild guild, GuildRank rank, String msg) {
-        for(GuildMember gPlayer : guild.getMembers()) {
-            if(!(gPlayer.getRank().equals(rank))) {
+        for(GuildMember member : guild.getMembers()) {
+            if(!(member.getRank().equals(rank))) {
                 return;
             }
-            Player player = plugin.getServer().getPlayer(gPlayer.getPlayer());
-            if(player != null) {
-                player.sendMessage(msg);
+            OfflinePlayer player = Util.player(member.getPlayer());
+            if(player.isOnline()) {
+                player.getPlayer().sendMessage(msg);
             }
         }
     }

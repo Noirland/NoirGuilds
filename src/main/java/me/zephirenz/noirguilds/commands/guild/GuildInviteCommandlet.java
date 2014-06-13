@@ -7,6 +7,7 @@ import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.InviteData;
 import me.zephirenz.noirguilds.tasks.GuildInviteTask;
+import nz.co.noirland.zephcore.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -45,7 +46,7 @@ public class GuildInviteCommandlet {
         String invitee = args[0];
         GuildMember inviterMember = gHandler.getGuildMember(inviter);
         GuildMember inviteeMember = gHandler.getGuildMember(invitee);
-        if(plugin.getServer().getPlayer(invitee) == null) {
+        if(!Util.player(invitee).isOnline()) {
             plugin.sendMessage(sender, PLAYER_NOT_ONLINE);
             return;
         }

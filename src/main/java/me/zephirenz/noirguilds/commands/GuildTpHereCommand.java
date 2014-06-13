@@ -5,6 +5,7 @@ import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
+import nz.co.noirland.zephcore.Util;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,7 +34,7 @@ public class GuildTpHereCommand implements CommandExecutor {
         }
         String tele = args[0];
         GuildMember mTele = gHandler.getGuildMember(tele);
-        Player pTele = plugin.getServer().getPlayer(tele);
+        Player pTele = Util.player(tele).getPlayer();
         if(pTele == null) {
             plugin.sendMessage(sender, PLAYER_NOT_ONLINE);
             return true;
