@@ -11,7 +11,9 @@ public enum RankPerm {
     ADMINCHAT("adminchat"),
     TP("tp"),
     TPHERE("tphere"),
-    HQ("hq");
+    HQ("hq"),
+    BANK_WITHDRAW("withdraw"),
+    PAY("pay");
 
     public static final Map<RankPerm, Boolean> defaults = new ImmutableMap.Builder<RankPerm, Boolean>()
         .put(INVITE, false)
@@ -20,6 +22,7 @@ public enum RankPerm {
         .put(TP, false)
         .put(TPHERE, false)
         .put(HQ, false)
+        .put(BANK_WITHDRAW, false)
         .put(PAY, false)
         .build();
 

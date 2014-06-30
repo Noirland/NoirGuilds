@@ -63,6 +63,13 @@ public class GuildCommand implements CommandExecutor {
                 break;
             case motd:
                 new GuildMOTDCommandlet().run(sender, cmdletArgs);
+                break;
+            case bank:
+                new GuildBankCommandlet().run(sender, cmdletArgs);
+                break;
+            case pay:
+                new GuildPayCommandlet().run(sender, cmdletArgs);
+                break;
             default:
                 //helpCommandlet(sender, cmdletArgs, null);
                 break;

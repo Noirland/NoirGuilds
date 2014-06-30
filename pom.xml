@@ -27,8 +27,13 @@
         </dependency>
         <dependency>
             <groupId>nz.co.noirland</groupId>
+            <artifactId>bankofnoir</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>nz.co.noirland</groupId>
             <artifactId>zephcore</artifactId>
-            <version>1.8</version>
+            <version>LATEST</version>
         </dependency>
     </dependencies>
 
