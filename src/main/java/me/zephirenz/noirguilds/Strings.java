@@ -135,4 +135,8 @@ public class Strings {
     public static final String HQ_NO_HQ = "No HQ set for guild.";
     public static final String HQ_TELEPORTING = ChatColor.GOLD + "Teleporting to HQ...";
     public static final String HQ_SET = "Your guild's HQ has been set here.";
+
+    public static final String FLAG_PVP_GUILD_TAKEN = ChatColor.GOLD + "%s" + ChatColor.RESET +" was taken from your guild.";
+    public static final String FLAG_PVP_PLAYER_TAKEN = ChatColor.GOLD + "%s" + ChatColor.RESET +" was taken from your guild.";
+    public static final String FLAG_PVP_WON = ChatColor.GOLD + "%s" + ChatColor.RESET +" was given to your guild for winning.";
 }
