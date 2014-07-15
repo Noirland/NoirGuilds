@@ -1,7 +1,7 @@
 package me.zephirenz.noirguilds;
 
-import me.zephirenz.noirguilds.database.DatabaseManager;
-import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
+import me.zephirenz.noirguilds.databaseold.DatabaseManager;
+import me.zephirenz.noirguilds.databaseold.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;

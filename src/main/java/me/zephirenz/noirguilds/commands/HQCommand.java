@@ -2,8 +2,8 @@ package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.database.DatabaseManager;
-import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
+import me.zephirenz.noirguilds.databaseold.DatabaseManager;
+import me.zephirenz.noirguilds.databaseold.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;

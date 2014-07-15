@@ -1,8 +1,9 @@
 package me.zephirenz.noirguilds;
 
 import me.zephirenz.noirguilds.commands.*;
-import me.zephirenz.noirguilds.database.DatabaseManager;
-import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
+import me.zephirenz.noirguilds.databaseold.DatabaseManager;
+import me.zephirenz.noirguilds.databaseold.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.listeners.PlayerChatListener;
 import me.zephirenz.noirguilds.listeners.PlayerJoinListener;
 import nz.co.noirland.zephcore.Debug;
@@ -23,6 +24,7 @@ public class NoirGuilds extends JavaPlugin {
         inst = this;
         debug = new Debug(this);
         this.dbManager = DatabaseManagerFactory.getDatabaseManager();
+        GuildsDatabase.inst().checkSchema();
         guildsHandler = new GuildsHandler();
         bankManager = new GuildBankManager();
         try {

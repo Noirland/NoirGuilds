@@ -1,4 +1,4 @@
-package me.zephirenz.noirguilds.database;
+package me.zephirenz.noirguilds.databaseold;
 
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;

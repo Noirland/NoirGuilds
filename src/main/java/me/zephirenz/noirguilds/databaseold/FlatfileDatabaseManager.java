@@ -1,4 +1,4 @@
-package me.zephirenz.noirguilds.database;
+package me.zephirenz.noirguilds.databaseold;
 
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.config.GuildConfig;
