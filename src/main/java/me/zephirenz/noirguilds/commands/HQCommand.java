@@ -2,8 +2,6 @@ package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.databaseold.DatabaseManager;
-import me.zephirenz.noirguilds.databaseold.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -20,22 +18,19 @@ public class HQCommand implements CommandExecutor {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
-    private final DatabaseManager dbManager;
 
     public HQCommand() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
     }
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);
             return true;
         }
 
-        GuildMember gMember = gHandler.getGuildMember(sender.getName());
+        GuildMember gMember = gHandler.getMember(sender.getName());
         if (gMember == null) {
             plugin.sendMessage(sender, HQ_NO_GUILD);
             return true;
@@ -56,7 +51,8 @@ public class HQCommand implements CommandExecutor {
                 plugin.sendMessage(sender, HQ_NOT_LEADER);
                 return true;
             }
-            createHq(guild, (Player) sender);
+            setHQ(guild, ((Player) sender).getLocation());
+            plugin.sendMessage(sender, HQ_SET);
             return true;
         }
 
@@ -67,7 +63,7 @@ public class HQCommand implements CommandExecutor {
     }
 
     private void teleport(Guild guild, Player player) {
-        Location loc = dbManager.getHq(guild);
+        Location loc = guild.getHQ();
         if(loc == null) {
             plugin.sendMessage(player, HQ_NO_HQ);
             return;
@@ -76,11 +72,9 @@ public class HQCommand implements CommandExecutor {
         plugin.sendMessage(player, HQ_TELEPORTING);
     }
 
-    private void createHq(Guild guild, Player player) {
-
-        dbManager.setHq(guild, player.getLocation());
-        plugin.sendMessage(player, HQ_SET);
-
+    private void setHQ(Guild guild, Location loc) {
+        guild.setHQ(loc);
+        guild.updateDB();
     }
 
 

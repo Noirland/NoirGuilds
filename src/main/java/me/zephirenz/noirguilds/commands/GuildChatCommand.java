@@ -11,8 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static me.zephirenz.noirguilds.Strings.GUILD_CHAT_NO_GUILD;
-import static me.zephirenz.noirguilds.Strings.NO_CONSOLE;
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildChatCommand implements CommandExecutor {
 
@@ -30,19 +29,18 @@ public class GuildChatCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        GuildMember gPlayer = gHandler.getGuildMember(player.getUniqueId());
-        if(gPlayer == null || gPlayer.getGuild() == null || gPlayer.getRank() == null) {
+        GuildMember member = gHandler.getMember(player);
+        if(member == null) {
             plugin.sendMessage(sender, GUILD_CHAT_NO_GUILD);
             return false;
         }
 
-        GuildRank rank = gPlayer.getRank();
-        String prefix = ChatColor.RED + "[G]" + ChatColor.GRAY + " [" + rank.getColour() + rank.getName() + ChatColor.GRAY + "] "
-                            + ChatColor.RESET + player.getName() + ChatColor.RED + ":" + ChatColor.RESET;
+        GuildRank rank = member.getRank();
+        String prefix = String.format(GUILD_CHAT_FORMAT, rank.getColour(), rank.getName(), player.getName());
         String msg = prefix + GuildsUtil.arrayToString(args, 0, args.length - 1, " ");
         msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
         if(!(msg.length() == prefix.length())) {
-            gPlayer.getGuild().sendMessage(msg);
+            member.getGuild().sendMessage(msg);
             return true;
         }
 

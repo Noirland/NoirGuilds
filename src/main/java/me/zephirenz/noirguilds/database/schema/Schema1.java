@@ -32,6 +32,7 @@ public class Schema1 implements Schema {
                 "`name` VARCHAR(255), " +
                 "`balance` DOUBLE UNSIGNED, " +
                 "`motd` TEXT, " +
+                "`hq` TEXT, " +
                 "`kills` INT UNSIGNED, " +
                 "`deaths` INT UNSIGNED, " +
                 " PRIMARY KEY (`id`)" +

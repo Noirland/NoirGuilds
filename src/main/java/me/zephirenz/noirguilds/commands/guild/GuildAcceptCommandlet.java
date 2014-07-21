@@ -4,6 +4,7 @@ import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.config.PluginConfig;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
@@ -29,12 +30,10 @@ public class GuildAcceptCommandlet {
     /**
      *  The commandlet for accepting invites.
      *  Usage: /guild accept
+     *   @param sender the sender of the command
      *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
-    public void run(CommandSender sender, String[] args) {
-
+    public void run(CommandSender sender) {
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);
             return;
@@ -43,7 +42,7 @@ public class GuildAcceptCommandlet {
         GuildInviteTask inviteTask = null;
         for(GuildInviteTask task : gHandler.getInvites()) {
             InviteData id = task.getData();
-            if(id.getInvitee().equalsIgnoreCase(sender.getName())) {
+            if(id.getInvitee().equals(((Player) sender).getUniqueId())) {
                 data = id;
                 inviteTask = task;
             }
@@ -64,12 +63,10 @@ public class GuildAcceptCommandlet {
 
         Guild guild = data.getGuild();
         GuildRank rank = guild.getDefaultRank();
-        GuildMember gMember = new GuildMember(data.getInvitee(), guild, rank, kills, deaths);
-        guild.addMember(gMember);
-        gHandler.addMember(gMember);
+        GuildMember member = new GuildMember(data.getInvitee(), rank, 0, 0);
+        GuildsDatabase.inst().addMember(member);
 
-        guild.sendMessage(String.format(Strings.GUILD_ACCEPT_JOINED, rank.getColour() + data.getInvitee()));
-
+        guild.sendMessage(String.format(Strings.GUILD_ACCEPT_JOINED, rank.getColour() + sender.getName()));
     }
 
 }

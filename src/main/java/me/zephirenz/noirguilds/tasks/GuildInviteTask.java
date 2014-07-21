@@ -4,10 +4,11 @@ import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.objects.InviteData;
 import nz.co.noirland.zephcore.Util;
-import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildInviteTask extends BukkitRunnable {
 
@@ -22,12 +23,12 @@ public class GuildInviteTask extends BukkitRunnable {
 
         Player sender = Util.player(data.getSender()).getPlayer();
         Player invitee = Util.player(data.getInvitee()).getPlayer();
-        plugin.sendMessage(invitee, "You have been invited to join " + ChatColor.BLUE + data.getGuild().getName() + ChatColor.RESET + " by " + data.getSender());
-        plugin.sendMessage(invitee, "To accept the invitation, do " + ChatColor.DARK_GRAY + "/guild accept");
-        plugin.sendMessage(sender, "Your invitation has been sent.");
+        plugin.sendMessage(invitee, String.format(GUILD_INVITE_INVITED, data.getGuild().getName(), Util.player(data.getSender()).getName()));
+        plugin.sendMessage(invitee, GUILD_INVITE_CMD_HELP);
+        plugin.sendMessage(sender, GUILD_INVITE_SENT);
 
         gHandler.addInvite(this);
-
+        runTaskLater(plugin, 60 * 20);
     }
 
     public InviteData getData() {
@@ -35,7 +36,6 @@ public class GuildInviteTask extends BukkitRunnable {
     }
 
     public void run() {
-
         OfflinePlayer sender = Util.player(data.getSender());
         OfflinePlayer invitee = Util.player(data.getInvitee());
         if(!invitee.isOnline()) {
@@ -44,9 +44,9 @@ public class GuildInviteTask extends BukkitRunnable {
         if(gHandler.getInvites().contains(this)) {
             gHandler.removeInvite(this);
             if(sender.isOnline()) {
-                plugin.sendMessage(sender.getPlayer(), "Your invite to " + data.getInvitee() + " has expired.");
+                plugin.sendMessage(sender.getPlayer(), String.format(GUILD_INVITE_EXPIRED, Util.player(data.getInvitee()).getName()));
             }
-            plugin.sendMessage(invitee.getPlayer(), "You invite to " + data.getGuild().getName() + " has expired.");
+            plugin.sendMessage(invitee.getPlayer(), String.format(GUILD_INVITE_EXPIRED, data.getGuild().getName()));
         }
     }
 

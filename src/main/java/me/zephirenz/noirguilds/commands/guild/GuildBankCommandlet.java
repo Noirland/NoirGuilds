@@ -48,8 +48,7 @@ public class GuildBankCommandlet {
                 return;
             }
         } else {
-            String player = sender.getName();
-            GuildMember member = gHandler.getGuildMember(player);
+            GuildMember member = gHandler.getMember((Player) sender);
             if(member == null) {
                 plugin.sendMessage(sender, GUILD_BANK_NO_GUILD);
                 return;

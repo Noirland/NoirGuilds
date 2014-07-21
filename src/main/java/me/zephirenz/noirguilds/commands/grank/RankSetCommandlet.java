@@ -3,11 +3,10 @@ package me.zephirenz.noirguilds.commands.grank;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Strings;
-import me.zephirenz.noirguilds.databaseold.DatabaseManager;
-import me.zephirenz.noirguilds.databaseold.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
+import nz.co.noirland.zephcore.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -17,12 +16,10 @@ public class RankSetCommandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
-    private final DatabaseManager dbManager;
 
     public RankSetCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
     }
 
 
@@ -34,7 +31,6 @@ public class RankSetCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
-
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);
             return;
@@ -48,8 +44,8 @@ public class RankSetCommandlet {
         String promote = args[0];
         String rankName = args[1];
 
-        GuildMember mSender = gHandler.getGuildMember(sender.getName());
-        GuildMember mPromote = gHandler.getGuildMember(promote);
+        GuildMember mSender = gHandler.getMember((Player) sender);
+        GuildMember mPromote = gHandler.getMember(promote);
 
         if(mSender == null) {
             plugin.sendMessage(sender, RANK_SET_NO_GUILD);
@@ -89,9 +85,8 @@ public class RankSetCommandlet {
         }
 
         mPromote.setRank(newRank);
-        dbManager.updateMemberRank(mPromote, newRank);
-        plugin.sendMessage(sender, String.format(Strings.RANK_SET_CHANGED, mPromote.getPlayer(), newRank.getColour() + newRank.getName()));
-
+        mPromote.updateDB();
+        plugin.sendMessage(sender, String.format(Strings.RANK_SET_CHANGED, Util.player(mPromote.getPlayer()).getName(), newRank.getColour() + newRank.getName()));
     }
 
 }

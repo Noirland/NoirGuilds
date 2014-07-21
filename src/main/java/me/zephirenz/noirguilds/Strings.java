@@ -6,10 +6,10 @@ public class Strings {
 
     public static final String DEFAULT_LEADER = "Leader";
     public static final String DEFAULT_DEFAULT = "Default";
+    public static final String MESSAGE_PREFIX = ChatColor.RED + "[NoirGuilds] " + ChatColor.RESET;
 
     public static final String RANK_NOT_EXISTS = "That rank doesn't exist.";
     public static final String RANK_EXISTS = "That rank already exists.";
-    public static final String RANK_NO_PERIODS = "Rank names may not contain full stops.";
     public static final String NO_CONSOLE = "The console cannot use that command.";
     public static final String NO_INVITE = "You have no pending guild invite.";
     public static final String GUILD_AT_MAX = "The guild has the maximum number of members.";
@@ -42,7 +42,7 @@ public class Strings {
     public static final String RANK_EDIT_BAD_OPTION = "That option does not exist.";
     public static final String RANK_EDIT_NO_PERM = "%s no longer has %s permission.";
     public static final String RANK_EDIT_PERM = "%s now has %s permission.";
-    public static final String RANK_EDIT_BAD_COLOUR = "Not a valid colour code.";
+    public static final String RANK_EDIT_BAD_COLOUR = "Not a valid colour code. (see http://dft.ba/-chatcolours)";
     public static final String RANK_EDIT_SET_COLOUR = "Rank's colour now set to %s";
     public static final String RANK_EDIT_SET_NAME = "Rank's name now set to %s";
 
@@ -98,6 +98,10 @@ public class Strings {
     public static final String GUILD_INVITE_NO_GUILD = "You must be in a guild to invite players.";
     public static final String GUILD_INVITE_TARGET_IN_GUILD = "That player is already in a guild.";
     public static final String GUILD_INVITE_NO_PERMS = "You do not have permission to invite players.";
+    public static final String GUILD_INVITE_INVITED = "You have been invited to join " + ChatColor.BLUE + "%s" + ChatColor.RESET + " by %s";
+    public static final String GUILD_INVITE_CMD_HELP = "To accept the invitation, do " + ChatColor.DARK_GRAY + "/guild accept";
+    public static final String GUILD_INVITE_SENT = "Your invitation has been sent.";
+    public static final String GUILD_INVITE_EXPIRED = "Your invite to %s has expired.";
 
     public static final String GUILD_KICK_WRONG_ARGS = "You must specify a player to kick.";
     public static final String GUILD_KICK_NO_GUILD = "You must be in a guild to kick players.";
@@ -118,6 +122,9 @@ public class Strings {
     public static final String GUILD_MOTD_UPDATED = "Updated guild MOTD.";
 
     public static final String GUILD_CHAT_NO_GUILD = "You are not currently in a guild.";
+    public static final String GUILD_CHAT_NAME_FORMAT = ChatColor.GRAY + " [%s%s" + ChatColor.GRAY + "] " + ChatColor.RESET + "%s"+ ChatColor.RED + ":" + ChatColor.RESET;
+    public static final String GUILD_CHAT_FORMAT = ChatColor.RED + "[G]" + GUILD_CHAT_NAME_FORMAT;
+    public static final String GUILD_ACHAT_FORMAT = ChatColor.GREEN + "[A]" + GUILD_CHAT_NAME_FORMAT;
     public static final String GUILD_ACHAT_NO_PERMS = "You haven't got permission to use Guild Admin chat.";
 
     public static final String TP_NO_PLAYER = "Must specify a player to teleport to.";

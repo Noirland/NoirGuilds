@@ -2,7 +2,6 @@ package me.zephirenz.noirguilds.listeners;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -10,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.List;
 
 public class PlayerJoinListener implements Listener {
 
@@ -25,12 +26,11 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        GuildMember gMember = gHandler.getGuildMember(player.getName());
-        if(gMember == null) {
+        GuildMember member = gHandler.getMember(player);
+        if(member == null) {
             return;
         }
-        Guild guild = gMember.getGuild();
-        String[] motd = guild.getMotd();
+         List<String> motd = member.getGuild().getMotd();
 
         for(String line : motd) {
             line = ChatColor.translateAlternateColorCodes("&".charAt(0), line);

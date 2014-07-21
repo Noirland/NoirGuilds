@@ -3,8 +3,6 @@ package me.zephirenz.noirguilds.commands.guild;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.GuildsUtil;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.databaseold.DatabaseManager;
-import me.zephirenz.noirguilds.databaseold.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
@@ -16,12 +14,10 @@ public class GuildEditCommandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
-    private final DatabaseManager dbManager;
 
     public GuildEditCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
     }
 
 
@@ -47,7 +43,7 @@ public class GuildEditCommandlet {
         String option = args[0];
         String value = args[1];
 
-        GuildMember gMember = gHandler.getGuildMember(sender.getName());
+        GuildMember gMember = gHandler.getMember((Player) sender);
         if (gMember == null) {
             plugin.sendMessage(sender, GUILD_EDIT_NO_GUILD);
             return;
@@ -62,8 +58,7 @@ public class GuildEditCommandlet {
         if(option.equalsIgnoreCase("name")) {
             editName(sender, guild, value);
         } else if (option.equalsIgnoreCase("tag")) {
-            //editTag(sender, guild, value);
-            plugin.sendMessage(sender, GUILD_EDIT_TAGS_DISABLED);
+            editTag(sender, guild, value);
         }
     }
 
@@ -74,15 +69,15 @@ public class GuildEditCommandlet {
                 return;
             }
         }
-        dbManager.updateGuildName(guild, name);
         guild.setName(name);
+        guild.updateDB();
         plugin.sendMessage(sender, String.format(GUILD_EDIT_NAME_CHANGED, guild.getName()));
     }
 
     public void editTag(CommandSender sender, Guild guild, String tag) {
 
         if(!GuildsUtil.isValidTag(tag)) {
-            if(tag.length() <= 4) {
+            if(tag.length() > 4) {
                 plugin.sendMessage(sender, BIG_TAG);
             }
             plugin.sendMessage(sender, BAD_TAG_CHARS);
@@ -95,8 +90,8 @@ public class GuildEditCommandlet {
                 return;
             }
         }
-        dbManager.updateGuildTag(guild, tag);
         guild.setTag(tag);
+        guild.updateDB();
         plugin.sendMessage(sender, String.format(GUILD_EDIT_TAG_CHANGED, guild.getTag()));
 
     }

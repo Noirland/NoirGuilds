@@ -30,10 +30,10 @@ public class GuildAdminChatCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        GuildMember member = gHandler.getGuildMember(player.getName());
-        if(member == null || member.getGuild() == null || member.getRank() == null) {
+        GuildMember member = gHandler.getMember(player);
+        if(member == null) {
             plugin.sendMessage(sender, GUILD_CHAT_NO_GUILD);
-            return true;
+            return false;
         }
 
         GuildRank rank = member.getRank();
@@ -42,8 +42,7 @@ public class GuildAdminChatCommand implements CommandExecutor {
             return true;
         }
 
-        String prefix = ChatColor.GREEN + "[A]" + ChatColor.GRAY + " [" + rank.getColour() + rank.getName() + ChatColor.GRAY + "] "
-                + ChatColor.RESET + player.getName() + ChatColor.GRAY + ":" + ChatColor.RESET;
+        String prefix = String.format(GUILD_ACHAT_FORMAT, rank.getColour(), rank.getName(), player.getName());
         String msg = prefix + GuildsUtil.arrayToString(args, 0, args.length - 1, " ");
         msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
         if(!(msg.length() == prefix.length())) {
@@ -52,11 +51,10 @@ public class GuildAdminChatCommand implements CommandExecutor {
                 if(r.hasPerm(RankPerm.ADMINCHAT)) {
                     r.sendMessage(msg);
                 }
-
             }
+            return true;
         }
-
-        return true;
+        return false;
     }
 
 }

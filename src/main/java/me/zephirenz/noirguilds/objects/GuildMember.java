@@ -1,6 +1,8 @@
 package me.zephirenz.noirguilds.objects;
 
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.enums.RankPerm;
+import nz.co.noirland.zephcore.Util;
 
 import java.util.UUID;
 
@@ -17,6 +19,7 @@ public class GuildMember {
         this.rank = rank;
         this.kills = kills;
         this.deaths = deaths;
+        rank.getGuild().addMember(this);
     }
 
     public boolean hasPerm(RankPerm perm) {
@@ -55,11 +58,19 @@ public class GuildMember {
         this.deaths = deaths;
     }
 
+    public void updateDB() {
+        GuildsDatabase.inst().updateMember(this);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof GuildMember)) return false;
         GuildMember gPlayer = (GuildMember) obj;
         return gPlayer.getPlayer().equals(this.getPlayer());
+    }
 
+    @Override
+    public String toString() {
+        return Util.player(player).getName();
     }
 }

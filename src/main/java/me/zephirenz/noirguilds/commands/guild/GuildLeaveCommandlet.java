@@ -2,6 +2,7 @@ package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
@@ -23,17 +24,15 @@ public class GuildLeaveCommandlet {
     /**
      *  The commandlet for leaving a guild.
      *  Usage: /guild leave
+     *   @param sender the sender of the command
      *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
-    public void run(CommandSender sender, String[] args) {
-
+    public void run(CommandSender sender) {
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
-        GuildMember member = gHandler.getGuildMember(sender.getName());
+        GuildMember member = gHandler.getMember((Player) sender);
 
         if(member == null) {
             plugin.sendMessage(sender, GUILD_LEAVE_NO_GUILD);
@@ -46,7 +45,7 @@ public class GuildLeaveCommandlet {
         }
 
         guild.removeMember(member);
-        gHandler.removeGuildMember(member);
+        GuildsDatabase.inst().removeMember(member);
         guild.sendMessage(String.format(GUILD_LEAVE_GUILD_LEFT, member.getPlayer()));
         plugin.sendMessage(sender, String.format(GUILD_LEAVE_PLAYER_LEFT, guild.getName()));
 

@@ -67,8 +67,8 @@ public class FlagsHandler implements Listener {
         Player to = (Player) event.getEntity();
         Player from = (Player) event.getDamager();
 
-        GuildMember toMember = gHandler.getGuildMember(to.getName());
-        GuildMember fromMember = gHandler.getGuildMember(from.getName());
+        GuildMember toMember = gHandler.getMember(to.getName());
+        GuildMember fromMember = gHandler.getMember(from.getName());
         if(toMember == null || fromMember == null) return;
 
         if(toMember.getGuild() != fromMember.getGuild()) {
@@ -91,8 +91,8 @@ public class FlagsHandler implements Listener {
 
         if(killer == null) return;
 
-        GuildMember pMember = gHandler.getGuildMember(player.getName());
-        GuildMember kMember = gHandler.getGuildMember(killer.getName());
+        GuildMember pMember = gHandler.getMember(player.getName());
+        GuildMember kMember = gHandler.getMember(killer.getName());
 
         if(kMember == null || pMember == null) return; // Killer/Killed has no guild
 

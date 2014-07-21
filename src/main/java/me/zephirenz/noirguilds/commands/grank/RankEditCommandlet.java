@@ -2,8 +2,6 @@ package me.zephirenz.noirguilds.commands.grank;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.databaseold.DatabaseManager;
-import me.zephirenz.noirguilds.databaseold.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
@@ -17,12 +15,10 @@ public class RankEditCommandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
-    private final DatabaseManager dbManager;
 
     public RankEditCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
     }
 
 
@@ -34,9 +30,7 @@ public class RankEditCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
-
         if(!(sender instanceof Player)) {
-
             plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
@@ -49,7 +43,7 @@ public class RankEditCommandlet {
         String option = args[1];
         String value = args[2];
 
-        GuildMember mSender = gHandler.getGuildMember(sender.getName());
+        GuildMember mSender = gHandler.getMember((Player) sender);
         if(mSender == null) {
             plugin.sendMessage(sender, RANK_EDIT_NO_GUILD);
             return;
@@ -82,7 +76,6 @@ public class RankEditCommandlet {
     }
 
     private void editPerm(CommandSender sender, GuildRank rank, String permName, String value) {
-
         RankPerm perm = RankPerm.get(permName);
         if(perm == null) {
             plugin.sendMessage(sender, RANK_EDIT_BAD_OPTION);
@@ -91,7 +84,7 @@ public class RankEditCommandlet {
 
         boolean val = Boolean.valueOf(value);
         rank.setPerm(perm, val);
-        dbManager.updateRankPerm(rank, perm, val);
+        rank.updateDB();
         if(!val) {
             plugin.sendMessage(sender, String.format(RANK_EDIT_NO_PERM, rank.getName(), perm.getPerm()));
         }else{
@@ -100,7 +93,6 @@ public class RankEditCommandlet {
     }
 
     private void editColour(CommandSender sender, GuildRank rank, String value) {
-
         ChatColor colour;
         try{
             colour = ChatColor.valueOf(value);
@@ -110,25 +102,20 @@ public class RankEditCommandlet {
         }
 
         rank.setColour(colour);
-        dbManager.updateRankColour(rank, colour);
+        rank.updateDB();
         plugin.sendMessage(sender, String.format(RANK_EDIT_SET_COLOUR, colour + colour.toString()));
 
     }
     private void editName(CommandSender sender, GuildRank rank, String value) {
-
         for(GuildRank r : rank.getGuild().getRanks()) {
             if(r.getName().equalsIgnoreCase(value)) {
                 plugin.sendMessage(sender, RANK_EXISTS);
                 return;
             }
         }
-        if(value.contains(".")) {
-            plugin.sendMessage(sender, RANK_NO_PERIODS);
-            return;
-        }
 
-        dbManager.updateRankName(rank, value);
         rank.setName(value);
+        rank.updateDB();
         plugin.sendMessage(sender, RANK_EDIT_SET_NAME);
 
     }

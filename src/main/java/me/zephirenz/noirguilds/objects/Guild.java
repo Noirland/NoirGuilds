@@ -1,29 +1,32 @@
 package me.zephirenz.noirguilds.objects;
 
+import me.zephirenz.noirguilds.Strings;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import nz.co.noirland.zephcore.Util;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
 public class Guild {
 
-    final private int id;
-
-    private String name;
-    private String tag;
-
     private ArrayList<GuildRank> ranks = new ArrayList<GuildRank>();
+
     private ArrayList<GuildMember> members = new ArrayList<GuildMember>();
 
-    private String[] motd;
-
+    final private int id;
+    private String name;
+    private String tag;
+    private List<String> motd;
     private Double balance;
-
+    private Location hq;
     private int kills;
     private int deaths;
 
-    public Guild(int id, String name, String tag, double balance, int kills, int deaths, String[] motd) {
+    public Guild(int id, String name, String tag, double balance, int kills, int deaths, List<String> motd, Location hq) {
         this.id = id;
         this.name = name;
         this.tag = tag;
@@ -31,6 +34,7 @@ public class Guild {
         this.kills = kills;
         this.deaths = deaths;
         this.motd = motd;
+        this.hq = hq;
     }
 
     public void setName(String name) {
@@ -41,17 +45,43 @@ public class Guild {
         return name;
     }
 
-    public ArrayList<GuildMember> getMembers() {
-        return members;
-    }
-
     public void sendMessage(String msg) {
         for(GuildMember member : getMembers()) {
             OfflinePlayer player = Util.player(member.getPlayer());
             if(player.isOnline()) {
-                player.getPlayer().sendMessage(msg);
+                player.getPlayer().sendMessage(Strings.MESSAGE_PREFIX + msg);
             }
         }
+    }
+
+    public GuildRank getLeaderRank() {
+        for(GuildRank rank : ranks) {
+            if(rank.isLeader()) return rank;
+        }
+        return null;
+    }
+
+    public GuildRank getDefaultRank() {
+        for(GuildRank rank : ranks) {
+            if(rank.isDefault()) return rank;
+        }
+        return null;
+    }
+
+    public Collection<GuildMember> getMembersByRank(GuildRank rank) {
+        Collection<GuildMember> ret = new HashSet<GuildMember>();
+        for(GuildMember member : ret) {
+            if(member.getRank() == rank) ret.add(member);
+        }
+        return ret;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public ArrayList<GuildMember> getMembers() {
+        return members;
     }
 
     public void addMember(GuildMember member) {
@@ -66,6 +96,10 @@ public class Guild {
         members.remove(member);
     }
 
+    public ArrayList<GuildRank> getRanks() {
+        return ranks;
+    }
+
     public void addRank(GuildRank rank) {
         ranks.add(rank);
     }
@@ -78,10 +112,6 @@ public class Guild {
         ranks.remove(rank);
     }
 
-    public ArrayList<GuildRank> getRanks() {
-        return ranks;
-    }
-
     public String getTag() {
         return tag;
     }
@@ -90,11 +120,11 @@ public class Guild {
         this.tag = tag;
     }
 
-    public String[] getMotd() {
+    public List<String> getMotd() {
         return motd;
     }
 
-    public void setMotd(String[] motd) {
+    public void setMotd(List<String> motd) {
         this.motd = motd;
     }
 
@@ -106,8 +136,12 @@ public class Guild {
         this.balance = balance;
     }
 
-    public int getId() {
-        return id;
+    public Location getHQ() {
+        return hq;
+    }
+
+    public void setHQ(Location hq) {
+        this.hq = hq;
     }
 
     public int getKills() {
@@ -126,11 +160,20 @@ public class Guild {
         this.deaths = deaths;
     }
 
+    public void updateDB() {
+        GuildsDatabase.inst().updateGuild(this);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Guild)) return false;
         Guild guild = (Guild) obj;
         return guild.getName().equals(this.getName());
 
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

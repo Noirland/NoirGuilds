@@ -50,16 +50,16 @@ public class GuildCommand implements CommandExecutor {
                 new GuildEditCommandlet().run(sender, cmdletArgs);
                 break;
             case leave:
-                new GuildLeaveCommandlet().run(sender, cmdletArgs);
+                new GuildLeaveCommandlet().run(sender);
                 break;
             case disband:
                 new GuildDisbandCommandlet().run(sender, cmdletArgs);
                 break;
             case accept:
-                new GuildAcceptCommandlet().run(sender, cmdletArgs);
+                new GuildAcceptCommandlet().run(sender);
                 break;
             case deny:
-                new GuildDenyCommandlet().run(sender, cmdletArgs);
+                new GuildDenyCommandlet().run(sender);
                 break;
             case motd:
                 new GuildMOTDCommandlet().run(sender, cmdletArgs);

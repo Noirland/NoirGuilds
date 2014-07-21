@@ -25,29 +25,28 @@ public class GuildTpHereCommand implements CommandExecutor {
         this.gHandler = plugin.getGuildsHandler();
     }
 
-
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-
-        if(args.length != 1) {
-            plugin.sendMessage(sender, TPHERE_NO_PLAYER);
-            return true;
-        }
-        String tele = args[0];
-        GuildMember mTele = gHandler.getGuildMember(tele);
-        Player pTele = Util.player(tele).getPlayer();
-        if(pTele == null) {
-            plugin.sendMessage(sender, PLAYER_NOT_ONLINE);
-            return true;
-        }
-
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);
             return true;
         }
 
-        GuildMember mSender = gHandler.getGuildMember(sender.getName());
+        GuildMember mSender = gHandler.getMember(sender.getName());
         if (mSender == null) {
             plugin.sendMessage(sender, TP_NO_GUILD);
+            return true;
+        }
+
+        if(args.length != 1) {
+            plugin.sendMessage(sender, TPHERE_NO_PLAYER);
+            return true;
+        }
+
+        String tele = args[0];
+        GuildMember mTele = gHandler.getMember(tele);
+        Player pTele = Util.player(tele).getPlayer();
+        if(pTele == null) {
+            plugin.sendMessage(sender, PLAYER_NOT_ONLINE);
             return true;
         }
 

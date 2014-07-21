@@ -9,70 +9,49 @@ import nz.co.noirland.zephcore.Util;
 import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 public class GuildsHandler {
 
-    private final NoirGuilds plugin;
     private final GuildsDatabase db;
-    private final ArrayList<Guild> guilds = new ArrayList<Guild>();
-    private final ArrayList<GuildInviteTask> invites = new ArrayList<GuildInviteTask>();
+    private final List<Guild> guilds = new ArrayList<Guild>();
+    private final List<GuildInviteTask> invites = new ArrayList<GuildInviteTask>();
 
     public GuildsHandler() {
-        this.plugin = NoirGuilds.inst();
         this.db = GuildsDatabase.inst();
-        updateGuildsList();
-    }
-
-    public void updateGuildsList() {
-        guilds.clear();
         guilds.addAll(db.getGuilds());
     }
 
-    public ArrayList<Guild> getGuilds() {
+    public void save() {
+        for(Guild guild : guilds) {
+            guild.updateDB();
+            for(GuildMember member : guild.getMembers()) {
+                member.updateDB();
+            }
+            for(GuildRank rank : guild.getRanks()) {
+                rank.updateDB();
+            }
+        }
+    }
+
+    public Collection<Guild> getGuilds() {
         return guilds;
     }
 
     public void addGuild(Guild guild) {
         guilds.add(guild);
-        db.updateGuild(guild);
-    }
-
-    public void addRank(GuildRank rank) {
-        db.updateRank(rank);
-    }
-
-    public void addMember(GuildMember member) {
-        db.updateMember(member);
     }
 
     public void removeGuild(Guild guild) {
-        guilds.remove(guild);
         for(GuildInviteTask task : getInvites()) {
             if(task.getData().getGuild() == guild) {
                 task.run();
                 task.cancel();
             }
         }
-        db.removeGuild(guild);
-    }
-
-    public void removeRank(GuildRank rank) {
-        for(GuildMember member : rank.getGuild().getMembers()) {
-            if(member.getRank() == rank){
-                member.setRank(rank.getGuild().getDefaultRank());
-                OfflinePlayer p = Util.player(member.getPlayer());
-                if(p.isOnline()) {
-                    plugin.sendMessage(p.getPlayer(), String.format(Strings.RANK_DELETE_RANK_DELETED, member.getRank().getColour() + member.getRank().getName()));
-                }
-            }
-        }
-        db.removeRank(rank);
-    }
-
-    public void removeGuildMember(GuildMember member) {
-        db.removeMember(member);
-
+        guilds.remove(guild);
     }
 
     public Guild getGuildByName(String name) {
@@ -93,7 +72,7 @@ public class GuildsHandler {
         return null;
     }
 
-    public GuildMember getGuildMember(UUID player) {
+    public GuildMember getMember(UUID player) {
         for(Guild guild : guilds) {
             for(GuildMember member : guild.getMembers()) {
                 if(member.getPlayer().equals(player)) {
@@ -104,7 +83,15 @@ public class GuildsHandler {
         return null;
     }
 
-    public ArrayList<GuildInviteTask> getInvites() {
+    public GuildMember getMember(OfflinePlayer player) {
+        return getMember(player.getUniqueId());
+    }
+
+    public GuildMember getMember(String name) {
+        return getMember(Util.player(name));
+    }
+
+    public Collection<GuildInviteTask> getInvites() {
         return invites;
     }
 
@@ -114,5 +101,36 @@ public class GuildsHandler {
 
     public void removeInvite(GuildInviteTask task) {
         invites.remove(task);
+    }
+
+    public int createGuildID() {
+        while(true) { // This should be safe in thread, over 60,000 possible IDs
+            int id = Util.createRandomHex(4);
+            boolean found = false;
+            for(Guild guild : guilds) {
+                if(guild.getId() == id) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found) return id;
+        }
+    }
+
+    public int createRankID() {
+        while(true) { // This should be safe in thread, over 65,000 possible IDs
+            int id = Util.createRandomHex(4);
+            boolean found = false;
+            for(Guild guild : guilds) {
+                for(GuildRank rank : guild.getRanks()) {
+                    if(rank.getId() == id) {
+                        found = true;
+                        break;
+                    }
+                }
+                if(found) break;
+            }
+            if(!found) return id;
+        }
     }
 }
