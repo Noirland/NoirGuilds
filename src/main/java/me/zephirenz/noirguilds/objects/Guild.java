@@ -1,24 +1,36 @@
 package me.zephirenz.noirguilds.objects;
 
+import nz.co.noirland.zephcore.Util;
+import org.bukkit.OfflinePlayer;
+
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Guild {
 
+    final private int id;
+
     private String name;
     private String tag;
-    private String leader;
 
     private ArrayList<GuildRank> ranks = new ArrayList<GuildRank>();
     private ArrayList<GuildMember> members = new ArrayList<GuildMember>();
 
-    private String[] motd = new String[0];
+    private String[] motd;
 
-    private Double balance = 0D;
+    private Double balance;
 
-    public Guild(String name, String tag, String leader) {
+    private int kills;
+    private int deaths;
+
+    public Guild(int id, String name, String tag, double balance, int kills, int deaths, String[] motd) {
+        this.id = id;
         this.name = name;
         this.tag = tag;
-        this.leader = leader;
+        this.balance = balance;
+        this.kills = kills;
+        this.deaths = deaths;
+        this.motd = motd;
     }
 
     public void setName(String name) {
@@ -33,54 +45,37 @@ public class Guild {
         return members;
     }
 
-    public boolean isMember(String player) {
-        for(GuildMember gPlayer: members) {
-            if(gPlayer.getPlayer().equals(player)) {
-                return true;
+    public void sendMessage(String msg) {
+        for(GuildMember member : getMembers()) {
+            OfflinePlayer player = Util.player(member.getPlayer());
+            if(player.isOnline()) {
+                player.getPlayer().sendMessage(msg);
             }
         }
-        return false;
     }
 
-    public boolean isMember(GuildMember gPlayer) {
-        return isMember(gPlayer.getPlayer());
-    }
-
-    public void addGuildMember(GuildMember member) {
-
+    public void addMember(GuildMember member) {
         members.add(member);
-
     }
 
-    public void removeGuildMember(GuildMember member) {
-
-        if(members.contains(member)) {
-            members.remove(member);
-            save();
-        }
-
+    public void addMembers(Collection<GuildMember> members) {
+        this.members.addAll(members);
     }
 
-    public void setMembers(ArrayList<GuildMember> members) {
-        this.members = members;
-        save();
+    public void removeMember(GuildMember member) {
+        members.remove(member);
     }
 
     public void addRank(GuildRank rank) {
         ranks.add(rank);
-        save();
+    }
+
+    public void addRanks(Collection<GuildRank> ranks) {
+        this.ranks.addAll(ranks);
     }
 
     public void removeRank(GuildRank rank) {
-        if(ranks.contains(rank)) {
-            ranks.remove(rank);
-            save();
-        }
-    }
-
-    public void setRanks(ArrayList<GuildRank> ranks) {
-        this.ranks = ranks;
-        save();
+        ranks.remove(rank);
     }
 
     public ArrayList<GuildRank> getRanks() {
@@ -93,23 +88,6 @@ public class Guild {
 
     public void setTag(String tag) {
         this.tag = tag;
-    }
-
-    public String getLeader() {
-        return leader;
-    }
-
-    public void setLeader(String leader) {
-        this.leader = leader;
-    }
-
-    public GuildRank getDefaultRank() {
-        for(GuildRank rank : getRanks()) {
-            if(rank.isDefault()) {
-                return rank;
-            }
-        }
-        return null;
     }
 
     public String[] getMotd() {
@@ -128,10 +106,24 @@ public class Guild {
         this.balance = balance;
     }
 
-    public void save() {
+    public int getId() {
+        return id;
+    }
 
+    public int getKills() {
+        return kills;
+    }
 
+    public void setKills(int kills) {
+        this.kills = kills;
+    }
 
+    public int getDeaths() {
+        return deaths;
+    }
+
+    public void setDeaths(int deaths) {
+        this.deaths = deaths;
     }
 
     @Override

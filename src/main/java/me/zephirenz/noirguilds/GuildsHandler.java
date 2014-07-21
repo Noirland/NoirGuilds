@@ -1,8 +1,6 @@
 package me.zephirenz.noirguilds;
 
-import me.zephirenz.noirguilds.databaseold.DatabaseManager;
-import me.zephirenz.noirguilds.databaseold.DatabaseManagerFactory;
-import me.zephirenz.noirguilds.enums.RankPerm;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
@@ -11,33 +9,24 @@ import nz.co.noirland.zephcore.Util;
 import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class GuildsHandler {
 
     private final NoirGuilds plugin;
-    private final DatabaseManager dbManager;
+    private final GuildsDatabase db;
     private final ArrayList<Guild> guilds = new ArrayList<Guild>();
     private final ArrayList<GuildInviteTask> invites = new ArrayList<GuildInviteTask>();
 
     public GuildsHandler() {
         this.plugin = NoirGuilds.inst();
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
+        this.db = GuildsDatabase.inst();
         updateGuildsList();
     }
 
     public void updateGuildsList() {
-
-         for(Guild guildA : dbManager.getGuilds()) {
-             boolean inArray = false;
-             for(Guild guildB : guilds) {
-                 if(guildA.equals(guildB)) {
-                     inArray = true;
-                 }
-             }
-             if(!inArray) {
-                 guilds.add(guildA);
-             }
-         }
+        guilds.clear();
+        guilds.addAll(db.getGuilds());
     }
 
     public ArrayList<Guild> getGuilds() {
@@ -46,15 +35,15 @@ public class GuildsHandler {
 
     public void addGuild(Guild guild) {
         guilds.add(guild);
-        dbManager.createGuild(guild);
+        db.updateGuild(guild);
     }
 
     public void addRank(GuildRank rank) {
-        dbManager.addRank(rank);
+        db.updateRank(rank);
     }
 
     public void addMember(GuildMember member) {
-        dbManager.addMember(member);
+        db.updateMember(member);
     }
 
     public void removeGuild(Guild guild) {
@@ -65,7 +54,7 @@ public class GuildsHandler {
                 task.cancel();
             }
         }
-        dbManager.removeGuild(guild);
+        db.removeGuild(guild);
     }
 
     public void removeRank(GuildRank rank) {
@@ -78,11 +67,11 @@ public class GuildsHandler {
                 }
             }
         }
-        dbManager.removeRank(rank);
+        db.removeRank(rank);
     }
 
     public void removeGuildMember(GuildMember member) {
-        dbManager.removeMember(member);
+        db.removeMember(member);
 
     }
 
@@ -104,7 +93,7 @@ public class GuildsHandler {
         return null;
     }
 
-    public GuildMember getGuildMember(String player) {
+    public GuildMember getGuildMember(UUID player) {
         for(Guild guild : guilds) {
             for(GuildMember member : guild.getMembers()) {
                 if(member.getPlayer().equals(player)) {
@@ -113,39 +102,6 @@ public class GuildsHandler {
             }
         }
         return null;
-    }
-
-    public void sendMessageToGuild(Guild guild, String msg) {
-        for(GuildMember member : guild.getMembers()) {
-            OfflinePlayer player = Util.player(member.getPlayer());
-            if(player.isOnline()) {
-                player.getPlayer().sendMessage(msg);
-            }
-        }
-    }
-
-    public void sendMessageToRank(Guild guild, GuildRank rank, String msg) {
-        for(GuildMember member : guild.getMembers()) {
-            if(!(member.getRank().equals(rank))) {
-                return;
-            }
-            OfflinePlayer player = Util.player(member.getPlayer());
-            if(player.isOnline()) {
-                player.getPlayer().sendMessage(msg);
-            }
-        }
-    }
-
-    public boolean hasPerm(GuildMember member, RankPerm perm) {
-        return hasPerm(member.getRank(), perm);
-    }
-
-    public boolean hasPerm(GuildRank rank, RankPerm perm) {
-        if(rank.isLeader()) {
-            return true;
-        }else{
-            return rank.hasPerm(perm);
-        }
     }
 
     public ArrayList<GuildInviteTask> getInvites() {

@@ -18,7 +18,7 @@ public class PluginConfig extends Config {
 
     // MYSQL
 
-    public String getDBPrefix()   { return config.getString("noirguilds.database.mysql.prefix", "guild_"); }
+    public String getDBPrefix()   { return config.getString("noirguilds.database.mysql.prefix", "guild"); }
     public String getDBName()     { return config.getString("noirguilds.db.name"); }
     public String getDBUser()     { return config.getString("noirguilds.db.username"); }
     public String getDBPassword() { return config.getString("noirguilds.db.password"); }

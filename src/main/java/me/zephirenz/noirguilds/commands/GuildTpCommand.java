@@ -56,7 +56,7 @@ public class GuildTpCommand implements CommandExecutor {
             return true;
         }
 
-        if(!gHandler.hasPerm(mSender, RankPerm.TP)) {
+        if(!mSender.hasPerm(RankPerm.TP)) {
             plugin.sendMessage(sender, TP_NO_PERMS);
             return true;
         }

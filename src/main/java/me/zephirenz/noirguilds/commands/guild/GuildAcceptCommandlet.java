@@ -64,11 +64,11 @@ public class GuildAcceptCommandlet {
 
         Guild guild = data.getGuild();
         GuildRank rank = guild.getDefaultRank();
-        GuildMember gMember = new GuildMember(data.getInvitee(), guild, rank);
-        guild.addGuildMember(gMember);
+        GuildMember gMember = new GuildMember(data.getInvitee(), guild, rank, kills, deaths);
+        guild.addMember(gMember);
         gHandler.addMember(gMember);
 
-        gHandler.sendMessageToGuild(guild, String.format(Strings.GUILD_ACCEPT_JOINED, rank.getColour() + data.getInvitee()));
+        guild.sendMessage(String.format(Strings.GUILD_ACCEPT_JOINED, rank.getColour() + data.getInvitee()));
 
     }
 

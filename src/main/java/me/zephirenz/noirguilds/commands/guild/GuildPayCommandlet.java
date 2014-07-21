@@ -63,7 +63,7 @@ public class GuildPayCommandlet {
             return;
         }
 
-        if(!gHandler.hasPerm(member, RankPerm.PAY)) {
+        if(!member.hasPerm(RankPerm.PAY)) {
             plugin.sendMessage(sender, GUILD_PAY_NO_PERMS);
             return;
         }

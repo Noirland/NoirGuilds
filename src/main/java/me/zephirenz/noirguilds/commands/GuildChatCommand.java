@@ -30,7 +30,7 @@ public class GuildChatCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        GuildMember gPlayer = gHandler.getGuildMember(player.getName());
+        GuildMember gPlayer = gHandler.getGuildMember(player.getUniqueId());
         if(gPlayer == null || gPlayer.getGuild() == null || gPlayer.getRank() == null) {
             plugin.sendMessage(sender, GUILD_CHAT_NO_GUILD);
             return false;
@@ -42,7 +42,7 @@ public class GuildChatCommand implements CommandExecutor {
         String msg = prefix + GuildsUtil.arrayToString(args, 0, args.length - 1, " ");
         msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
         if(!(msg.length() == prefix.length())) {
-            gHandler.sendMessageToGuild(gPlayer.getGuild(), msg);
+            gPlayer.getGuild().sendMessage(msg);
             return true;
         }
 

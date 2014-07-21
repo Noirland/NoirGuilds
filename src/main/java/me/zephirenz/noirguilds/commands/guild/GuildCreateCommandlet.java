@@ -92,8 +92,8 @@ public class GuildCreateCommandlet {
         defRank.setDefault(true);
         guild.addRank(defRank);
 
-        GuildMember leaderMember = new GuildMember(leader, guild, leaderRank);
-        guild.addGuildMember(leaderMember);
+        GuildMember leaderMember = new GuildMember(leader, guild, leaderRank, kills, deaths);
+        guild.addMember(leaderMember);
 
         gHandler.addGuild(guild);
         plugin.sendGlobalMessage(String.format(GUILD_CREATE_CREATED, guild.getLeader(), name));

@@ -58,7 +58,7 @@ public class GuildInviteCommandlet {
             plugin.sendMessage(sender, GUILD_INVITE_TARGET_IN_GUILD);
             return;
         }
-        if(!gHandler.hasPerm(inviterMember, RankPerm.INVITE)) {
+        if(inviterMember.hasPerm(RankPerm.INVITE)) {
             plugin.sendMessage(sender, GUILD_INVITE_NO_PERMS);
             return;
         }

@@ -44,7 +44,7 @@ public class HQCommand implements CommandExecutor {
         Guild guild = gMember.getGuild();
 
         if(args.length == 0) {
-            if(!gHandler.hasPerm(gMember, RankPerm.HQ)) {
+            if(!gMember.hasPerm(RankPerm.HQ)) {
                 plugin.sendMessage(sender, HQ_NO_PERMS);
                 return true;
             }

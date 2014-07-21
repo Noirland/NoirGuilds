@@ -60,14 +60,14 @@ public class GuildKickCommandlet {
             plugin.sendMessage(sender, GUILD_KICK_LEADER);
             return;
         }
-        if(!gHandler.hasPerm(senderMember, RankPerm.KICK)) {
+        if(!senderMember.hasPerm(RankPerm.KICK)) {
             plugin.sendMessage(sender, GUILD_KICK_NO_PERMS);
             return;
         }
 
-        guild.removeGuildMember(kickeeMember);
+        guild.removeMember(kickeeMember);
         gHandler.removeGuildMember(kickeeMember);
-        gHandler.sendMessageToGuild(guild, String.format(GUILD_KICK_KICKED, kickee));
+        guild.sendMessage(String.format(GUILD_KICK_KICKED, kickee));
     }
 
 }

@@ -109,7 +109,7 @@ public class GuildBankManager extends AbstractBankManager<Guild> {
         GuildMember member = gHandler.getGuildMember(event.getWhoClicked().getName());
         if((member != null && member.getGuild() != null && member.getGuild().equals(bank.getOwner()))) {
             // If member is part of guild's bank, check if they have withdraw perms
-            enabled = gHandler.hasPerm(member, RankPerm.BANK_WITHDRAW);
+            enabled = member.hasPerm(RankPerm.BANK_WITHDRAW);
         }else{
             // Otherwise, check if they have override perms
             enabled = event.getWhoClicked().hasPermission(Perms.BANK_OTHER);

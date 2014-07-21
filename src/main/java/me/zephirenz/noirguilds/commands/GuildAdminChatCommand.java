@@ -30,14 +30,14 @@ public class GuildAdminChatCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        GuildMember gPlayer = gHandler.getGuildMember(player.getName());
-        if(gPlayer == null || gPlayer.getGuild() == null || gPlayer.getRank() == null) {
+        GuildMember member = gHandler.getGuildMember(player.getName());
+        if(member == null || member.getGuild() == null || member.getRank() == null) {
             plugin.sendMessage(sender, GUILD_CHAT_NO_GUILD);
             return true;
         }
 
-        GuildRank rank = gPlayer.getRank();
-        if(!gHandler.hasPerm(gPlayer, RankPerm.ADMINCHAT)) {
+        GuildRank rank = member.getRank();
+        if(!member.hasPerm(RankPerm.ADMINCHAT)) {
             plugin.sendMessage(sender, GUILD_ACHAT_NO_PERMS);
             return true;
         }
@@ -48,9 +48,9 @@ public class GuildAdminChatCommand implements CommandExecutor {
         msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
         if(!(msg.length() == prefix.length())) {
 
-            for(GuildRank r : gPlayer.getGuild().getRanks()) {
-                if(gHandler.hasPerm(r, RankPerm.ADMINCHAT)) {
-                    gHandler.sendMessageToRank(gPlayer.getGuild(), r, msg);
+            for(GuildRank r : member.getGuild().getRanks()) {
+                if(r.hasPerm(RankPerm.ADMINCHAT)) {
+                    r.sendMessage(msg);
                 }
 
             }

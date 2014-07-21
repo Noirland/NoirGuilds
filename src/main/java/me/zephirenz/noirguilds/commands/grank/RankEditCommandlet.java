@@ -83,10 +83,8 @@ public class RankEditCommandlet {
 
     private void editPerm(CommandSender sender, GuildRank rank, String permName, String value) {
 
-        RankPerm perm;
-        try{
-            perm = RankPerm.get(permName);
-        }catch(IllegalArgumentException e) {
+        RankPerm perm = RankPerm.get(permName);
+        if(perm == null) {
             plugin.sendMessage(sender, RANK_EDIT_BAD_OPTION);
             return;
         }

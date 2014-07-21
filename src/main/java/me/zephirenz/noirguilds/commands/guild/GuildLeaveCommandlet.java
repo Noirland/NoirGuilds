@@ -45,9 +45,9 @@ public class GuildLeaveCommandlet {
             return;
         }
 
-        guild.removeGuildMember(member);
+        guild.removeMember(member);
         gHandler.removeGuildMember(member);
-        gHandler.sendMessageToGuild(guild, String.format(GUILD_LEAVE_GUILD_LEFT, member.getPlayer()));
+        guild.sendMessage(String.format(GUILD_LEAVE_GUILD_LEFT, member.getPlayer()));
         plugin.sendMessage(sender, String.format(GUILD_LEAVE_PLAYER_LEFT, guild.getName()));
 
     }

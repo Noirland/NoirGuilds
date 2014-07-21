@@ -56,7 +56,7 @@ public class GuildTpHereCommand implements CommandExecutor {
             return true;
         }
 
-        if(!gHandler.hasPerm(mSender, RankPerm.TPHERE)) {
+        if(!mSender.hasPerm(RankPerm.TPHERE)) {
             plugin.sendMessage(sender, TP_NO_PERMS);
             return true;
         }
