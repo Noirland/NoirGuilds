@@ -11,7 +11,7 @@ public class AddMemberQuery extends GuildsQuery {
 
     public AddMemberQuery(GuildMember member) {
         super(4, QUERY);
-        setValue(1, member.getPlayer());
+        setValue(1, member.getPlayer().toString());
         setValue(2, member.getRank().getId());
         setValue(3, member.getKills());
         setValue(4, member.getDeaths());

@@ -7,7 +7,7 @@ public class RemoveMemberQuery extends GuildsQuery {
 
     public RemoveMemberQuery(GuildMember member) {
         super(1, "DELETE FROM {PREFIX}_members WHERE uuid=?;");
-        setValue(1, member.getPlayer());
+        setValue(1, member.getPlayer().toString());
     }
 
 }

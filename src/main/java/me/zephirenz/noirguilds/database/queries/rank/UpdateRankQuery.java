@@ -16,7 +16,6 @@ public class UpdateRankQuery extends GuildsQuery {
         setValue(4, rank.getColour().toString());
         setValue(5, rank.isLeader());
         setValue(6, rank.isDefault());
-        //TODO: Ensure RankPerm is serialised properly
         setValue(7, JSONValue.toJSONString(rank.getPerms()));
     }
 

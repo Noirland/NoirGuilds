@@ -16,14 +16,21 @@ public class UpdateGuildQuery extends GuildsQuery {
         setValue(2, guild.getTag());
         setValue(3, guild.getName());
         setValue(4, guild.getBalance());
-        setValue(5, JSONValue.toJSONString(guild.getMotd()));
-        if(guild.getHQ() != null) {
+
+        if(guild.getMotd() == null) {
+            setValue(5, null);
+        }else {
+            setValue(5, JSONValue.toJSONString(guild.getMotd()));
+        }
+
+        if (guild.getHQ() == null) {
+            setValue(6, null);
+        } else {
             JSONObject hq = new JSONObject();
             hq.putAll(Util.toMap(guild.getHQ()));
             setValue(6, hq.toString());
-        } else {
-            setValue(6, null);
         }
+
         setValue(7, guild.getKills());
         setValue(8, guild.getDeaths());
     }

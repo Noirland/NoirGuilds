@@ -27,7 +27,7 @@ public class Schema1 implements Schema {
 
     private void createGuildsTable() throws SQLException {
         Query query = new GuildsQuery("CREATE TABLE {PREFIX}_guilds (" +
-                "`id` CHAR(4), " +
+                "`id` SMALLINT UNSIGNED, " +
                 "`tag` VARCHAR(4), " +
                 "`name` VARCHAR(255), " +
                 "`balance` DOUBLE UNSIGNED, " +
@@ -42,8 +42,8 @@ public class Schema1 implements Schema {
 
     private void createRanksTable() throws SQLException {
         Query query = new GuildsQuery("CREATE TABLE {PREFIX}_ranks (" +
-                "`id` CHAR(4), " +
-                "`guild` TINYINT, " +
+                "`id` SMALLINT UNSIGNED, " +
+                "`guild` SMALLINT UNSIGNED, " +
                 "`name` VARCHAR(255), " +
                 "`colour` VARCHAR(16), " +
                 "`leader` BOOLEAN DEFAULT FALSE, " +
@@ -57,7 +57,7 @@ public class Schema1 implements Schema {
     private void createMembersTable() throws SQLException {
         Query query = new GuildsQuery("CREATE TABLE {PREFIX}_members (" +
                 "`uuid` VARCHAR(36) NOT NULL, " +
-                "`rank` TINYINT UNSIGNED, " +
+                "`rank` SMALLINT UNSIGNED, " +
                 "`kills` INT UNSIGNED, " +
                 "`deaths` INT UNSIGNED, " +
                 " PRIMARY KEY (`uuid`) " +

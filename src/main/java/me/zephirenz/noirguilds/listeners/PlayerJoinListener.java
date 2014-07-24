@@ -30,7 +30,10 @@ public class PlayerJoinListener implements Listener {
         if(member == null) {
             return;
         }
-         List<String> motd = member.getGuild().getMotd();
+
+        List<String> motd = member.getGuild().getMotd();
+
+        if(motd == null) return;
 
         for(String line : motd) {
             line = ChatColor.translateAlternateColorCodes("&".charAt(0), line);

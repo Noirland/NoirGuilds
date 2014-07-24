@@ -6,7 +6,7 @@ import org.json.simple.JSONValue;
 
 public class AddRankQuery extends GuildsQuery {
 
-    private static final String QUERY = "INSERT INTO {PREFIX}_guilds (id, guild, name, colour, leader, `default`, perms) " +
+    private static final String QUERY = "INSERT INTO {PREFIX}_ranks (id, guild, name, colour, leader, `default`, perms) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
 
@@ -18,7 +18,6 @@ public class AddRankQuery extends GuildsQuery {
         setValue(4, rank.getColour().toString());
         setValue(5, rank.isLeader());
         setValue(6, rank.isDefault());
-        //TODO: Ensure RankPerm is serialised properly
         setValue(7, JSONValue.toJSONString(rank.getPerms()));
     }
 }
