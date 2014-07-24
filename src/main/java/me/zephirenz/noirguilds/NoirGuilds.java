@@ -38,6 +38,7 @@ public class NoirGuilds extends JavaPlugin {
     public void onDisable() {
         guildsHandler.save();
         AsyncDatabaseUpdateTask.inst().stop(); // Finishes any remaining queries
+        GuildsDatabase.inst().close();
     }
 
     public static NoirGuilds inst() {
