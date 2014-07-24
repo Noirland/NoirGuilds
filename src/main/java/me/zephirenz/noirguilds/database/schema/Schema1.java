@@ -33,8 +33,8 @@ public class Schema1 implements Schema {
                 "`balance` DOUBLE UNSIGNED, " +
                 "`motd` TEXT, " +
                 "`hq` TEXT, " +
-                "`kills` INT UNSIGNED, " +
-                "`deaths` INT UNSIGNED, " +
+                "`kills` MEDIUMINT UNSIGNED, " +
+                "`deaths` MEDIUMINT UNSIGNED, " +
                 " PRIMARY KEY (`id`)" +
                 ");");
         query.execute();
@@ -58,8 +58,8 @@ public class Schema1 implements Schema {
         Query query = new GuildsQuery("CREATE TABLE {PREFIX}_members (" +
                 "`uuid` VARCHAR(36) NOT NULL, " +
                 "`rank` SMALLINT UNSIGNED, " +
-                "`kills` INT UNSIGNED, " +
-                "`deaths` INT UNSIGNED, " +
+                "`kills` MEDIUMINT UNSIGNED, " +
+                "`deaths` MEDIUMINT UNSIGNED, " +
                 " PRIMARY KEY (`uuid`) " +
                 ");");
         query.execute();
