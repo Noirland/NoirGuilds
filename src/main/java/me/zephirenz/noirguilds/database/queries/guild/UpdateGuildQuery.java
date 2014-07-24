@@ -12,10 +12,10 @@ public class UpdateGuildQuery extends GuildsQuery {
 
     public UpdateGuildQuery(Guild guild) {
         super(8, QUERY);
-        setValue(1, guild.getId());
-        setValue(2, guild.getTag());
-        setValue(3, guild.getName());
-        setValue(4, guild.getBalance());
+        setValue(1, guild.getTag());
+        setValue(2, guild.getName());
+        setValue(3, guild.getBalance());
+        setValue(4, guild.getId());
 
         if(guild.getMotd() == null) {
             setValue(5, null);
