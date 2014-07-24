@@ -15,13 +15,11 @@ import java.util.UUID;
 
 public class GuildsHandler {
 
-    private final GuildsDatabase db;
     private final List<Guild> guilds = new ArrayList<Guild>();
     private final List<GuildInviteTask> invites = new ArrayList<GuildInviteTask>();
 
     public GuildsHandler() {
-        this.db = GuildsDatabase.inst();
-        guilds.addAll(db.getGuilds());
+        guilds.addAll(GuildsDatabase.inst().getGuilds());
     }
 
     public Collection<Guild> getGuilds() {
