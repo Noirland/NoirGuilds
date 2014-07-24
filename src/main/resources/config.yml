@@ -6,7 +6,7 @@ noirguilds:
     mysql:
       hostname: localhost
       port: 3306
-      username: herp
-      password: 'derp'
-      database: foo
-      prefix: bar_
+      username: noirguilds
+      password: 'guilds'
+      database: noirguilds
+      prefix: guild_
