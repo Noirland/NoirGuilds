@@ -38,7 +38,7 @@ public class GuildsDatabase extends MySQLDatabase {
 
     private static GuildsDatabase inst;
 
-    PluginConfig config = PluginConfig.getInstance();
+    private static PluginConfig config = PluginConfig.inst();
 
     public static GuildsDatabase inst() {
         if(inst == null) {
@@ -59,7 +59,7 @@ public class GuildsDatabase extends MySQLDatabase {
 
     @Override
     protected String getHost() {
-        return config.getDBHost();
+        return PluginConfig.inst().getDBHost();
     }
 
     @Override

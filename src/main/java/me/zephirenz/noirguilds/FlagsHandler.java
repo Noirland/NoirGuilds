@@ -107,7 +107,7 @@ public class FlagsHandler implements Listener {
             return;
         }
 
-        double killMoney = PluginConfig.getInstance().getKillMoney();
+        double killMoney = PluginConfig.inst().getKillMoney();
 
         if(pGuild.getBalance() >= killMoney) {
             pGuild.setBalance(pGuild.getBalance() - killMoney);

@@ -8,7 +8,7 @@ public class PluginConfig extends Config {
         super("config.yml");
     }
 
-    public static PluginConfig getInstance() {
+    public static PluginConfig inst() {
         if(instance == null) {
             instance = new PluginConfig();
         }
@@ -18,7 +18,7 @@ public class PluginConfig extends Config {
 
     // MYSQL
 
-    public String getDBPrefix()   { return config.getString("noirguilds.database.mysql.prefix", "guild"); }
+    public String getDBPrefix()   { return config.getString("noirguilds.db.prefix", "guild"); }
     public String getDBName()     { return config.getString("noirguilds.db.name"); }
     public String getDBUser()     { return config.getString("noirguilds.db.username"); }
     public String getDBPassword() { return config.getString("noirguilds.db.password"); }

@@ -24,7 +24,7 @@ public class GuildAcceptCommandlet {
     public GuildAcceptCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
-        this.pConfig = PluginConfig.getInstance();
+        this.pConfig = PluginConfig.inst();
     }
 
     /**
