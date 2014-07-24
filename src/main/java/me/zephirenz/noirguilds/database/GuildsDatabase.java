@@ -20,7 +20,6 @@ import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import nz.co.noirland.zephcore.Debug;
-import nz.co.noirland.zephcore.Util;
 import nz.co.noirland.zephcore.database.MySQLDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -102,7 +101,7 @@ public class GuildsDatabase extends MySQLDatabase {
         }
 
         for(Map<String, Object> rawGuild : rawGuilds) {
-            Integer id = Util.hexToInt((String) rawGuild.get("id"));
+            int id = (Integer) rawGuild.get("id");
             String name = (String) rawGuild.get("name");
             String tag = (String) rawGuild.get("tag");
             Double balance = (Double) rawGuild.get("balance");
@@ -159,7 +158,7 @@ public class GuildsDatabase extends MySQLDatabase {
             } catch (ParseException e) {
                 perms = null;
             }
-            int id = Util.hexToInt((String) rawRank.get("id"));
+            int id = (Integer) rawRank.get("id");
             ChatColor colour = ChatColor.valueOf((String) rawRank.get("colour"));
             String name = (String) rawRank.get("name");
             ranks.add(new GuildRank(id, guild, name, perms, colour));
