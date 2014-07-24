@@ -36,10 +36,6 @@ public class GuildBankCommandlet {
             return;
         }
 
-        if(!bManager.isEnabled()) {
-            plugin.sendMessage(sender, BANKS_NOT_ENABLED);
-        }
-
         Guild guild;
         if(args.length > 0 && sender.hasPermission(Perms.BANK_OTHER)) {
             guild = gHandler.getGuildByName(args[0]);

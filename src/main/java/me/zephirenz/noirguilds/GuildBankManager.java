@@ -19,18 +19,8 @@ public class GuildBankManager extends AbstractBankManager<Guild> {
 
     private GuildsHandler gHandler;
 
-    private boolean enabled = true;
-
     public GuildBankManager() {
-        if(BankOfNoir.inst() == null) {
-            enabled = false;
-            return;
-        }
         this.gHandler = NoirGuilds.inst().getGuildsHandler();
-    }
-
-    public boolean isEnabled() {
-        return enabled;
     }
 
     @Override

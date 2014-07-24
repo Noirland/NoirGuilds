@@ -75,11 +75,9 @@ public class GuildInfoCommandlet {
 
         sender.sendMessage(titleString);
         sender.sendMessage(Util.concatenate(ChatColor.BLUE + "Leader: " + ChatColor.WHITE, guild.getMembersByRank(guild.getLeaderRank()), "", ", "));
-        if(plugin.getBankManager().isEnabled()) {
-            EcoManager eco = EcoManager.inst();
-            String bal = eco.format(guild.getBalance());
-            sender.sendMessage(ChatColor.BLUE + "Bank: " + ChatColor.WHITE + bal);
-        }
+        EcoManager eco = EcoManager.inst();
+        String bal = eco.format(guild.getBalance());
+        sender.sendMessage(ChatColor.BLUE + "Bank: " + ChatColor.WHITE + bal);
         sender.sendMessage(membersString);
         sender.sendMessage(ChatColor.RED + StringUtils.repeat("=", ChatColor.stripColor(titleString).length()-3));
     }
