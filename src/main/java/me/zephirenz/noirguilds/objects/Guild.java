@@ -45,11 +45,11 @@ public class Guild {
         return name;
     }
 
-    public void sendMessage(String msg) {
+    public void sendMessage(String msg, boolean prefix) {
         for(GuildMember member : getMembers()) {
             OfflinePlayer player = Util.player(member.getPlayer());
             if(player.isOnline()) {
-                player.getPlayer().sendMessage(Strings.MESSAGE_PREFIX + msg);
+                player.getPlayer().sendMessage((prefix ? Strings.MESSAGE_PREFIX : "") + msg);
             }
         }
     }
@@ -109,6 +109,7 @@ public class Guild {
     }
 
     public void removeRank(GuildRank rank) {
+        rank.remove();
         ranks.remove(rank);
     }
 

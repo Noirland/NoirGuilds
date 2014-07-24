@@ -49,7 +49,7 @@ public class GuildAdminChatCommand implements CommandExecutor {
 
             for(GuildRank r : member.getGuild().getRanks()) {
                 if(r.hasPerm(RankPerm.ADMINCHAT)) {
-                    r.sendMessage(msg);
+                    r.sendMessage(msg, false);
                 }
             }
             return true;

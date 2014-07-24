@@ -66,7 +66,7 @@ public class GuildAcceptCommandlet {
         GuildMember member = new GuildMember(data.getInvitee(), rank, 0, 0);
         GuildsDatabase.inst().addMember(member);
 
-        guild.sendMessage(String.format(Strings.GUILD_ACCEPT_JOINED, rank.getColour() + sender.getName()));
+        guild.sendMessage(String.format(Strings.GUILD_ACCEPT_JOINED, rank.getColour() + sender.getName()), true);
     }
 
 }

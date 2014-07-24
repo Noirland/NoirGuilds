@@ -36,14 +36,14 @@ public class GuildRank {
         guild.addRank(this);
     }
 
-    public void sendMessage(String msg) {
+    public void sendMessage(String msg, boolean prefix) {
         for(GuildMember member : guild.getMembers()) {
             if(!(member.getRank().equals(this))) {
                 return;
             }
             OfflinePlayer player = Util.player(member.getPlayer());
             if(player.isOnline()) {
-                player.getPlayer().sendMessage(Strings.MESSAGE_PREFIX + msg);
+                player.getPlayer().sendMessage((prefix ? Strings.MESSAGE_PREFIX : "") + msg);
             }
         }
     }
@@ -54,7 +54,7 @@ public class GuildRank {
             member.setRank(guild.getDefaultRank());
             member.updateDB();
         }
-        sendMessage(String.format(Strings.RANK_DELETE_RANK_DELETED, guild.getDefaultRank().getColour() + guild.getDefaultRank().getName()));
+        sendMessage(String.format(Strings.RANK_DELETE_RANK_DELETED, guild.getDefaultRank().getColour() + guild.getDefaultRank().getName()), true);
     }
 
     public Boolean hasPerm(RankPerm perm) {

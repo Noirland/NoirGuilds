@@ -40,7 +40,7 @@ public class GuildChatCommand implements CommandExecutor {
         String msg = prefix + GuildsUtil.arrayToString(args, 0, args.length - 1, " ");
         msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
         if(!(msg.length() == prefix.length())) {
-            member.getGuild().sendMessage(msg);
+            member.getGuild().sendMessage(msg, false);
             return true;
         }
 

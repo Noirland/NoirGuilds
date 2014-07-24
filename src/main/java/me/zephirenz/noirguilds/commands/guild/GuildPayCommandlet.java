@@ -107,7 +107,7 @@ public class GuildPayCommandlet {
         toGuild.updateDB();
         fromGuild.updateDB();
 
-        toGuild.getLeaderRank().sendMessage(String.format(GUILD_PAY_RECIEVED, eco.format(amount), fromGuild.getName()));
+        toGuild.getLeaderRank().sendMessage(String.format(GUILD_PAY_RECIEVED, eco.format(amount), fromGuild.getName()), true);
 
         plugin.sendMessage(sender, String.format(GUILD_PAY_SUCCESSFUL, eco.format(amount), toGuild.getName()));
     }

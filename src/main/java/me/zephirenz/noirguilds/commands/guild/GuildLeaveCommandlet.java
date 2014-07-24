@@ -46,7 +46,7 @@ public class GuildLeaveCommandlet {
 
         guild.removeMember(member);
         GuildsDatabase.inst().removeMember(member);
-        guild.sendMessage(String.format(GUILD_LEAVE_GUILD_LEFT, member.getPlayer()));
+        guild.sendMessage(String.format(GUILD_LEAVE_GUILD_LEFT, member.getPlayer()), true);
         plugin.sendMessage(sender, String.format(GUILD_LEAVE_PLAYER_LEFT, guild.getName()));
 
     }

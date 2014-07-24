@@ -65,7 +65,7 @@ public class GuildKickCommandlet {
 
         guild.removeMember(kickeeMember);
         GuildsDatabase.inst().removeMember(kickeeMember);
-        guild.sendMessage(String.format(GUILD_KICK_KICKED, kickee));
+        guild.sendMessage(String.format(GUILD_KICK_KICKED, kickee), true);
     }
 
 }
