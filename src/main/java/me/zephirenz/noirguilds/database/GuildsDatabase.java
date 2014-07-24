@@ -59,7 +59,7 @@ public class GuildsDatabase extends MySQLDatabase {
 
     @Override
     protected String getHost() {
-        return PluginConfig.inst().getDBHost();
+        return config.getDBHost();
     }
 
     @Override
