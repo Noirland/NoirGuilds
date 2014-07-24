@@ -19,9 +19,13 @@ public class AddGuildQuery extends GuildsQuery {
         setValue(3, guild.getName());
         setValue(4, guild.getBalance());
         setValue(5, JSONValue.toJSONString(guild.getMotd()));
-        JSONObject hq = new JSONObject();
-        hq.putAll(Util.toMap(guild.getHQ()));
-        setValue(6, hq.toString());
+        if(guild.getHQ() != null) {
+            JSONObject hq = new JSONObject();
+            hq.putAll(Util.toMap(guild.getHQ()));
+            setValue(6, hq.toString());
+        } else {
+            setValue(6, null);
+        }
         setValue(7, guild.getKills());
         setValue(8, guild.getDeaths());
     }
