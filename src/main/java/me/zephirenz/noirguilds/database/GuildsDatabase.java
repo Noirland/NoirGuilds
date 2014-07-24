@@ -105,8 +105,8 @@ public class GuildsDatabase extends MySQLDatabase {
             String name = (String) rawGuild.get("name");
             String tag = (String) rawGuild.get("tag");
             Double balance = (Double) rawGuild.get("balance");
-            int kills = (Integer) rawGuild.get("kills");
-            int deaths = (Integer) rawGuild.get("deaths");
+            long kills = (Long) rawGuild.get("kills");
+            long deaths = (Long) rawGuild.get("deaths");
             JSONArray motd = new JSONArray();
             try {
                 motd = ((JSONArray) new JSONParser().parse((String) rawGuild.get("motd")));
@@ -178,8 +178,8 @@ public class GuildsDatabase extends MySQLDatabase {
 
         for(Map<String, Object> rawMember : rawMembers) {
             UUID uuid = UUID.fromString((String) rawMember.get("uuid"));
-            int kills = (Integer) rawMember.get("kills");
-            int deaths = (Integer) rawMember.get("deaths");
+            long kills = (Long) rawMember.get("kills");
+            long deaths = (Long) rawMember.get("deaths");
             members.add(new GuildMember(uuid, rank, kills, deaths));
         }
         return members;

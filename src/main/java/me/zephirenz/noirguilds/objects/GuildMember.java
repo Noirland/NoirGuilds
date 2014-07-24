@@ -11,10 +11,10 @@ public class GuildMember {
     private final UUID player;
     private GuildRank rank;
 
-    private int kills;
-    private int deaths;
+    private long kills;
+    private long deaths;
 
-    public GuildMember(UUID player, GuildRank rank, int kills, int deaths) {
+    public GuildMember(UUID player, GuildRank rank, long kills, long deaths) {
         this.player = player;
         this.rank = rank;
         this.kills = kills;
@@ -42,19 +42,19 @@ public class GuildMember {
         this.rank = rank;
     }
 
-    public int getKills() {
+    public long getKills() {
         return kills;
     }
 
-    public void setKills(int kills) {
+    public void setKills(long kills) {
         this.kills = kills;
     }
 
-    public int getDeaths() {
+    public long getDeaths() {
         return deaths;
     }
 
-    public void setDeaths(int deaths) {
+    public void setDeaths(long deaths) {
         this.deaths = deaths;
     }
 

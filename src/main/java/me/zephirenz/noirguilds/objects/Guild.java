@@ -23,10 +23,10 @@ public class Guild {
     private List<String> motd;
     private Double balance;
     private Location hq;
-    private int kills;
-    private int deaths;
+    private long kills;
+    private long deaths;
 
-    public Guild(int id, String name, String tag, double balance, int kills, int deaths, List<String> motd, Location hq) {
+    public Guild(int id, String name, String tag, double balance, long kills, long deaths, List<String> motd, Location hq) {
         this.id = id;
         this.name = name;
         this.tag = tag;
@@ -145,19 +145,19 @@ public class Guild {
         this.hq = hq;
     }
 
-    public int getKills() {
+    public long getKills() {
         return kills;
     }
 
-    public void setKills(int kills) {
+    public void setKills(long kills) {
         this.kills = kills;
     }
 
-    public int getDeaths() {
+    public long getDeaths() {
         return deaths;
     }
 
-    public void setDeaths(int deaths) {
+    public void setDeaths(long deaths) {
         this.deaths = deaths;
     }
 
