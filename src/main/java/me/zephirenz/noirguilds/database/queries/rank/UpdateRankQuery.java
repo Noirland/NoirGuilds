@@ -6,7 +6,7 @@ import org.json.simple.JSONValue;
 
 public class UpdateRankQuery extends GuildsQuery {
 
-    private static final String QUERY = "UPDATE {PREFIX}_ranks WHERE id=? SET guild=?, name=?, colour=?, leader=?, default=?, perms=?;";
+    private static final String QUERY = "UPDATE {PREFIX}_ranks WHERE id=? SET guild=?, name=?, colour=?, leader=?, `default`=?, perms=?;";
 
     public UpdateRankQuery(GuildRank rank) {
         super(7, QUERY);

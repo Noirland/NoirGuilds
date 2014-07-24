@@ -6,7 +6,7 @@ import org.json.simple.JSONValue;
 
 public class AddRankQuery extends GuildsQuery {
 
-    private static final String QUERY = "INSERT INTO {PREFIX}_guilds (id, guild, name, colour, leader, default, perms) " +
+    private static final String QUERY = "INSERT INTO {PREFIX}_guilds (id, guild, name, colour, leader, `default`, perms) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
 
