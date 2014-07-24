@@ -22,7 +22,7 @@ public class Schema1 implements Schema {
 
     private void createSchemaTable() throws SQLException {
         new GuildsQuery("CREATE TABLE `{PREFIX}_schema` (`version` TINYINT UNSIGNED);").execute();
-        new GuildsQuery("INSERT INTO `{PREFIX}`_schema` VALUES(1);").execute();
+        new GuildsQuery("INSERT INTO `{PREFIX}_schema` VALUES(1);").execute();
     }
 
     private void createGuildsTable() throws SQLException {
@@ -49,7 +49,7 @@ public class Schema1 implements Schema {
                 "`leader` BOOLEAN DEFAULT FALSE, " +
                 "`default` BOOLEAN DEFAULT FALSE, " +
                 "`perms` TEXT, " +
-                " PRIMARY KEY (`id`), " +
+                " PRIMARY KEY (`id`) " +
                 ");");
         query.execute();
     }
@@ -60,7 +60,7 @@ public class Schema1 implements Schema {
                 "`rank` TINYINT UNSIGNED, " +
                 "`kills` INT UNSIGNED, " +
                 "`deaths` INT UNSIGNED, " +
-                " PRIMARY KEY (`uuid`), " +
+                " PRIMARY KEY (`uuid`) " +
                 ");");
         query.execute();
     }
