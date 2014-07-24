@@ -32,7 +32,7 @@ public class GuildChatCommand implements CommandExecutor {
         GuildMember member = gHandler.getMember(player);
         if(member == null) {
             plugin.sendMessage(sender, GUILD_CHAT_NO_GUILD);
-            return false;
+            return true;
         }
 
         GuildRank rank = member.getRank();
