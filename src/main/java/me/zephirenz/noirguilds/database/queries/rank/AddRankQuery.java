@@ -15,7 +15,7 @@ public class AddRankQuery extends GuildsQuery {
         setValue(1, rank.getId());
         setValue(2, rank.getGuild().getId());
         setValue(3, rank.getName());
-        setValue(4, rank.getColour().toString());
+        setValue(4, rank.getColour().name());
         setValue(5, rank.isLeader());
         setValue(6, rank.isDefault());
         setValue(7, JSONValue.toJSONString(rank.getPerms()));

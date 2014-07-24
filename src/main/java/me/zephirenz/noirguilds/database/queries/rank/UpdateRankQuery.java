@@ -6,14 +6,14 @@ import org.json.simple.JSONValue;
 
 public class UpdateRankQuery extends GuildsQuery {
 
-    private static final String QUERY = "UPDATE {PREFIX}_ranks WHERE id=? SET guild=?, name=?, colour=?, leader=?, `default`=?, perms=?;";
+    private static final String QUERY = "UPDATE {PREFIX}_ranks SET guild=?, name=?, colour=?, leader=?, `default`=?, perms=? WHERE id=?;";
 
     public UpdateRankQuery(GuildRank rank) {
         super(7, QUERY);
         setValue(1, rank.getId());
         setValue(2, rank.getGuild().getId());
         setValue(3, rank.getName());
-        setValue(4, rank.getColour().toString());
+        setValue(4, rank.getColour().name());
         setValue(5, rank.isLeader());
         setValue(6, rank.isDefault());
         setValue(7, JSONValue.toJSONString(rank.getPerms()));

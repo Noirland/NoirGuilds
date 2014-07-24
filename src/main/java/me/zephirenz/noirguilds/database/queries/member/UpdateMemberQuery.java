@@ -5,7 +5,7 @@ import me.zephirenz.noirguilds.objects.GuildMember;
 
 public class UpdateMemberQuery extends GuildsQuery {
 
-    private static final String QUERY = "UPDATE {PREFIX}_members WHERE uuid=? SET rank=?, kills=?, deaths=?;";
+    private static final String QUERY = "UPDATE {PREFIX}_members SET rank=?, kills=?, deaths=? WHERE uuid=?;";
 
     public UpdateMemberQuery(GuildMember member) {
         super(4, QUERY);
