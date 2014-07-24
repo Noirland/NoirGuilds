@@ -107,12 +107,17 @@ public class GuildsDatabase extends MySQLDatabase {
             Double balance = (Double) rawGuild.get("balance");
             long kills = (Long) rawGuild.get("kills");
             long deaths = (Long) rawGuild.get("deaths");
-            JSONArray motd = new JSONArray();
-            try {
-                motd = ((JSONArray) new JSONParser().parse((String) rawGuild.get("motd")));
-            } catch (ParseException e) {
-                debug().warning("Could not parse motd for guild: " + name, e);
+
+            List motd = null;
+            if(rawGuild.get("motd") != null) {
+                try {
+                    motd = ((JSONArray) new JSONParser().parse((String) rawGuild.get("motd")));
+                } catch (ParseException e) {
+                    debug().warning("Could not parse motd for guild: " + name, e);
+                }
+
             }
+
             Location hq = null;
             if(rawGuild.get("hq") != null) {
                 try {
@@ -126,7 +131,7 @@ public class GuildsDatabase extends MySQLDatabase {
                     hq = new Location(world, x, y, z, yaw, pitch);
                 } catch (Exception ignored) {}
             }
-            //TODO: Update to add HQs (maybe via JSON)
+
             Guild guild = new Guild(id, name, tag, balance, kills, deaths, motd, hq);
             guilds.add(guild);
             for(GuildRank rank : getRanks(guild)) {
