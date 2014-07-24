@@ -24,18 +24,6 @@ public class GuildsHandler {
         guilds.addAll(db.getGuilds());
     }
 
-    public void save() {
-        for(Guild guild : guilds) {
-            guild.updateDB();
-            for(GuildMember member : guild.getMembers()) {
-                member.updateDB();
-            }
-            for(GuildRank rank : guild.getRanks()) {
-                rank.updateDB();
-            }
-        }
-    }
-
     public Collection<Guild> getGuilds() {
         return guilds;
     }

@@ -19,9 +19,9 @@ public class NoirGuilds extends JavaPlugin {
     @Override
     public void onEnable() {
         inst = this;
+        guildsHandler = new GuildsHandler();
         debug = new Debug(this);
         GuildsDatabase.inst().checkSchema();
-        guildsHandler = new GuildsHandler();
         bankManager = new GuildBankManager();
         try {
             new FlagsHandler();
@@ -36,7 +36,6 @@ public class NoirGuilds extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        guildsHandler.save();
         AsyncDatabaseUpdateTask.inst().stop(); // Finishes any remaining queries
         GuildsDatabase.inst().close();
     }
