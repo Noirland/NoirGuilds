@@ -6,7 +6,7 @@ import me.zephirenz.noirguilds.objects.GuildRank;
 public class GetMembersByRankQuery extends GuildsQuery {
 
     public GetMembersByRankQuery(GuildRank rank) {
-        super(1, "SELECT * FROM {PREFIX}_members WHERE guild=?;");
+        super(1, "SELECT * FROM {PREFIX}_members WHERE rank=?;");
         setValue(1, rank.getId());
     }
 
