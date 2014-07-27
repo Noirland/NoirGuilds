@@ -2,9 +2,9 @@ package me.zephirenz.noirguilds.database.queries;
 
 import me.zephirenz.noirguilds.database.GuildsDatabase;
 import nz.co.noirland.zephcore.database.MySQLDatabase;
-import nz.co.noirland.zephcore.database.queries.Query;
+import nz.co.noirland.zephcore.database.queries.MySQLQuery;
 
-public class GuildsQuery extends Query {
+public class GuildsQuery extends MySQLQuery {
 
     public GuildsQuery(int nargs, String query) {
         super(nargs, query);
