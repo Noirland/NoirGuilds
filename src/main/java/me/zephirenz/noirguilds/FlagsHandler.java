@@ -107,6 +107,19 @@ public class FlagsHandler implements Listener {
             return;
         }
 
+        // Kill count
+        pMember.incrDeaths();
+        pMember.getGuild().incrDeaths();
+        pMember.updateDB();
+        pMember.getGuild().updateDB();
+
+        kMember.incrKills();
+        kMember.getGuild().incrKills();
+        kMember.updateDB();
+        kMember.getGuild().updateDB();
+
+        // Money for Guild
+
         double killMoney = PluginConfig.inst().getKillMoney();
 
         if(pGuild.getBalance() >= killMoney) {

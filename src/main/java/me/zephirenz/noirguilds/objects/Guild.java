@@ -149,16 +149,16 @@ public class Guild {
         return kills;
     }
 
-    public void setKills(long kills) {
-        this.kills = kills;
+    public void incrKills() {
+        ++kills;
     }
 
     public long getDeaths() {
         return deaths;
     }
 
-    public void setDeaths(long deaths) {
-        this.deaths = deaths;
+    public void incrDeaths() {
+        ++deaths;
     }
 
     public void updateDB() {
