@@ -166,7 +166,10 @@ public class GuildsDatabase extends MySQLDatabase {
             int id = (Integer) rawRank.get("id");
             ChatColor colour = ChatColor.valueOf((String) rawRank.get("colour"));
             String name = (String) rawRank.get("name");
-            ranks.add(new GuildRank(id, guild, name, perms, colour));
+            GuildRank rank = new GuildRank(id, guild, name, perms, colour);
+            if((Boolean) rawRank.get("leader")) rank.setLeader();
+            if((Boolean) rawRank.get("default")) rank.setDefault();
+            ranks.add(rank);
         }
         return ranks;
     }
