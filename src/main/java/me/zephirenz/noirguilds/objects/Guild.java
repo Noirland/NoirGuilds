@@ -70,7 +70,7 @@ public class Guild {
 
     public Collection<GuildMember> getMembersByRank(GuildRank rank) {
         Collection<GuildMember> ret = new HashSet<GuildMember>();
-        for(GuildMember member : ret) {
+        for(GuildMember member : members) {
             if(member.getRank() == rank) ret.add(member);
         }
         return ret;
