@@ -66,9 +66,10 @@ public class GuildInfoCommandlet {
 
         List<String> members = new ArrayList<String>();
         for(GuildMember member : guild.getMembers()) {
-            members.add((Util.player(member.getPlayer()).isOnline() ? ChatColor.GREEN.toString() : "") + member.getPlayer());
+            if(Util.player(member.getPlayer()).getName() == null) continue;
+            members.add((Util.player(member.getPlayer()).isOnline() ? ChatColor.GREEN.toString() : "") + Util.player(member.getPlayer()).getName());
         }
-        membersString = Util.concatenate(membersString, members, ChatColor.RESET.toString(), ChatColor.WHITE + ", ");
+        membersString = Util.concatenate(membersString, members, ChatColor.WHITE.toString(), ChatColor.WHITE + ", ");
 
         String tagString = ChatColor.GRAY + "[" + guild.getTag() + "]";
         String titleString = ChatColor.RED + "====== " + ChatColor.WHITE + guild.getName() + " " + tagString + ChatColor.RED + " ======";
