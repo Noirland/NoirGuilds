@@ -45,16 +45,15 @@ public class GuildAdminChatCommand implements CommandExecutor {
         String prefix = String.format(GUILD_ACHAT_FORMAT, rank.getColour(), rank.getName(), player.getName());
         String msg = prefix + GuildsUtil.arrayToString(args, 0, args.length - 1, " ");
         msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
-        if(!(msg.length() == prefix.length())) {
-
-            for(GuildRank r : member.getGuild().getRanks()) {
-                if(r.hasPerm(RankPerm.ADMINCHAT)) {
-                    r.sendMessage(msg, false);
-                }
-            }
-            return true;
+        if (msg.length() == prefix.length()) {
+            return false;
         }
-        return false;
+        for(GuildRank r : member.getGuild().getRanks()) {
+            if(r.hasPerm(RankPerm.ADMINCHAT)) {
+                r.sendMessage(msg, false);
+            }
+        }
+        return true;
     }
 
 }
