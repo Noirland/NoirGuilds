@@ -71,6 +71,6 @@ public class GuildMember {
 
     @Override
     public String toString() {
-        return Util.player(player).getName();
+        return Util.name(player);
     }
 }
