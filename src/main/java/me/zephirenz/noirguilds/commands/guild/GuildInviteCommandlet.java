@@ -8,6 +8,7 @@ import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.InviteData;
 import me.zephirenz.noirguilds.tasks.GuildInviteTask;
 import nz.co.noirland.zephcore.Util;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,7 +23,7 @@ public class GuildInviteCommandlet {
     public GuildInviteCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
-        this.pConfig = PluginConfig.getInstance();
+        this.pConfig = PluginConfig.inst();
     }
 
     /**
@@ -33,20 +34,19 @@ public class GuildInviteCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
-
-        if(args.length != 1) {
-            plugin.sendMessage(sender, GUILD_INVITE_WRONG_ARGS);
-            return;
-        }
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
-        String inviter = sender.getName();
-        String invitee = args[0];
-        GuildMember inviterMember = gHandler.getGuildMember(inviter);
-        GuildMember inviteeMember = gHandler.getGuildMember(invitee);
-        if(!Util.player(invitee).isOnline()) {
+        if(args.length != 1) {
+            plugin.sendMessage(sender, GUILD_INVITE_WRONG_ARGS);
+            return;
+        }
+        OfflinePlayer inviter = (Player) sender;
+        OfflinePlayer invitee = Util.player(args[0]);
+        GuildMember inviterMember = gHandler.getMember(inviter);
+        GuildMember inviteeMember = gHandler.getMember(invitee);
+        if(!invitee.isOnline()) {
             plugin.sendMessage(sender, PLAYER_NOT_ONLINE);
             return;
         }
@@ -58,7 +58,7 @@ public class GuildInviteCommandlet {
             plugin.sendMessage(sender, GUILD_INVITE_TARGET_IN_GUILD);
             return;
         }
-        if(!gHandler.hasPerm(inviterMember, RankPerm.INVITE)) {
+        if(!inviterMember.hasPerm(RankPerm.INVITE)) {
             plugin.sendMessage(sender, GUILD_INVITE_NO_PERMS);
             return;
         }
@@ -66,8 +66,8 @@ public class GuildInviteCommandlet {
             plugin.sendMessage(sender, GUILD_AT_MAX);
             return;
         }
-        InviteData inviteData = new InviteData(inviter, invitee, inviterMember.getGuild());
-        new GuildInviteTask(inviteData).runTaskLater(plugin, 60 * 20);
+        InviteData inviteData = new InviteData(inviter.getUniqueId(), invitee.getUniqueId(), inviterMember.getGuild());
+        new GuildInviteTask(inviteData);
     }
 
 }

@@ -1,12 +1,10 @@
 noirguilds:
   member-limit: 25
   kill-money: 10
-  database:
-    type: flatfile
-    mysql:
-      hostname: localhost
-      port: 3306
-      username: herp
-      password: 'derp'
-      database: foo
-      prefix: bar_
+  db:
+    host: localhost
+    port: 3306
+    username: noirguilds
+    password: 'guilds'
+    name: noirguilds
+    prefix: guild

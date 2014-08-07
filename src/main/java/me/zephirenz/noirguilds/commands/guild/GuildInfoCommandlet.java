@@ -11,6 +11,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildInfoCommandlet {
@@ -31,7 +34,6 @@ public class GuildInfoCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
-
         Guild guild;
 
         if(args.length >= 1) {
@@ -52,34 +54,32 @@ public class GuildInfoCommandlet {
                 return;
             }
             Player player = (Player) sender;
-            GuildMember gMember = gHandler.getGuildMember(player.getName());
-            if(gMember == null) {
+            GuildMember member = gHandler.getMember(player.getName());
+            if(member == null) {
                 plugin.sendMessage(sender, GUILD_LIST_NO_GUILD);
                 return;
             }
-            guild = gMember.getGuild();
+            guild = member.getGuild();
         }
 
-        StringBuilder membersString = new StringBuilder(ChatColor.BLUE + "Members" + ChatColor.GRAY + "[" + guild.getMembers().size() + "]" + ChatColor.BLUE + ": ");
+        String membersString = ChatColor.BLUE + "Members" + ChatColor.GRAY + "[" + guild.getMembers().size() + "]" + ChatColor.BLUE + ": ";
 
-        String delim = ChatColor.RESET.toString();
+        List<String> members = new ArrayList<String>();
         for(GuildMember member : guild.getMembers()) {
-            String memberString = (Util.player(member.getPlayer()).isOnline() ? ChatColor.GREEN : "") + member.getPlayer();
-            membersString.append(delim).append(memberString);
-            delim = ChatColor.WHITE + ", ";
+            if(Util.player(member.getPlayer()).getName() == null) continue;
+            members.add((Util.player(member.getPlayer()).isOnline() ? ChatColor.GREEN.toString() : "") + Util.name(member.getPlayer()));
         }
+        membersString = Util.concatenate(membersString, members, ChatColor.WHITE.toString(), ChatColor.WHITE + ", ");
 
         String tagString = ChatColor.GRAY + "[" + guild.getTag() + "]";
         String titleString = ChatColor.RED + "====== " + ChatColor.WHITE + guild.getName() + " " + tagString + ChatColor.RED + " ======";
 
         sender.sendMessage(titleString);
-        sender.sendMessage(ChatColor.BLUE + "Leader: " + ChatColor.WHITE + guild.getLeader());
-        if(plugin.getBankManager().isEnabled()) {
-            EcoManager eco = EcoManager.inst();
-            String bal = eco.format(guild.getBalance());
-            sender.sendMessage(ChatColor.BLUE + "Bank: " + ChatColor.WHITE + bal);
-        }
-        sender.sendMessage(membersString.toString());
+        sender.sendMessage(Util.concatenate(ChatColor.BLUE + "Leader: " + ChatColor.WHITE, guild.getMembersByRank(guild.getLeaderRank()), "", ", "));
+        EcoManager eco = EcoManager.inst();
+        String bal = eco.format(guild.getBalance());
+        sender.sendMessage(ChatColor.BLUE + "Bank: " + ChatColor.WHITE + bal);
+        sender.sendMessage(membersString);
         sender.sendMessage(ChatColor.RED + StringUtils.repeat("=", ChatColor.stripColor(titleString).length()-3));
     }
 

@@ -2,6 +2,7 @@ package me.zephirenz.noirguilds.commands.grank;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
@@ -29,13 +30,11 @@ public class RankDeleteCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
-
         if(!(sender instanceof Player)) {
-
             plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
-        GuildMember gMember = gHandler.getGuildMember(sender.getName());
+        GuildMember gMember = gHandler.getMember((Player) sender);
 
         if(gMember == null) {
             plugin.sendMessage(sender, RANK_DELETE_NO_GUILD);
@@ -75,9 +74,8 @@ public class RankDeleteCommandlet {
         }
 
         guild.removeRank(rank);
-        gHandler.removeRank(rank);
+        GuildsDatabase.inst().removeRank(rank);
         plugin.sendMessage(sender, String.format(RANK_DELETE_DELETED, rank.getColour() + rank.getName()));
-
     }
 
 }

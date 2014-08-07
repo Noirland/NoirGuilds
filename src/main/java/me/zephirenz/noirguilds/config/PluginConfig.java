@@ -8,7 +8,7 @@ public class PluginConfig extends Config {
         super("config.yml");
     }
 
-    public static PluginConfig getInstance() {
+    public static PluginConfig inst() {
         if(instance == null) {
             instance = new PluginConfig();
         }
@@ -18,14 +18,13 @@ public class PluginConfig extends Config {
 
     // MYSQL
 
-    public String getDatabaseType()      { return config.getString("noirguilds.database.type", "flatfile"); }
-    public String getMySQLTablePrefix()  { return config.getString("noirguilds.database.mysql.prefix", "guild_"); }
-    public String getMySQLDatabaseName() { return config.getString("noirguilds.database.mysql.database"); }
-    public String getMySQLUserName()     { return config.getString("noirguilds.database.mysql.username"); }
-    public String getMySQLPassword()     { return config.getString("noirguilds.database.mysql.password"); }
-    public int    getMySQLServerPort()   { return config.getInt   ("noirguilds.database.mysql.port", 3306); }
-    public String getMySQLServerAddr()   { return config.getString("noirguilds.database.mysql.hostname", "localhost"); }
+    public String getDBPrefix()   { return config.getString("noirguilds.db.prefix", "guild"); }
+    public String getDBName()     { return config.getString("noirguilds.db.name"); }
+    public String getDBUser()     { return config.getString("noirguilds.db.username"); }
+    public String getDBPassword() { return config.getString("noirguilds.db.password"); }
+    public int    getDBPort()     { return config.getInt   ("noirguilds.db.port", 3306); }
+    public String getDBHost()     { return config.getString("noirguilds.db.host", "localhost"); }
 
-    public double getKillMoney()         { return config.getDouble("noirguilds.kill-money", 10); }
-    public int    getMemberLimit()       { return config.getInt   ("noirguilds.member-limit", 0); }
+    public double getKillMoney()   { return config.getDouble("noirguilds.kill-money", 10); }
+    public int    getMemberLimit() { return config.getInt   ("noirguilds.member-limit", 0); }
 }

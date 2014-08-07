@@ -26,11 +26,10 @@ public class GuildDenyCommandlet {
     /**
      *  The commandlet for denying invites.
      *  Usage: /guild deny
+     *   @param sender the sender of the command
      *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
-    public void run(CommandSender sender, String[] args) {
+    public void run(CommandSender sender) {
 
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);
@@ -41,7 +40,7 @@ public class GuildDenyCommandlet {
         GuildInviteTask inviteTask = null;
         for(GuildInviteTask task : gHandler.getInvites()) {
             InviteData id = task.getData();
-            if(id.getInvitee().equalsIgnoreCase(sender.getName())) {
+            if(id.getInvitee().equals(((Player) sender).getUniqueId())) {
                 data = id;
                 inviteTask = task;
             }
@@ -57,7 +56,7 @@ public class GuildDenyCommandlet {
 
         OfflinePlayer pSender = Util.player(data.getSender());
         if(pSender.isOnline()) {
-            plugin.sendMessage(pSender.getPlayer(), String.format(Strings.GUILD_DENY_DENIED, data.getInvitee()));
+            plugin.sendMessage(pSender.getPlayer(), String.format(Strings.GUILD_DENY_DENIED, Util.player(data.getInvitee()).getName()));
         }
         plugin.sendMessage(sender, String.format(Strings.GUILD_DENY_DENIED, data.getGuild().getName()));
 

@@ -1,12 +1,11 @@
 package me.zephirenz.noirguilds;
 
 import me.zephirenz.noirguilds.commands.*;
-import me.zephirenz.noirguilds.database.DatabaseManager;
-import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.listeners.PlayerChatListener;
 import me.zephirenz.noirguilds.listeners.PlayerJoinListener;
 import nz.co.noirland.zephcore.Debug;
-import org.bukkit.ChatColor;
+import nz.co.noirland.zephcore.database.AsyncDatabaseUpdateTask;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,14 +14,13 @@ public class NoirGuilds extends JavaPlugin {
     private static NoirGuilds inst;
     private GuildsHandler guildsHandler;
     private GuildBankManager bankManager;
-    private DatabaseManager dbManager;
     private static Debug debug;
 
     @Override
     public void onEnable() {
         inst = this;
         debug = new Debug(this);
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
+        GuildsDatabase.inst().checkSchema();
         guildsHandler = new GuildsHandler();
         bankManager = new GuildBankManager();
         try {
@@ -38,8 +36,8 @@ public class NoirGuilds extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        dbManager.saveAll();
-        dbManager.close();
+        AsyncDatabaseUpdateTask.inst().stop(); // Finishes any remaining queries
+        GuildsDatabase.inst().close();
     }
 
     public static NoirGuilds inst() {
@@ -57,12 +55,11 @@ public class NoirGuilds extends JavaPlugin {
     }
 
     public void sendMessage(CommandSender sender, String msg) {
-
-        sender.sendMessage(ChatColor.RED + "[NoirGuilds] " + ChatColor.RESET + msg);
+        sender.sendMessage(Strings.MESSAGE_PREFIX + msg);
     }
 
     public void sendGlobalMessage(String msg) {
-        getServer().broadcastMessage(ChatColor.RED + "[NoirGuilds] " + ChatColor.RESET + msg);
+        getServer().broadcastMessage(Strings.MESSAGE_PREFIX + msg);
     }
 
     private void addCommands() {

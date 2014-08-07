@@ -3,14 +3,10 @@ package me.zephirenz.noirguilds.commands.guild;
 import me.zephirenz.noirguilds.GuildBankManager;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.database.DatabaseManager;
-import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
-import nz.co.noirland.bankofnoir.BankOfNoir;
 import nz.co.noirland.bankofnoir.EcoManager;
-import nz.co.noirland.bankofnoir.Strings;
 import nz.co.noirland.zephcore.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,12 +14,12 @@ import org.bukkit.entity.Player;
 import java.text.DecimalFormat;
 
 import static me.zephirenz.noirguilds.Strings.*;
+import static nz.co.noirland.bankofnoir.Strings.AMOUNT_NAN;
 
 public class GuildPayCommandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
-    private final DatabaseManager dbManager;
     private final GuildBankManager bManager;
     private final EcoManager eco;
 
@@ -32,7 +28,6 @@ public class GuildPayCommandlet {
         this.gHandler = plugin.getGuildsHandler();
         this.bManager = plugin.getBankManager();
         this.eco = EcoManager.inst();
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
     }
 
 
@@ -44,26 +39,24 @@ public class GuildPayCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
+        if(!(sender instanceof Player)) {
+            plugin.sendMessage(sender, NO_CONSOLE);
+            return;
+        }
 
-        GuildMember member = gHandler.getGuildMember(sender.getName());
+        GuildMember member = gHandler.getMember((Player) sender);
         if(member == null) {
             plugin.sendMessage(sender, GUILD_PAY_NO_GUILD);
             return;
         }
         Guild fromGuild = member.getGuild();
 
-
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
-
         if(args.length != 2) {
             plugin.sendMessage(sender, GUILD_PAY_WRONG_ARGS);
             return;
         }
 
-        if(!gHandler.hasPerm(member, RankPerm.PAY)) {
+        if(!member.hasPerm(RankPerm.PAY)) {
             plugin.sendMessage(sender, GUILD_PAY_NO_PERMS);
             return;
         }
@@ -84,7 +77,7 @@ public class GuildPayCommandlet {
         try {
             amount = Double.parseDouble(a);
         } catch(NumberFormatException e) {
-            plugin.sendMessage(sender, Strings.AMOUNT_NAN);
+            plugin.sendMessage(sender, AMOUNT_NAN);
             return;
         }
         if(amount < 0) {
@@ -111,14 +104,12 @@ public class GuildPayCommandlet {
         toGuild.setBalance(toBal + amount);
         fromGuild.setBalance(fromBal - amount);
 
-        dbManager.setBalance(toGuild, toGuild.getBalance());
-        dbManager.setBalance(fromGuild, fromGuild.getBalance());
+        toGuild.updateDB();
+        fromGuild.updateDB();
 
-        if(Util.player(toGuild.getLeader()).isOnline()) {
-            BankOfNoir.sendMessage(Util.player(toGuild.getLeader()).getPlayer(), String.format(GUILD_PAY_RECIEVED, eco.format(amount), fromGuild.getName()));
-        }
+        toGuild.getLeaderRank().sendMessage(String.format(GUILD_PAY_RECIEVED, eco.format(amount), fromGuild.getName()), true);
 
-        BankOfNoir.sendMessage(sender, String.format(GUILD_PAY_SUCCESSFUL, eco.format(amount), toGuild.getName()));
+        plugin.sendMessage(sender, String.format(GUILD_PAY_SUCCESSFUL, eco.format(amount), toGuild.getName()));
     }
 
 }

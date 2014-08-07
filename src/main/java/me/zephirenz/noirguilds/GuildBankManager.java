@@ -1,7 +1,5 @@
 package me.zephirenz.noirguilds;
 
-import me.zephirenz.noirguilds.database.DatabaseManager;
-import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -19,22 +17,10 @@ import org.bukkit.inventory.Inventory;
 
 public class GuildBankManager extends AbstractBankManager<Guild> {
 
-    private DatabaseManager dbManager;
     private GuildsHandler gHandler;
 
-    private boolean enabled = true;
-
     public GuildBankManager() {
-        if(BankOfNoir.inst() == null) {
-            enabled = false;
-            return;
-        }
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
         this.gHandler = NoirGuilds.inst().getGuildsHandler();
-    }
-
-    public boolean isEnabled() {
-        return enabled;
     }
 
     @Override
@@ -49,8 +35,9 @@ public class GuildBankManager extends AbstractBankManager<Guild> {
 
     @Override
     public void updateBalance(Guild owner, Player updater, double balance, double diff) {
-        dbManager.setBalance(owner, balance);
         owner.setBalance(balance);
+        owner.updateDB();
+
         String action;
 
         if(diff > 0) {
@@ -60,9 +47,11 @@ public class GuildBankManager extends AbstractBankManager<Guild> {
         }
         BankOfNoir.sendMessage(updater, String.format(action, eco.format(Math.abs(diff))));
 
-        OfflinePlayer pOwner = Util.player(owner.getLeader());
-        if(!pOwner.equals(updater) && pOwner.isOnline()) {
-            BankOfNoir.sendMessage(pOwner.getPlayer(), String.format(action, eco.format(Math.abs(diff))));
+        for(GuildMember leader : owner.getMembersByRank(owner.getLeaderRank())) {
+            OfflinePlayer pLeader = Util.player(leader.getPlayer());
+            if(!pLeader.equals(updater) && pLeader.isOnline()) {
+                BankOfNoir.sendMessage(pLeader.getPlayer(), String.format(action, eco.format(Math.abs(diff))));
+            }
         }
     }
 
@@ -106,10 +95,10 @@ public class GuildBankManager extends AbstractBankManager<Guild> {
         }
 
         boolean enabled;
-        GuildMember member = gHandler.getGuildMember(event.getWhoClicked().getName());
+        GuildMember member = gHandler.getMember((Player) event.getWhoClicked());
         if((member != null && member.getGuild() != null && member.getGuild().equals(bank.getOwner()))) {
             // If member is part of guild's bank, check if they have withdraw perms
-            enabled = gHandler.hasPerm(member, RankPerm.BANK_WITHDRAW);
+            enabled = member.hasPerm(RankPerm.BANK_WITHDRAW);
         }else{
             // Otherwise, check if they have override perms
             enabled = event.getWhoClicked().hasPermission(Perms.BANK_OTHER);

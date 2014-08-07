@@ -38,7 +38,7 @@ public enum RankPerm {
                 return rp;
             }
         }
-        throw new IllegalArgumentException("No rank perm with value " + perm);
+        return null;
     }
 
     public String getPerm() {

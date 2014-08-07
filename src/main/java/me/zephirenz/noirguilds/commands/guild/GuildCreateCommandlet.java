@@ -1,15 +1,18 @@
 package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.GuildsUtil;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
+import nz.co.noirland.zephcore.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
@@ -32,26 +35,22 @@ public class GuildCreateCommandlet {
      *  @param args   commandlet specific args
      */
     public void run(CommandSender sender, String[] args) {
-
         if(args.length < 2) {
             plugin.sendMessage(sender, GUILD_CREATE_WRONG_ARGS);
-//            helpCommandlet(sender, args, GuildCommandlet.create);
             return;
         }
         String name = args[0];
         String tag = args[1];
-        String leader;
 
-
+        UUID leader;
         if(args.length == 3 && sender.hasPermission(Perms.CREATE_OTHER)) {
-            leader = args[2];
+            leader = Util.uuid(args[2]);
         }else{
-            if(sender instanceof Player) {
-                leader = sender.getName();
-            }else{
+            if (!(sender instanceof Player)) {
                 plugin.sendMessage(sender, GUILD_CREATE_CONSOLE_LEADER);
                 return;
             }
+            leader = ((Player) sender).getUniqueId();
         }
 
         if(!sender.hasPermission(Perms.CREATE)) {
@@ -59,15 +58,12 @@ public class GuildCreateCommandlet {
             return;
         }
 
-        if(gHandler.getGuildMember(leader) != null) {
+        if(gHandler.getMember(leader) != null) {
             plugin.sendMessage(sender, GUILD_CREATE_IN_GUILD);
             return;
         }
-        if(!GuildsUtil.isValidTag(tag)) {
-            if(tag.length() <= 4) {
-                plugin.sendMessage(sender, BIG_TAG);
-            }
-            plugin.sendMessage(sender, BAD_TAG_CHARS);
+        if(tag.length() > 4) {
+            plugin.sendMessage(sender, BIG_TAG);
             return;
         }
 
@@ -82,21 +78,22 @@ public class GuildCreateCommandlet {
             }
         }
 
-        Guild guild = new Guild(name, tag, leader);
+        GuildsDatabase db = GuildsDatabase.inst();
+        Guild guild = new Guild(gHandler.createGuildID(), name, tag, 0, 0, 0, null, null);
+        db.addGuild(guild);
 
-        GuildRank leaderRank = new GuildRank(guild, DEFAULT_LEADER, null, ChatColor.DARK_RED);
-        leaderRank.setLeader(true);
-        guild.addRank(leaderRank);
+        GuildRank leaderRank = new GuildRank(gHandler.createRankID(), guild, DEFAULT_LEADER, null, ChatColor.DARK_RED);
+        leaderRank.setLeader();
+        db.addRank(leaderRank);
 
-        GuildRank defRank = new GuildRank(guild, DEFAULT_DEFAULT, null, ChatColor.BLUE);
-        defRank.setDefault(true);
-        guild.addRank(defRank);
+        GuildRank defRank = new GuildRank(gHandler.createRankID(), guild, DEFAULT_DEFAULT, null, ChatColor.BLUE);
+        defRank.setDefault();
+        db.addRank(defRank);
 
-        GuildMember leaderMember = new GuildMember(leader, guild, leaderRank);
-        guild.addGuildMember(leaderMember);
+        db.addMember(new GuildMember(leader, leaderRank, 0, 0));
 
         gHandler.addGuild(guild);
-        plugin.sendGlobalMessage(String.format(GUILD_CREATE_CREATED, guild.getLeader(), name));
+        plugin.sendGlobalMessage(String.format(GUILD_CREATE_CREATED, Util.player(leader).getName(), name));
     }
 
 }

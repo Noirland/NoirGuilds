@@ -11,24 +11,19 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class PlayerChatListener implements Listener {
 
-    private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
 
     public PlayerChatListener() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
+        this.gHandler = NoirGuilds.inst().getGuildsHandler();
     }
 
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerChat(final AsyncPlayerChatEvent event) {
-
         String guildString = "";
-        String player = event.getPlayer().getName();
-        GuildMember gMember = gHandler.getGuildMember(player);
-        if(gMember != null) {
-            Guild guild = gMember.getGuild();
+        GuildMember member = gHandler.getMember(event.getPlayer());
+        if(member != null) {
+            Guild guild = member.getGuild();
             guildString = " [" + guild.getTag() + "]";
-
         }
 
         String format = event.getFormat();

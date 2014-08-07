@@ -1,16 +1,18 @@
 package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.GuildsUtil;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
+import nz.co.noirland.zephcore.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
@@ -30,32 +32,29 @@ public class GuildAdminChatCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        GuildMember gPlayer = gHandler.getGuildMember(player.getName());
-        if(gPlayer == null || gPlayer.getGuild() == null || gPlayer.getRank() == null) {
+        GuildMember member = gHandler.getMember(player);
+        if(member == null) {
             plugin.sendMessage(sender, GUILD_CHAT_NO_GUILD);
             return true;
         }
 
-        GuildRank rank = gPlayer.getRank();
-        if(!gHandler.hasPerm(gPlayer, RankPerm.ADMINCHAT)) {
+        GuildRank rank = member.getRank();
+        if(!member.hasPerm(RankPerm.ADMINCHAT)) {
             plugin.sendMessage(sender, GUILD_ACHAT_NO_PERMS);
             return true;
         }
 
-        String prefix = ChatColor.GREEN + "[A]" + ChatColor.GRAY + " [" + rank.getColour() + rank.getName() + ChatColor.GRAY + "] "
-                + ChatColor.RESET + player.getName() + ChatColor.GRAY + ":" + ChatColor.RESET;
-        String msg = prefix + GuildsUtil.arrayToString(args, 0, args.length - 1, " ");
+        String prefix = String.format(GUILD_ACHAT_FORMAT, rank.getColour(), rank.getName(), player.getName());
+        String msg = Util.concatenate(prefix, Arrays.asList(args), "", " ");
         msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
-        if(!(msg.length() == prefix.length())) {
-
-            for(GuildRank r : gPlayer.getGuild().getRanks()) {
-                if(gHandler.hasPerm(r, RankPerm.ADMINCHAT)) {
-                    gHandler.sendMessageToRank(gPlayer.getGuild(), r, msg);
-                }
-
+        if (msg.length() == prefix.length()) {
+            return false;
+        }
+        for(GuildRank r : member.getGuild().getRanks()) {
+            if(r.hasPerm(RankPerm.ADMINCHAT)) {
+                r.sendMessage(msg, false);
             }
         }
-
         return true;
     }
 

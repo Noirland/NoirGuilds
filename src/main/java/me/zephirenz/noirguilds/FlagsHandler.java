@@ -67,8 +67,8 @@ public class FlagsHandler implements Listener {
         Player to = (Player) event.getEntity();
         Player from = (Player) event.getDamager();
 
-        GuildMember toMember = gHandler.getGuildMember(to.getName());
-        GuildMember fromMember = gHandler.getGuildMember(from.getName());
+        GuildMember toMember = gHandler.getMember(to.getName());
+        GuildMember fromMember = gHandler.getMember(from.getName());
         if(toMember == null || fromMember == null) return;
 
         if(toMember.getGuild() != fromMember.getGuild()) {
@@ -91,8 +91,8 @@ public class FlagsHandler implements Listener {
 
         if(killer == null) return;
 
-        GuildMember pMember = gHandler.getGuildMember(player.getName());
-        GuildMember kMember = gHandler.getGuildMember(killer.getName());
+        GuildMember pMember = gHandler.getMember(player.getName());
+        GuildMember kMember = gHandler.getMember(killer.getName());
 
         if(kMember == null || pMember == null) return; // Killer/Killed has no guild
 
@@ -107,7 +107,20 @@ public class FlagsHandler implements Listener {
             return;
         }
 
-        double killMoney = PluginConfig.getInstance().getKillMoney();
+        // Kill count
+        pMember.incrDeaths();
+        pMember.getGuild().incrDeaths();
+        pMember.updateDB();
+        pMember.getGuild().updateDB();
+
+        kMember.incrKills();
+        kMember.getGuild().incrKills();
+        kMember.updateDB();
+        kMember.getGuild().updateDB();
+
+        // Money for Guild
+
+        double killMoney = PluginConfig.inst().getKillMoney();
 
         if(pGuild.getBalance() >= killMoney) {
             pGuild.setBalance(pGuild.getBalance() - killMoney);
@@ -119,7 +132,7 @@ public class FlagsHandler implements Listener {
         }  else return;
 
         kGuild.setBalance(kGuild.getBalance() + killMoney);
-        plugin.sendMessage(player, String.format(Strings.FLAG_PVP_WON, eco.format(killMoney)));
+        plugin.sendMessage(killer, String.format(Strings.FLAG_PVP_WON, eco.format(killMoney)));
     }
 
 

@@ -2,6 +2,7 @@ package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -29,18 +30,18 @@ public class GuildKickCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
+        if(!(sender instanceof Player)) {
+            plugin.sendMessage(sender, NO_CONSOLE);
+            return;
+        }
 
         if(args.length != 1) {
             plugin.sendMessage(sender, GUILD_KICK_WRONG_ARGS);
             return;
         }
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
         String kickee = args[0];
-        GuildMember senderMember = gHandler.getGuildMember(sender.getName());
-        GuildMember kickeeMember = gHandler.getGuildMember(kickee);
+        GuildMember senderMember = gHandler.getMember((Player) sender);
+        GuildMember kickeeMember = gHandler.getMember(kickee);
 
         if(senderMember == null) {
             plugin.sendMessage(sender, GUILD_KICK_NO_GUILD);
@@ -48,11 +49,12 @@ public class GuildKickCommandlet {
         }
         Guild guild = senderMember.getGuild();
 
-        boolean inGuild = false;
-        if(kickeeMember != null && senderMember.getGuild().getMembers().contains(kickeeMember)) {
-                inGuild = true;
+        if(!senderMember.hasPerm(RankPerm.KICK)) {
+            plugin.sendMessage(sender, GUILD_KICK_NO_PERMS);
+            return;
         }
-        if(!inGuild) {
+
+        if(!senderMember.getGuild().getMembers().contains(kickeeMember)) {
             plugin.sendMessage(sender, GUILD_KICK_BAD_TAGET);
             return;
         }
@@ -60,14 +62,10 @@ public class GuildKickCommandlet {
             plugin.sendMessage(sender, GUILD_KICK_LEADER);
             return;
         }
-        if(!gHandler.hasPerm(senderMember, RankPerm.KICK)) {
-            plugin.sendMessage(sender, GUILD_KICK_NO_PERMS);
-            return;
-        }
 
-        guild.removeGuildMember(kickeeMember);
-        gHandler.removeGuildMember(kickeeMember);
-        gHandler.sendMessageToGuild(guild, String.format(GUILD_KICK_KICKED, kickee));
+        guild.removeMember(kickeeMember);
+        GuildsDatabase.inst().removeMember(kickeeMember);
+        guild.sendMessage(String.format(GUILD_KICK_KICKED, kickee), true);
     }
 
 }

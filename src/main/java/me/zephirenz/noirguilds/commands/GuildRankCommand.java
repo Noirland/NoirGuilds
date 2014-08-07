@@ -47,7 +47,7 @@ public class GuildRankCommand implements CommandExecutor {
                 new RankSetCommandlet().run(sender, cmdletArgs);
                 break;
             case list:
-                new RankListCommandlet().run(sender, cmdletArgs);
+                new RankListCommandlet().run(sender);
                 break;
             default:
                 break;

@@ -1,8 +1,6 @@
 package me.zephirenz.noirguilds;
 
-import me.zephirenz.noirguilds.database.DatabaseManager;
-import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
-import me.zephirenz.noirguilds.enums.RankPerm;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
@@ -11,79 +9,35 @@ import nz.co.noirland.zephcore.Util;
 import org.bukkit.OfflinePlayer;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 public class GuildsHandler {
 
-    private final NoirGuilds plugin;
-    private final DatabaseManager dbManager;
-    private final ArrayList<Guild> guilds = new ArrayList<Guild>();
-    private final ArrayList<GuildInviteTask> invites = new ArrayList<GuildInviteTask>();
+    private final List<Guild> guilds = new ArrayList<Guild>();
+    private final List<GuildInviteTask> invites = new ArrayList<GuildInviteTask>();
 
     public GuildsHandler() {
-        this.plugin = NoirGuilds.inst();
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
-        updateGuildsList();
+        guilds.addAll(GuildsDatabase.inst().getGuilds());
     }
 
-    public void updateGuildsList() {
-
-         for(Guild guildA : dbManager.getGuilds()) {
-             boolean inArray = false;
-             for(Guild guildB : guilds) {
-                 if(guildA.equals(guildB)) {
-                     inArray = true;
-                 }
-             }
-             if(!inArray) {
-                 guilds.add(guildA);
-             }
-         }
-    }
-
-    public ArrayList<Guild> getGuilds() {
+    public Collection<Guild> getGuilds() {
         return guilds;
     }
 
     public void addGuild(Guild guild) {
         guilds.add(guild);
-        dbManager.createGuild(guild);
-    }
-
-    public void addRank(GuildRank rank) {
-        dbManager.addRank(rank);
-    }
-
-    public void addMember(GuildMember member) {
-        dbManager.addMember(member);
     }
 
     public void removeGuild(Guild guild) {
-        guilds.remove(guild);
         for(GuildInviteTask task : getInvites()) {
             if(task.getData().getGuild() == guild) {
                 task.run();
                 task.cancel();
             }
         }
-        dbManager.removeGuild(guild);
-    }
-
-    public void removeRank(GuildRank rank) {
-        for(GuildMember member : rank.getGuild().getMembers()) {
-            if(member.getRank() == rank){
-                member.setRank(rank.getGuild().getDefaultRank());
-                OfflinePlayer p = Util.player(member.getPlayer());
-                if(p.isOnline()) {
-                    plugin.sendMessage(p.getPlayer(), String.format(Strings.RANK_DELETE_RANK_DELETED, member.getRank().getColour() + member.getRank().getName()));
-                }
-            }
-        }
-        dbManager.removeRank(rank);
-    }
-
-    public void removeGuildMember(GuildMember member) {
-        dbManager.removeMember(member);
-
+        guilds.remove(guild);
     }
 
     public Guild getGuildByName(String name) {
@@ -104,7 +58,7 @@ public class GuildsHandler {
         return null;
     }
 
-    public GuildMember getGuildMember(String player) {
+    public GuildMember getMember(UUID player) {
         for(Guild guild : guilds) {
             for(GuildMember member : guild.getMembers()) {
                 if(member.getPlayer().equals(player)) {
@@ -115,40 +69,15 @@ public class GuildsHandler {
         return null;
     }
 
-    public void sendMessageToGuild(Guild guild, String msg) {
-        for(GuildMember member : guild.getMembers()) {
-            OfflinePlayer player = Util.player(member.getPlayer());
-            if(player.isOnline()) {
-                player.getPlayer().sendMessage(msg);
-            }
-        }
+    public GuildMember getMember(OfflinePlayer player) {
+        return getMember(player.getUniqueId());
     }
 
-    public void sendMessageToRank(Guild guild, GuildRank rank, String msg) {
-        for(GuildMember member : guild.getMembers()) {
-            if(!(member.getRank().equals(rank))) {
-                return;
-            }
-            OfflinePlayer player = Util.player(member.getPlayer());
-            if(player.isOnline()) {
-                player.getPlayer().sendMessage(msg);
-            }
-        }
+    public GuildMember getMember(String name) {
+        return getMember(Util.player(name));
     }
 
-    public boolean hasPerm(GuildMember member, RankPerm perm) {
-        return hasPerm(member.getRank(), perm);
-    }
-
-    public boolean hasPerm(GuildRank rank, RankPerm perm) {
-        if(rank.isLeader()) {
-            return true;
-        }else{
-            return rank.hasPerm(perm);
-        }
-    }
-
-    public ArrayList<GuildInviteTask> getInvites() {
+    public Collection<GuildInviteTask> getInvites() {
         return invites;
     }
 
@@ -158,5 +87,36 @@ public class GuildsHandler {
 
     public void removeInvite(GuildInviteTask task) {
         invites.remove(task);
+    }
+
+    public int createGuildID() {
+        while(true) { // This should be safe in thread, over 60,000 possible IDs
+            int id = Util.createRandomHex(4);
+            boolean found = false;
+            for(Guild guild : guilds) {
+                if(guild.getId() == id) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found) return id;
+        }
+    }
+
+    public int createRankID() {
+        while(true) { // This should be safe in thread, over 65,000 possible IDs
+            int id = Util.createRandomHex(4);
+            boolean found = false;
+            for(Guild guild : guilds) {
+                for(GuildRank rank : guild.getRanks()) {
+                    if(rank.getId() == id) {
+                        found = true;
+                        break;
+                    }
+                }
+                if(found) break;
+            }
+            if(!found) return id;
+        }
     }
 }

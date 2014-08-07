@@ -26,18 +26,17 @@ public class RankListCommandlet {
     /**
      *  The commandlet for listing all ranks.
      *  Usage: /grank list
+     *   @param sender the sender of the command
      *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
-    public void run(CommandSender sender, String[] args) {
+    public void run(CommandSender sender) {
 
         if(!(sender instanceof Player)) {
 
             plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
-        GuildMember gMember = gHandler.getGuildMember(sender.getName());
+        GuildMember gMember = gHandler.getMember((Player) sender);
 
         if(gMember == null) {
             plugin.sendMessage(sender, RANK_LIST_NO_GUILD);
