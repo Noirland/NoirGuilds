@@ -2,17 +2,11 @@ package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.callbacks.InfoCallback;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
-import nz.co.noirland.bankofnoir.EcoManager;
-import nz.co.noirland.zephcore.Util;
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
@@ -62,25 +56,7 @@ public class GuildInfoCommandlet {
             guild = member.getGuild();
         }
 
-        String membersString = ChatColor.BLUE + "Members" + ChatColor.GRAY + "[" + guild.getMembers().size() + "]" + ChatColor.BLUE + ": ";
-
-        List<String> members = new ArrayList<String>();
-        for(GuildMember member : guild.getMembers()) {
-            if(Util.player(member.getPlayer()).getName() == null) continue;
-            members.add((Util.player(member.getPlayer()).isOnline() ? ChatColor.GREEN.toString() : "") + Util.name(member.getPlayer()));
-        }
-        membersString = Util.concatenate(membersString, members, ChatColor.WHITE.toString(), ChatColor.WHITE + ", ");
-
-        String tagString = ChatColor.GRAY + "[" + guild.getTag() + "]";
-        String titleString = ChatColor.RED + "====== " + ChatColor.WHITE + guild.getName() + " " + tagString + ChatColor.RED + " ======";
-
-        sender.sendMessage(titleString);
-        sender.sendMessage(Util.concatenate(ChatColor.BLUE + "Leader: " + ChatColor.WHITE, guild.getMembersByRank(guild.getLeaderRank()), "", ", "));
-        EcoManager eco = EcoManager.inst();
-        String bal = eco.format(guild.getBalance());
-        sender.sendMessage(ChatColor.BLUE + "Bank: " + ChatColor.WHITE + bal);
-        sender.sendMessage(membersString);
-        sender.sendMessage(ChatColor.RED + StringUtils.repeat("=", ChatColor.stripColor(titleString).length()-3));
+        new InfoCallback(sender, guild);
     }
 
 }
