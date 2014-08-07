@@ -103,7 +103,7 @@ public class RankEditCommandlet {
 
         rank.setColour(colour);
         rank.updateDB();
-        plugin.sendMessage(sender, String.format(RANK_EDIT_SET_COLOUR, colour + colour.toString()));
+        plugin.sendMessage(sender, String.format(RANK_EDIT_SET_COLOUR, colour + colour.name()));
 
     }
     private void editName(CommandSender sender, GuildRank rank, String value) {

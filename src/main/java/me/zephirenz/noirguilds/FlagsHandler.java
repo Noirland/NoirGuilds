@@ -132,7 +132,7 @@ public class FlagsHandler implements Listener {
         }  else return;
 
         kGuild.setBalance(kGuild.getBalance() + killMoney);
-        plugin.sendMessage(player, String.format(Strings.FLAG_PVP_WON, eco.format(killMoney)));
+        plugin.sendMessage(killer, String.format(Strings.FLAG_PVP_WON, eco.format(killMoney)));
     }
 
 

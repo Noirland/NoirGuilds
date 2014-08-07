@@ -67,7 +67,7 @@ public class GuildInfoCommandlet {
         List<String> members = new ArrayList<String>();
         for(GuildMember member : guild.getMembers()) {
             if(Util.player(member.getPlayer()).getName() == null) continue;
-            members.add((Util.player(member.getPlayer()).isOnline() ? ChatColor.GREEN.toString() : "") + Util.player(member.getPlayer()).getName());
+            members.add((Util.player(member.getPlayer()).isOnline() ? ChatColor.GREEN.toString() : "") + Util.name(member.getPlayer()));
         }
         membersString = Util.concatenate(membersString, members, ChatColor.WHITE.toString(), ChatColor.WHITE + ", ");
 

@@ -23,7 +23,7 @@ public class GuildMember {
     }
 
     public boolean hasPerm(RankPerm perm) {
-        return rank.hasPerm(perm);
+        return getGuild().getLeaderRank() == getRank() || rank.hasPerm(perm);
     }
 
     public UUID getPlayer() {

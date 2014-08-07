@@ -5,6 +5,7 @@ import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
+import nz.co.noirland.zephcore.Util;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -46,7 +47,7 @@ public class GuildLeaveCommandlet {
 
         guild.removeMember(member);
         GuildsDatabase.inst().removeMember(member);
-        guild.sendMessage(String.format(GUILD_LEAVE_GUILD_LEFT, member.getPlayer()), true);
+        guild.sendMessage(String.format(GUILD_LEAVE_GUILD_LEFT, Util.player(member.getPlayer()).getName()), true);
         plugin.sendMessage(sender, String.format(GUILD_LEAVE_PLAYER_LEFT, guild.getName()));
 
     }

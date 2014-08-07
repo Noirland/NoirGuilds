@@ -17,7 +17,6 @@ public class Strings {
     public static final String GUILD_EXISTS = "A guild with that name already exists.";
     public static final String TAG_EXISTS = "A guild with that tag already exists.";
     public static final String BIG_TAG = "Tags must be a maximum of 4 characters.";
-    public static final String BAD_TAG_CHARS = "Tags must only contain letters, numbers, periods, dashes, and underscores.";
     public static final String PLAYER_NOT_ONLINE = "Player does not exist or is not online.";
     public static final String NO_COMMAND = "Command not found.";
     public static final String BANKS_NOT_ENABLED = "Guild Banks are not enabled.";
@@ -68,7 +67,7 @@ public class Strings {
     public static final String GUILD_PAY_NO_PERMS = "You don't have permission to pay another guild.";
     public static final String GUILD_PAY_WRONG_ARGS = "You must specify a guild's name and amount to pay.";
     public static final String GUILD_PAY_SUCCESSFUL = "Sent %s to %s.";
-    public static final String GUILD_PAY_RECIEVED = "Recieved %s from %s.";
+    public static final String GUILD_PAY_RECIEVED = "Guild recieved %s from %s.";
     public static final String GUILD_PAY_INSUFFICIENT_BALANCE = "Your guild doesn't have enough money, you need %s.";
     public static final String GUILD_PAY_SELF = "You can't pay your own guild!";
     public static final String GUILD_PAY_NEGATIVE_AMOUNT = "You cannot 'pay' a guild a negative amount!";
@@ -122,7 +121,7 @@ public class Strings {
     public static final String GUILD_MOTD_UPDATED = "Updated guild MOTD.";
 
     public static final String GUILD_CHAT_NO_GUILD = "You are not currently in a guild.";
-    public static final String GUILD_CHAT_NAME_FORMAT = ChatColor.GRAY + " [%s%s" + ChatColor.GRAY + "] " + ChatColor.RESET + "%s"+ ChatColor.RED + ":" + ChatColor.RESET;
+    public static final String GUILD_CHAT_NAME_FORMAT = ChatColor.GRAY + " [%s%s" + ChatColor.GRAY + "] " + ChatColor.RESET + "%s"+ ChatColor.RED + ":" + ChatColor.RESET + " ";
     public static final String GUILD_CHAT_FORMAT = ChatColor.RED + "[G]" + GUILD_CHAT_NAME_FORMAT;
     public static final String GUILD_ACHAT_FORMAT = ChatColor.GREEN + "[A]" + GUILD_CHAT_NAME_FORMAT;
     public static final String GUILD_ACHAT_NO_PERMS = "You haven't got permission to use Guild Admin chat.";
@@ -144,6 +143,6 @@ public class Strings {
     public static final String HQ_SET = "Your guild's HQ has been set here.";
 
     public static final String FLAG_PVP_GUILD_TAKEN = ChatColor.GOLD + "%s" + ChatColor.RESET +" was taken from your guild.";
-    public static final String FLAG_PVP_PLAYER_TAKEN = ChatColor.GOLD + "%s" + ChatColor.RESET +" was taken from your guild.";
+    public static final String FLAG_PVP_PLAYER_TAKEN = ChatColor.GOLD + "%s" + ChatColor.RESET +" was taken from your balance.";
     public static final String FLAG_PVP_WON = ChatColor.GOLD + "%s" + ChatColor.RESET +" was given to your guild for winning.";
 }

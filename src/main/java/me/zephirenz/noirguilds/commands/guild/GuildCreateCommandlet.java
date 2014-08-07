@@ -1,7 +1,6 @@
 package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.GuildsUtil;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
 import me.zephirenz.noirguilds.database.GuildsDatabase;
@@ -63,11 +62,8 @@ public class GuildCreateCommandlet {
             plugin.sendMessage(sender, GUILD_CREATE_IN_GUILD);
             return;
         }
-        if(!GuildsUtil.isValidTag(tag)) {
-            if(tag.length() > 4) {
-                plugin.sendMessage(sender, BIG_TAG);
-            }
-            plugin.sendMessage(sender, BAD_TAG_CHARS);
+        if(tag.length() > 4) {
+            plugin.sendMessage(sender, BIG_TAG);
             return;
         }
 

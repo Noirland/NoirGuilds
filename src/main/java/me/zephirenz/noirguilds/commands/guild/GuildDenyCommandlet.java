@@ -56,7 +56,7 @@ public class GuildDenyCommandlet {
 
         OfflinePlayer pSender = Util.player(data.getSender());
         if(pSender.isOnline()) {
-            plugin.sendMessage(pSender.getPlayer(), String.format(Strings.GUILD_DENY_DENIED, data.getInvitee()));
+            plugin.sendMessage(pSender.getPlayer(), String.format(Strings.GUILD_DENY_DENIED, Util.player(data.getInvitee()).getName()));
         }
         plugin.sendMessage(sender, String.format(Strings.GUILD_DENY_DENIED, data.getGuild().getName()));
 

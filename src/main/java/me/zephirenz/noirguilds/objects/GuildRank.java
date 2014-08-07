@@ -39,7 +39,7 @@ public class GuildRank {
     public void sendMessage(String msg, boolean prefix) {
         for(GuildMember member : guild.getMembers()) {
             if(!(member.getRank().equals(this))) {
-                return;
+                continue;
             }
             OfflinePlayer player = Util.player(member.getPlayer());
             if(player.isOnline()) {
@@ -50,11 +50,11 @@ public class GuildRank {
 
     public void remove() {
         Collection<GuildMember> changed = guild.getMembersByRank(this);
+        sendMessage(String.format(Strings.RANK_DELETE_RANK_DELETED, guild.getDefaultRank().getColour() + guild.getDefaultRank().getName()), true);
         for(GuildMember member : changed) {
             member.setRank(guild.getDefaultRank());
             member.updateDB();
         }
-        sendMessage(String.format(Strings.RANK_DELETE_RANK_DELETED, guild.getDefaultRank().getColour() + guild.getDefaultRank().getName()), true);
     }
 
     public Boolean hasPerm(RankPerm perm) {

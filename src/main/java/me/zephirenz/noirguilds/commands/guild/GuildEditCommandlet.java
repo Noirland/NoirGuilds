@@ -1,7 +1,6 @@
 package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.GuildsUtil;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -76,11 +75,8 @@ public class GuildEditCommandlet {
 
     public void editTag(CommandSender sender, Guild guild, String tag) {
 
-        if(!GuildsUtil.isValidTag(tag)) {
-            if(tag.length() > 4) {
-                plugin.sendMessage(sender, BIG_TAG);
-            }
-            plugin.sendMessage(sender, BAD_TAG_CHARS);
+        if(tag.length() > 4) {
+            plugin.sendMessage(sender, BIG_TAG);
             return;
         }
 
