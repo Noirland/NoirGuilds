@@ -11,7 +11,6 @@ import me.zephirenz.noirguilds.objects.GuildMember;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -74,7 +73,7 @@ public class FlagsHandler implements Listener {
         if(event.getDamager() instanceof Player) {
             from = (Player) event.getDamager();
         } else if(event.getDamager() instanceof Projectile) {
-            ProjectileSource source = ((Arrow) event.getDamager()).getShooter();
+            ProjectileSource source = ((Projectile) event.getDamager()).getShooter();
             if (!(source instanceof Player)) {
                 return;
             }
