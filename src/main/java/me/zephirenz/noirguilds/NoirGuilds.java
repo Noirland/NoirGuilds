@@ -5,7 +5,6 @@ import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.listeners.PlayerChatListener;
 import me.zephirenz.noirguilds.listeners.PlayerJoinListener;
 import nz.co.noirland.zephcore.Debug;
-import nz.co.noirland.zephcore.database.AsyncDatabaseUpdateTask;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,7 +35,6 @@ public class NoirGuilds extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        AsyncDatabaseUpdateTask.inst().stop(); // Finishes any remaining queries
         GuildsDatabase.inst().close();
     }
 
