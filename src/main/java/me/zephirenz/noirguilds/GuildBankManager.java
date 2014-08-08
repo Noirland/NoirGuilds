@@ -30,7 +30,7 @@ public class GuildBankManager extends AbstractBankManager<Guild> {
 
     @Override
     protected String getName(Guild owner) {
-        return owner.getName();
+        return owner.getTag();
     }
 
     @Override
