@@ -2,11 +2,14 @@ package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildKickCommandlet {
 
@@ -27,47 +30,42 @@ public class GuildKickCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
-
-        if(args.length != 1) {
-            plugin.sendMessage(sender, "You must specify a player to kick.");
+        if(!(sender instanceof Player)) {
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Console can not kick players from guilds.");
+
+        if(args.length != 1) {
+            plugin.sendMessage(sender, GUILD_KICK_WRONG_ARGS);
             return;
         }
         String kickee = args[0];
-        GuildMember senderMember = gHandler.getGuildMember(sender.getName());
-        GuildMember kickeeMember = gHandler.getGuildMember(kickee);
+        GuildMember senderMember = gHandler.getMember((Player) sender);
+        GuildMember kickeeMember = gHandler.getMember(kickee);
 
         if(senderMember == null) {
-            plugin.sendMessage(sender, "You must be in a guild to leave players.");
+            plugin.sendMessage(sender, GUILD_KICK_NO_GUILD);
             return;
         }
         Guild guild = senderMember.getGuild();
 
-        boolean inGuild = false;
-        if(kickeeMember != null && senderMember.getGuild().getMembers().contains(kickeeMember)) {
-                inGuild = true;
+        if(!senderMember.hasPerm(RankPerm.KICK)) {
+            plugin.sendMessage(sender, GUILD_KICK_NO_PERMS);
+            return;
         }
-        if(!inGuild) {
-            plugin.sendMessage(sender, "Player must be in your guild to kick.");
+
+        if(!senderMember.getGuild().getMembers().contains(kickeeMember)) {
+            plugin.sendMessage(sender, GUILD_KICK_BAD_TAGET);
             return;
         }
         if(kickeeMember.getRank().isLeader()) {
-            plugin.sendMessage(sender, "You can't kick the guild leader.");
-            return;
-        }
-        if(!gHandler.hasPerm(senderMember, RankPerm.KICK)) {
-            plugin.sendMessage(sender, "You do not have permission to kick players.");
+            plugin.sendMessage(sender, GUILD_KICK_LEADER);
             return;
         }
 
-        guild.removeGuildMember(kickeeMember);
-        gHandler.removeGuildMember(kickeeMember);
-        gHandler.sendMessageToGuild(guild, kickee + " was kicked from the guild.");
-
-
+        guild.removeMember(kickeeMember);
+        GuildsDatabase.inst().removeMember(kickeeMember);
+        guild.sendMessage(String.format(GUILD_KICK_KICKED, kickee), true);
     }
 
 }

@@ -1,10 +1,10 @@
 package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.GuildsUtil;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
+import nz.co.noirland.zephcore.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,6 +12,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
+
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildChatCommand implements CommandExecutor {
 
@@ -24,25 +26,23 @@ public class GuildChatCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        plugin.debug("Command /g | " + Arrays.toString(args));
         if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Consoles cannot send messages in guild chat.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return true;
         }
         Player player = (Player) sender;
-        GuildMember gPlayer = gHandler.getGuildMember(player.getName());
-        if(gPlayer == null || gPlayer.getGuild() == null || gPlayer.getRank() == null) {
-            plugin.sendMessage(sender, "You are not currently in a guild.");
-            return false;
+        GuildMember member = gHandler.getMember(player);
+        if(member == null) {
+            plugin.sendMessage(sender, GUILD_CHAT_NO_GUILD);
+            return true;
         }
 
-        GuildRank rank = gPlayer.getRank();
-        String prefix = ChatColor.RED + "[G]" + ChatColor.GRAY + " [" + rank.getColour() + rank.getName() + ChatColor.GRAY + "] "
-                            + ChatColor.RESET + player.getName() + ChatColor.RED + ":" + ChatColor.RESET;
-        String msg = prefix + GuildsUtil.arrayToString(args, 0, args.length - 1, " ");
+        GuildRank rank = member.getRank();
+        String prefix = String.format(GUILD_CHAT_FORMAT, rank.getColour(), rank.getName(), player.getName());
+        String msg = Util.concatenate(prefix, Arrays.asList(args), "", " ");
         msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
         if(!(msg.length() == prefix.length())) {
-            gHandler.sendMessageToGuild(gPlayer.getGuild(), msg);
+            member.getGuild().sendMessage(msg, false);
             return true;
         }
 

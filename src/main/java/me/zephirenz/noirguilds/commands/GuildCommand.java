@@ -1,6 +1,7 @@
 package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.commands.guild.*;
 import me.zephirenz.noirguilds.enums.GuildCommandlet;
 import org.bukkit.command.Command;
@@ -27,7 +28,7 @@ public class GuildCommand implements CommandExecutor {
         try{
             cmd = GuildCommandlet.valueOf(args[0].toLowerCase());
         }catch(IllegalArgumentException e) {
-            plugin.sendMessage(sender, "Command not found.");
+            plugin.sendMessage(sender, Strings.NO_COMMAND);
             return true;
         }
 
@@ -36,9 +37,6 @@ public class GuildCommand implements CommandExecutor {
             case info:
                 new GuildInfoCommandlet().run(sender, cmdletArgs);
                 break;
-//            case list:
-//                listCommandlet();
-//                break;
             case create:
                 new GuildCreateCommandlet().run(sender, cmdletArgs);
                 break;
@@ -52,19 +50,26 @@ public class GuildCommand implements CommandExecutor {
                 new GuildEditCommandlet().run(sender, cmdletArgs);
                 break;
             case leave:
-                new GuildLeaveCommandlet().run(sender, cmdletArgs);
+                new GuildLeaveCommandlet().run(sender);
                 break;
             case disband:
                 new GuildDisbandCommandlet().run(sender, cmdletArgs);
                 break;
             case accept:
-                new GuildAcceptCommandlet().run(sender, cmdletArgs);
+                new GuildAcceptCommandlet().run(sender);
                 break;
             case deny:
-                new GuildDenyCommandlet().run(sender, cmdletArgs);
+                new GuildDenyCommandlet().run(sender);
                 break;
             case motd:
                 new GuildMOTDCommandlet().run(sender, cmdletArgs);
+                break;
+            case bank:
+                new GuildBankCommandlet().run(sender, cmdletArgs);
+                break;
+            case pay:
+                new GuildPayCommandlet().run(sender, cmdletArgs);
+                break;
             default:
                 //helpCommandlet(sender, cmdletArgs, null);
                 break;

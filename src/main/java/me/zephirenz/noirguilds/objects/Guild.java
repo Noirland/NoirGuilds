@@ -1,22 +1,40 @@
 package me.zephirenz.noirguilds.objects;
 
+import me.zephirenz.noirguilds.Strings;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
+import nz.co.noirland.zephcore.Util;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
 public class Guild {
 
-    private String name;
-    private String tag;
-    private String leader;
-
     private ArrayList<GuildRank> ranks = new ArrayList<GuildRank>();
+
     private ArrayList<GuildMember> members = new ArrayList<GuildMember>();
 
-    private String[] motd = new String[0];
+    final private int id;
+    private String name;
+    private String tag;
+    private List<String> motd;
+    private Double balance;
+    private Location hq;
+    private long kills;
+    private long deaths;
 
-    public Guild(String name, String tag, String leader) {
+    public Guild(int id, String name, String tag, double balance, long kills, long deaths, List<String> motd, Location hq) {
+        this.id = id;
         this.name = name;
         this.tag = tag;
-        this.leader = leader;
+        this.balance = balance;
+        this.kills = kills;
+        this.deaths = deaths;
+        this.motd = motd;
+        this.hq = hq;
     }
 
     public void setName(String name) {
@@ -27,62 +45,72 @@ public class Guild {
         return name;
     }
 
+    public void sendMessage(String msg, boolean prefix) {
+        for(GuildMember member : getMembers()) {
+            OfflinePlayer player = Util.player(member.getPlayer());
+            if(player.isOnline()) {
+                player.getPlayer().sendMessage((prefix ? Strings.MESSAGE_PREFIX : "") + msg);
+            }
+        }
+    }
+
+    public GuildRank getLeaderRank() {
+        for(GuildRank rank : ranks) {
+            if(rank.isLeader()) return rank;
+        }
+        return null;
+    }
+
+    public GuildRank getDefaultRank() {
+        for(GuildRank rank : ranks) {
+            if(rank.isDefault()) return rank;
+        }
+        return null;
+    }
+
+    public Collection<GuildMember> getMembersByRank(GuildRank rank) {
+        Collection<GuildMember> ret = new HashSet<GuildMember>();
+        for(GuildMember member : members) {
+            if(member.getRank() == rank) ret.add(member);
+        }
+        return ret;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public ArrayList<GuildMember> getMembers() {
         return members;
     }
 
-    public boolean isMember(String player) {
-        for(GuildMember gPlayer: members) {
-            if(gPlayer.getPlayer().equals(player)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isMember(GuildMember gPlayer) {
-        return isMember(gPlayer.getPlayer());
-    }
-
-    public void addGuildMember(GuildMember member) {
-
+    public void addMember(GuildMember member) {
         members.add(member);
-
     }
 
-    public void removeGuildMember(GuildMember member) {
-
-        if(members.contains(member)) {
-            members.remove(member);
-            save();
-        }
-
+    public void addMembers(Collection<GuildMember> members) {
+        this.members.addAll(members);
     }
 
-    public void setMembers(ArrayList<GuildMember> members) {
-        this.members = members;
-        save();
-    }
-
-    public void addRank(GuildRank rank) {
-        ranks.add(rank);
-        save();
-    }
-
-    public void removeRank(GuildRank rank) {
-        if(ranks.contains(rank)) {
-            ranks.remove(rank);
-            save();
-        }
-    }
-
-    public void setRanks(ArrayList<GuildRank> ranks) {
-        this.ranks = ranks;
-        save();
+    public void removeMember(GuildMember member) {
+        members.remove(member);
     }
 
     public ArrayList<GuildRank> getRanks() {
         return ranks;
+    }
+
+    public void addRank(GuildRank rank) {
+        ranks.add(rank);
+    }
+
+    public void addRanks(Collection<GuildRank> ranks) {
+        this.ranks.addAll(ranks);
+    }
+
+    public void removeRank(GuildRank rank) {
+        rank.remove();
+        ranks.remove(rank);
     }
 
     public String getTag() {
@@ -93,35 +121,48 @@ public class Guild {
         this.tag = tag;
     }
 
-    public String getLeader() {
-        return leader;
-    }
-
-    public void setLeader(String leader) {
-        this.leader = leader;
-    }
-
-    public GuildRank getDefaultRank() {
-        for(GuildRank rank : getRanks()) {
-            if(rank.isDefault()) {
-                return rank;
-            }
-        }
-        return null;
-    }
-
-    public String[] getMotd() {
+    public List<String> getMotd() {
         return motd;
     }
 
-    public void setMotd(String[] motd) {
+    public void setMotd(List<String> motd) {
         this.motd = motd;
     }
 
-    public void save() {
+    public Double getBalance() {
+        return balance;
+    }
 
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
 
+    public Location getHQ() {
+        return hq;
+    }
 
+    public void setHQ(Location hq) {
+        this.hq = hq;
+    }
+
+    public long getKills() {
+        return kills;
+    }
+
+    public void incrKills() {
+        ++kills;
+    }
+
+    public long getDeaths() {
+        return deaths;
+    }
+
+    public void incrDeaths() {
+        ++deaths;
+    }
+
+    public void updateDB() {
+        GuildsDatabase.inst().updateGuild(this);
     }
 
     @Override
@@ -130,5 +171,10 @@ public class Guild {
         Guild guild = (Guild) obj;
         return guild.getName().equals(this.getName());
 
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

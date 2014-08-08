@@ -1,20 +1,22 @@
 package me.zephirenz.noirguilds.objects;
 
+import java.util.UUID;
+
 public class InviteData {
 
-    private final String sender;
-    private final String invitee;
+    private final UUID sender;
+    private final UUID invitee;
     private final Guild guild;
-    public InviteData(String sender, String invitee, Guild guild) {
+    public InviteData(UUID sender, UUID invitee, Guild guild) {
         this.sender = sender;
         this.invitee = invitee;
         this.guild = guild;
     }
 
-    public String getSender() {
+    public UUID getSender() {
         return sender;
     }
-    public String getInvitee() {
+    public UUID getInvitee() {
         return invitee;
     }
     public Guild getGuild() {

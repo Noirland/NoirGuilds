@@ -1,6 +1,7 @@
 package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.commands.grank.*;
 import me.zephirenz.noirguilds.enums.GuildRankCommandlet;
 import org.bukkit.command.Command;
@@ -26,7 +27,7 @@ public class GuildRankCommand implements CommandExecutor {
         try{
             cmd = GuildRankCommandlet.valueOf(args[0].toLowerCase());
         }catch(IllegalArgumentException e) {
-            plugin.sendMessage(sender, "Command not found.");
+            plugin.sendMessage(sender, Strings.NO_COMMAND);
             return true;
         }
 
@@ -46,7 +47,7 @@ public class GuildRankCommand implements CommandExecutor {
                 new RankSetCommandlet().run(sender, cmdletArgs);
                 break;
             case list:
-                new RankListCommandlet().run(sender, cmdletArgs);
+                new RankListCommandlet().run(sender);
                 break;
             default:
                 break;

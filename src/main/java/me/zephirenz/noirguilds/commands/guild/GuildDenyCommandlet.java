@@ -2,10 +2,16 @@ package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.objects.InviteData;
 import me.zephirenz.noirguilds.tasks.GuildInviteTask;
+import nz.co.noirland.zephcore.Util;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static me.zephirenz.noirguilds.Strings.NO_CONSOLE;
+import static me.zephirenz.noirguilds.Strings.NO_INVITE;
 
 public class GuildDenyCommandlet {
 
@@ -20,14 +26,13 @@ public class GuildDenyCommandlet {
     /**
      *  The commandlet for denying invites.
      *  Usage: /guild deny
+     *   @param sender the sender of the command
      *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
-    public void run(CommandSender sender, String[] args) {
+    public void run(CommandSender sender) {
 
         if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Console can not deny invites.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
 
@@ -35,25 +40,25 @@ public class GuildDenyCommandlet {
         GuildInviteTask inviteTask = null;
         for(GuildInviteTask task : gHandler.getInvites()) {
             InviteData id = task.getData();
-            if(id.getInvitee().equalsIgnoreCase(sender.getName())) {
+            if(id.getInvitee().equals(((Player) sender).getUniqueId())) {
                 data = id;
                 inviteTask = task;
             }
         }
 
         if(data == null) {
-            plugin.sendMessage(sender, "You have no pending guild invite.");
+            plugin.sendMessage(sender, NO_INVITE);
             return;
         }
 
         inviteTask.cancel();
         gHandler.removeInvite(inviteTask);
 
-        Player pSender = plugin.getServer().getPlayer(data.getSender());
-        if(pSender != null) {
-            plugin.sendMessage(pSender, "Your invite to " + data.getInvitee() + "  has been denied.");
+        OfflinePlayer pSender = Util.player(data.getSender());
+        if(pSender.isOnline()) {
+            plugin.sendMessage(pSender.getPlayer(), String.format(Strings.GUILD_DENY_DENIED, Util.player(data.getInvitee()).getName()));
         }
-        plugin.sendMessage(sender, "Your invite to " + data.getGuild().getName() + " has been denied.");
+        plugin.sendMessage(sender, String.format(Strings.GUILD_DENY_DENIED, data.getGuild().getName()));
 
     }
 

@@ -2,11 +2,14 @@ package me.zephirenz.noirguilds.commands.grank;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class RankCreateCommandlet {
 
@@ -27,37 +30,36 @@ public class RankCreateCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
-
         if(!(sender instanceof Player)) {
-
-            plugin.sendMessage(sender, "Console cannot create guild ranks.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
-        GuildMember gMember = gHandler.getGuildMember(sender.getName());
+        GuildMember gMember = gHandler.getMember((Player) sender);
 
         if(gMember == null) {
-            plugin.sendMessage(sender, "You must be in a guild to create ranks.");
+            plugin.sendMessage(sender, RANK_CREATE_NO_GUILD);
             return;
         }
         if(!gMember.getRank().isLeader()) {
-            plugin.sendMessage(sender, "Only guild leaders can create ranks.");
+            plugin.sendMessage(sender, RANK_CREATE_NOT_LEADER);
             return;
         }
 
         if(args.length != 1){
-            plugin.sendMessage(sender, "You must only specify a rank name.");
+            plugin.sendMessage(sender, RANK_CREATE__WRONG_ARGS);
             return;
         }
         String name = args[0];
-        if(name.contains(".")) {
-            plugin.sendMessage(sender, "Rank names may not contain full stops.");
-            return;
+
+        for(GuildRank rank : gMember.getGuild().getRanks()) {
+            if(rank.getName().equalsIgnoreCase(name)) {
+                plugin.sendMessage(sender, RANK_EXISTS);
+                return;
+            }
         }
 
-        GuildRank newRank = new GuildRank(gMember.getGuild(), name, null, ChatColor.WHITE);
-        gMember.getGuild().addRank(newRank);
-        gHandler.addRank(newRank);
-        plugin.sendMessage(sender, newRank.getColour() + newRank.getName() + ChatColor.RESET + " rank has been created.");
-
+        GuildRank newRank = new GuildRank(gHandler.createRankID(), gMember.getGuild(), name, null, ChatColor.WHITE);
+        GuildsDatabase.inst().addRank(newRank);
+        plugin.sendMessage(sender, String.format(RANK_CREATE_CREATED, newRank.getColour() + newRank.getName()));
     }
 }

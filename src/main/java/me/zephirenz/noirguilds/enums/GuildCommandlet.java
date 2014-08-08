@@ -2,7 +2,6 @@ package me.zephirenz.noirguilds.enums;
 
 public enum GuildCommandlet {
     info,
-    list,
     create,
     invite,
     kick,
@@ -11,5 +10,7 @@ public enum GuildCommandlet {
     disband,
     accept,
     deny,
-    motd
+    motd,
+    bank,
+    pay
 }

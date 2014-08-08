@@ -9,6 +9,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import static me.zephirenz.noirguilds.Strings.NO_CONSOLE;
+import static me.zephirenz.noirguilds.Strings.RANK_LIST_NO_GUILD;
+
 public class RankListCommandlet {
 
     private final NoirGuilds plugin;
@@ -23,21 +26,20 @@ public class RankListCommandlet {
     /**
      *  The commandlet for listing all ranks.
      *  Usage: /grank list
+     *   @param sender the sender of the command
      *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
-    public void run(CommandSender sender, String[] args) {
+    public void run(CommandSender sender) {
 
         if(!(sender instanceof Player)) {
 
-            plugin.sendMessage(sender, "Console cannot see ranks.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
-        GuildMember gMember = gHandler.getGuildMember(sender.getName());
+        GuildMember gMember = gHandler.getMember((Player) sender);
 
         if(gMember == null) {
-            plugin.sendMessage(sender, "You must be in a guild to list ranks.");
+            plugin.sendMessage(sender, RANK_LIST_NO_GUILD);
             return;
         }
 

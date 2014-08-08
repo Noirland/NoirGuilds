@@ -2,12 +2,14 @@ package me.zephirenz.noirguilds.commands.grank;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class RankDeleteCommandlet {
 
@@ -28,25 +30,23 @@ public class RankDeleteCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
-
         if(!(sender instanceof Player)) {
-
-            plugin.sendMessage(sender, "Console cannot delete guild ranks.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
-        GuildMember gMember = gHandler.getGuildMember(sender.getName());
+        GuildMember gMember = gHandler.getMember((Player) sender);
 
         if(gMember == null) {
-            plugin.sendMessage(sender, "You must be in a guild to delete ranks.");
+            plugin.sendMessage(sender, RANK_DELETE_NO_GUILD);
             return;
         }
         if(!gMember.getRank().isLeader()) {
-            plugin.sendMessage(sender, "Only guild leaders can delete ranks.");
+            plugin.sendMessage(sender, RANK_DELETE_NOT_LEADER);
             return;
         }
 
         if(args.length != 1){
-            plugin.sendMessage(sender, "You must only specify a rank name.");
+            plugin.sendMessage(sender, RANK_DELETE_WRONG_ARGS);
             return;
         }
         String name = args[0];
@@ -60,23 +60,22 @@ public class RankDeleteCommandlet {
             }
         }
         if(rank == null) {
-            plugin.sendMessage(sender, "Rank not found.");
+            plugin.sendMessage(sender, RANK_NOT_EXISTS);
             return;
         }
 
         if(rank.isDefault()) {
-            plugin.sendMessage(sender, "You can't delete the default rank.");
+            plugin.sendMessage(sender, RANK_DELETE_DEFAULT);
             return;
         }
         if(rank.isLeader()) {
-            plugin.sendMessage(sender, "You can't delete the leader rank.");
+            plugin.sendMessage(sender, RANK_DELETE_LEADER);
             return;
         }
 
         guild.removeRank(rank);
-        gHandler.removeRank(rank);
-        plugin.sendMessage(sender, rank.getColour() + rank.getName() + ChatColor.RESET + " has been deleted.");
-
+        GuildsDatabase.inst().removeRank(rank);
+        plugin.sendMessage(sender, String.format(RANK_DELETE_DELETED, rank.getColour() + rank.getName()));
     }
 
 }

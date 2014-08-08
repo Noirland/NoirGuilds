@@ -7,8 +7,12 @@ import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.InviteData;
 import me.zephirenz.noirguilds.tasks.GuildInviteTask;
+import nz.co.noirland.zephcore.Util;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildInviteCommandlet {
 
@@ -19,7 +23,7 @@ public class GuildInviteCommandlet {
     public GuildInviteCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
-        this.pConfig = PluginConfig.getInstance();
+        this.pConfig = PluginConfig.inst();
     }
 
     /**
@@ -30,41 +34,40 @@ public class GuildInviteCommandlet {
      *  @param args   commandlet-specific args
      */
     public void run(CommandSender sender, String[] args) {
-
-        if(args.length != 1) {
-            plugin.sendMessage(sender, "You must specify a player to invite.");
-            return;
-        }
         if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, "Console can not invite players.");
+            plugin.sendMessage(sender, NO_CONSOLE);
             return;
         }
-        String inviter = sender.getName();
-        String invitee = args[0];
-        GuildMember inviterMember = gHandler.getGuildMember(inviter);
-        GuildMember inviteeMember = gHandler.getGuildMember(invitee);
-        if(plugin.getServer().getPlayer(invitee) == null) {
-            plugin.sendMessage(sender, "You can only invite online players.");
+        if(args.length != 1) {
+            plugin.sendMessage(sender, GUILD_INVITE_WRONG_ARGS);
+            return;
+        }
+        OfflinePlayer inviter = (Player) sender;
+        OfflinePlayer invitee = Util.player(args[0]);
+        GuildMember inviterMember = gHandler.getMember(inviter);
+        GuildMember inviteeMember = gHandler.getMember(invitee);
+        if(!invitee.isOnline()) {
+            plugin.sendMessage(sender, PLAYER_NOT_ONLINE);
             return;
         }
         if(inviterMember == null) {
-            plugin.sendMessage(sender, "You must be in a guild to invite players.");
+            plugin.sendMessage(sender, GUILD_INVITE_NO_GUILD);
             return;
         }
         if(inviteeMember != null) {
-            plugin.sendMessage(sender, "That player is already in a guild.");
+            plugin.sendMessage(sender, GUILD_INVITE_TARGET_IN_GUILD);
             return;
         }
-        if(!gHandler.hasPerm(inviterMember, RankPerm.INVITE)) {
-            plugin.sendMessage(sender, "You do not have permission to invite players.");
+        if(!inviterMember.hasPerm(RankPerm.INVITE)) {
+            plugin.sendMessage(sender, GUILD_INVITE_NO_PERMS);
             return;
         }
         if(inviterMember.getGuild().getMembers().size() >= pConfig.getMemberLimit() && pConfig.getMemberLimit() > 0) {
-            plugin.sendMessage(sender, "Your guild has the maximum number of members.");
+            plugin.sendMessage(sender, GUILD_AT_MAX);
             return;
         }
-        InviteData inviteData = new InviteData(inviter, invitee, inviterMember.getGuild());
-        new GuildInviteTask(inviteData).runTaskLater(plugin, 60 * 20);
+        InviteData inviteData = new InviteData(inviter.getUniqueId(), invitee.getUniqueId(), inviterMember.getGuild());
+        new GuildInviteTask(inviteData);
     }
 
 }

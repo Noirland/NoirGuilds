@@ -3,9 +3,12 @@ package me.zephirenz.noirguilds.tasks;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.objects.InviteData;
-import org.bukkit.ChatColor;
+import nz.co.noirland.zephcore.Util;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import static me.zephirenz.noirguilds.Strings.*;
 
 public class GuildInviteTask extends BukkitRunnable {
 
@@ -18,14 +21,14 @@ public class GuildInviteTask extends BukkitRunnable {
         this.gHandler = plugin.getGuildsHandler();
         this.data = data;
 
-        Player sender = plugin.getServer().getPlayer(data.getSender());
-        Player invitee = plugin.getServer().getPlayer(data.getInvitee());
-        plugin.sendMessage(invitee, "You have been invited to join " + ChatColor.BLUE + data.getGuild().getName() + ChatColor.RESET + " by " + data.getSender());
-        plugin.sendMessage(invitee, "To accept the invitation, do " + ChatColor.DARK_GRAY + "/guild accept");
-        plugin.sendMessage(sender, "Your invitation has been sent.");
+        Player sender = Util.player(data.getSender()).getPlayer();
+        Player invitee = Util.player(data.getInvitee()).getPlayer();
+        plugin.sendMessage(invitee, String.format(GUILD_INVITE_INVITED, data.getGuild().getName(), Util.player(data.getSender()).getName()));
+        plugin.sendMessage(invitee, GUILD_INVITE_CMD_HELP);
+        plugin.sendMessage(sender, GUILD_INVITE_SENT);
 
         gHandler.addInvite(this);
-
+        runTaskLater(plugin, 60 * 20);
     }
 
     public InviteData getData() {
@@ -33,18 +36,17 @@ public class GuildInviteTask extends BukkitRunnable {
     }
 
     public void run() {
-
-        Player sender = plugin.getServer().getPlayer(data.getSender());
-        Player invitee = plugin.getServer().getPlayer(data.getInvitee());
-        if(invitee == null) {
+        OfflinePlayer sender = Util.player(data.getSender());
+        OfflinePlayer invitee = Util.player(data.getInvitee());
+        if(!invitee.isOnline()) {
             this.cancel();
         }
         if(gHandler.getInvites().contains(this)) {
             gHandler.removeInvite(this);
-            if(sender != null) {
-                plugin.sendMessage(sender, "Your invite to " + data.getInvitee() + " has expired.");
+            if(sender.isOnline()) {
+                plugin.sendMessage(sender.getPlayer(), String.format(GUILD_INVITE_EXPIRED, Util.player(data.getInvitee()).getName()));
             }
-            plugin.sendMessage(invitee, "You invite to " + data.getGuild().getName() + " has expired.");
+            plugin.sendMessage(invitee.getPlayer(), String.format(GUILD_INVITE_EXPIRED, data.getGuild().getName()));
         }
     }
 

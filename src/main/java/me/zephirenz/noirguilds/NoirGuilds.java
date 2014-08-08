@@ -1,12 +1,10 @@
 package me.zephirenz.noirguilds;
 
 import me.zephirenz.noirguilds.commands.*;
-import me.zephirenz.noirguilds.config.PluginConfig;
-import me.zephirenz.noirguilds.database.DatabaseManager;
-import me.zephirenz.noirguilds.database.DatabaseManagerFactory;
+import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.listeners.PlayerChatListener;
 import me.zephirenz.noirguilds.listeners.PlayerJoinListener;
-import org.bukkit.ChatColor;
+import nz.co.noirland.zephcore.Debug;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,45 +12,52 @@ public class NoirGuilds extends JavaPlugin {
 
     private static NoirGuilds inst;
     private GuildsHandler guildsHandler;
-    private DatabaseManager dbManager;
+    private GuildBankManager bankManager;
+    private static Debug debug;
 
     @Override
     public void onEnable() {
         inst = this;
-        this.dbManager = DatabaseManagerFactory.getDatabaseManager();
+        debug = new Debug(this);
+        GuildsDatabase.inst().checkSchema();
         guildsHandler = new GuildsHandler();
+        bankManager = new GuildBankManager();
+        try {
+            new FlagsHandler();
+        } catch(Exception e) {
+            return;
+        }
         addCommands();
         getServer().getPluginManager().registerEvents(new PlayerChatListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(bankManager, this);
     }
 
     @Override
     public void onDisable() {
-        dbManager.saveAll();
-        dbManager.close();
+        GuildsDatabase.inst().close();
     }
 
     public static NoirGuilds inst() {
         return inst;
     }
 
+    public static Debug debug() { return debug; }
+
     public GuildsHandler getGuildsHandler() {
         return guildsHandler;
     }
 
-    public void sendMessage(CommandSender sender, String msg) {
+    public GuildBankManager getBankManager() {
+        return bankManager;
+    }
 
-        sender.sendMessage(ChatColor.RED + "[NoirGuilds] " + ChatColor.RESET + msg);
+    public void sendMessage(CommandSender sender, String msg) {
+        sender.sendMessage(Strings.MESSAGE_PREFIX + msg);
     }
 
     public void sendGlobalMessage(String msg) {
-        getServer().broadcastMessage(ChatColor.RED + "[NoirGuilds] " + ChatColor.RESET + msg);
-    }
-
-    public void debug(String msg) {
-        if(PluginConfig.getInstance().getDebug()) {
-            getLogger().info("[DEBUG] " + msg);
-        }
+        getServer().broadcastMessage(Strings.MESSAGE_PREFIX + msg);
     }
 
     private void addCommands() {

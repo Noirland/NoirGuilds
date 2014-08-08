@@ -1,5 +1,9 @@
 package me.zephirenz.noirguilds.enums;
 
+import com.google.common.collect.ImmutableMap;
+
+import java.util.Map;
+
 public enum RankPerm {
 
     INVITE("invite"),
@@ -7,7 +11,20 @@ public enum RankPerm {
     ADMINCHAT("adminchat"),
     TP("tp"),
     TPHERE("tphere"),
-    HQ("hq");
+    HQ("hq"),
+    BANK_WITHDRAW("withdraw"),
+    PAY("pay");
+
+    public static final Map<RankPerm, Boolean> defaults = new ImmutableMap.Builder<RankPerm, Boolean>()
+        .put(INVITE, false)
+        .put(KICK, false)
+        .put(ADMINCHAT, false)
+        .put(TP, false)
+        .put(TPHERE, false)
+        .put(HQ, false)
+        .put(BANK_WITHDRAW, false)
+        .put(PAY, false)
+        .build();
 
     private final String perm;
 
@@ -21,7 +38,7 @@ public enum RankPerm {
                 return rp;
             }
         }
-        throw new IllegalArgumentException("No rank perm with value " + perm);
+        return null;
     }
 
     public String getPerm() {
