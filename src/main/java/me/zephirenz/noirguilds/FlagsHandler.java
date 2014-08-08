@@ -11,12 +11,15 @@ import me.zephirenz.noirguilds.objects.GuildMember;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.projectiles.ProjectileSource;
 
 public class FlagsHandler implements Listener {
 
@@ -63,9 +66,22 @@ public class FlagsHandler implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onAttack(EntityDamageByEntityEvent event) {
-        if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) return;
+        if(!(event.getEntity() instanceof Player)) return;
+
+        Player from;
         Player to = (Player) event.getEntity();
-        Player from = (Player) event.getDamager();
+
+        if(event.getDamager() instanceof Player) {
+            from = (Player) event.getDamager();
+        } else if(event.getDamager() instanceof Projectile) {
+            ProjectileSource source = ((Arrow) event.getDamager()).getShooter();
+            if (!(source instanceof Player)) {
+                return;
+            }
+            from = (Player) source;
+        } else {
+            return;
+        }
 
         GuildMember toMember = gHandler.getMember(to.getName());
         GuildMember fromMember = gHandler.getMember(from.getName());
