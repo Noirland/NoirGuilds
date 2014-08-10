@@ -33,11 +33,6 @@ public class NoirGuilds extends JavaPlugin {
         getServer().getPluginManager().registerEvents(bankManager, this);
     }
 
-    @Override
-    public void onDisable() {
-        GuildsDatabase.inst().close();
-    }
-
     public static NoirGuilds inst() {
         return inst;
     }
