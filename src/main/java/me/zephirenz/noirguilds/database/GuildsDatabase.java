@@ -104,7 +104,7 @@ public class GuildsDatabase extends MySQLDatabase {
             int id = (Integer) rawGuild.get("id");
             String name = (String) rawGuild.get("name");
             String tag = (String) rawGuild.get("tag");
-            Double balance = (Double) rawGuild.get("balance");
+            Double balance = ((Number) rawGuild.get("balance")).doubleValue();
             long kills = ((Number) rawGuild.get("kills")).longValue();
             long deaths = ((Number) rawGuild.get("deaths")).longValue();
 
@@ -123,11 +123,11 @@ public class GuildsDatabase extends MySQLDatabase {
                 try {
                     JSONObject hqJSON = ((JSONObject) new JSONParser().parse((String) rawGuild.get("hq")));
                     World world = Bukkit.getWorld((String) hqJSON.get("world"));
-                    double x = (Double) hqJSON.get("x");
-                    double y = (Double) hqJSON.get("y");
-                    double z = (Double) hqJSON.get("z");
-                    float yaw = (Float) hqJSON.get("yaw");
-                    float pitch = (Float) hqJSON.get("pitch");
+                    double x = ((Number) hqJSON.get("x")).doubleValue();
+                    double y = ((Number) hqJSON.get("y")).doubleValue();
+                    double z = ((Number) hqJSON.get("z")).doubleValue();
+                    float yaw = ((Number) hqJSON.get("yaw")).floatValue();
+                    float pitch = ((Number) hqJSON.get("pitch")).floatValue();
                     hq = new Location(world, x, y, z, yaw, pitch);
                 } catch (Exception ignored) {}
             }
