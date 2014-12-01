@@ -22,11 +22,6 @@ public class NoirGuilds extends JavaPlugin {
         GuildsDatabase.inst().checkSchema();
         guildsHandler = new GuildsHandler();
         bankManager = new GuildBankManager();
-        try {
-            new FlagsHandler();
-        } catch(Exception e) {
-            return;
-        }
         addCommands();
         getServer().getPluginManager().registerEvents(new PlayerChatListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
