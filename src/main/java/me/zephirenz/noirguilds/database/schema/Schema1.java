@@ -3,7 +3,6 @@ package me.zephirenz.noirguilds.database.schema;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.database.queries.GuildsQuery;
 import nz.co.noirland.zephcore.database.Schema;
-import nz.co.noirland.zephcore.database.queries.Query;
 
 import java.sql.SQLException;
 
@@ -26,7 +25,7 @@ public class Schema1 implements Schema {
     }
 
     private void createGuildsTable() throws SQLException {
-        Query query = new GuildsQuery("CREATE TABLE {PREFIX}_guilds (" +
+        GuildsQuery query = new GuildsQuery("CREATE TABLE {PREFIX}_guilds (" +
                 "`id` SMALLINT UNSIGNED, " +
                 "`tag` VARCHAR(4), " +
                 "`name` VARCHAR(255), " +
@@ -41,7 +40,7 @@ public class Schema1 implements Schema {
     }
 
     private void createRanksTable() throws SQLException {
-        Query query = new GuildsQuery("CREATE TABLE {PREFIX}_ranks (" +
+        GuildsQuery query = new GuildsQuery("CREATE TABLE {PREFIX}_ranks (" +
                 "`id` SMALLINT UNSIGNED, " +
                 "`guild` SMALLINT UNSIGNED, " +
                 "`name` VARCHAR(255), " +
@@ -55,7 +54,7 @@ public class Schema1 implements Schema {
     }
 
     private void createMembersTable() throws SQLException {
-        Query query = new GuildsQuery("CREATE TABLE {PREFIX}_members (" +
+        GuildsQuery query = new GuildsQuery("CREATE TABLE {PREFIX}_members (" +
                 "`uuid` VARCHAR(36) NOT NULL, " +
                 "`rank` SMALLINT UNSIGNED, " +
                 "`kills` MEDIUMINT UNSIGNED, " +
