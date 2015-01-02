@@ -1,8 +1,8 @@
 package me.zephirenz.noirguilds.database.queries;
 
 import me.zephirenz.noirguilds.database.GuildsDatabase;
-import nz.co.noirland.zephcore.database.MySQLDatabase;
-import nz.co.noirland.zephcore.database.queries.MySQLQuery;
+import nz.co.noirland.zephcore.database.mysql.MySQLDatabase;
+import nz.co.noirland.zephcore.database.mysql.MySQLQuery;
 
 public class GuildsQuery extends MySQLQuery {
 

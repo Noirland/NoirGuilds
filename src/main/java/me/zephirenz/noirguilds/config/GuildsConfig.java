@@ -1,16 +1,31 @@
 package me.zephirenz.noirguilds.config;
 
-public class PluginConfig extends Config {
+import me.zephirenz.noirguilds.NoirGuilds;
+import nz.co.noirland.zephcore.Config;
+import nz.co.noirland.zephcore.Debug;
+import org.bukkit.plugin.Plugin;
 
-    private static PluginConfig instance;
+public class GuildsConfig extends Config {
 
-    private PluginConfig() {
+    private static GuildsConfig instance;
+
+    private GuildsConfig() {
         super("config.yml");
     }
 
-    public static PluginConfig inst() {
+    @Override
+    protected Plugin getPlugin() {
+        return NoirGuilds.inst();
+    }
+
+    @Override
+    protected Debug getDebug() {
+        return NoirGuilds.debug();
+    }
+
+    public static GuildsConfig inst() {
         if(instance == null) {
-            instance = new PluginConfig();
+            instance = new GuildsConfig();
         }
 
         return instance;

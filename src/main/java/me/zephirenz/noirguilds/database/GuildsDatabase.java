@@ -1,7 +1,7 @@
 package me.zephirenz.noirguilds.database;
 
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.config.PluginConfig;
+import me.zephirenz.noirguilds.config.GuildsConfig;
 import me.zephirenz.noirguilds.database.queries.guild.AddGuildQuery;
 import me.zephirenz.noirguilds.database.queries.guild.GetAllGuildsQuery;
 import me.zephirenz.noirguilds.database.queries.guild.RemoveGuildQuery;
@@ -20,7 +20,7 @@ import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import nz.co.noirland.zephcore.Debug;
-import nz.co.noirland.zephcore.database.MySQLDatabase;
+import nz.co.noirland.zephcore.database.mysql.MySQLDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -37,7 +37,7 @@ public class GuildsDatabase extends MySQLDatabase {
 
     private static GuildsDatabase inst;
 
-    private static PluginConfig config = PluginConfig.inst();
+    private static GuildsConfig config = GuildsConfig.inst();
 
     public static GuildsDatabase inst() {
         if(inst == null) {

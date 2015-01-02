@@ -2,7 +2,7 @@ package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
-import me.zephirenz.noirguilds.config.PluginConfig;
+import me.zephirenz.noirguilds.config.GuildsConfig;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.InviteData;
@@ -18,12 +18,12 @@ public class GuildInviteCommandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
-    private final PluginConfig pConfig;
+    private final GuildsConfig pConfig;
 
     public GuildInviteCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
-        this.pConfig = PluginConfig.inst();
+        this.pConfig = GuildsConfig.inst();
     }
 
     /**

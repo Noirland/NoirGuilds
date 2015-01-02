@@ -1,89 +1,75 @@
 package me.zephirenz.noirguilds.callbacks;
 
+import com.google.common.util.concurrent.FutureCallback;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import nz.co.noirland.bankofnoir.EcoManager;
-import nz.co.noirland.zephcore.Callback;
 import nz.co.noirland.zephcore.Util;
+import nz.co.noirland.zephcore.callbacks.GetNamesCallback;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.util.*;
 
-public class InfoCallback extends Callback {
-
-    Guild guild;
-    CommandSender sender;
-    Map<UUID, String> members = new HashMap<UUID, String>();
-    Map<UUID, String> leaders = new HashMap<UUID, String>();
-
-    String titleString;
-    String membersString;
-    String balString;
+public class InfoCallback {
 
     public InfoCallback(CommandSender sender, Guild guild) {
-        super(NoirGuilds.inst());
-        this.guild = guild;
-        this.sender = sender;
-
         List<UUID> members = new ArrayList<UUID>();
-        List<UUID> leaders = new ArrayList<UUID>();
+
         for(GuildMember member : guild.getMembers()) {
             members.add(member.getPlayer());
         }
-        for(GuildMember member : guild.getMembersByRank(guild.getLeaderRank())) {
-            leaders.add(member.getPlayer());
-        }
 
-        // Avoid stats changing after thread is complete
-        membersString = ChatColor.BLUE + "Members" + ChatColor.GRAY + "[" + guild.getMembers().size() + "]" + ChatColor.BLUE + ": ";
-        titleString = ChatColor.RED + "====== " + ChatColor.WHITE + guild.getName() + " " + ChatColor.GRAY + "[" + guild.getTag() + "]" + ChatColor.RED + " ======";
-        EcoManager eco = EcoManager.inst();
-        balString = ChatColor.BLUE + "Bank: " + ChatColor.WHITE + eco.format(guild.getBalance());
+        // Wrap around the callback, so we can generate a list of uuids.
+        new GetNamesCallback(new InfoResult(sender, guild), members);
+    }
 
-        new InfoThread(members, leaders);
+}
+
+class InfoResult implements FutureCallback<Map<UUID, String>> {
+    private final CommandSender to;
+    private final Guild guild;
+
+    public InfoResult(CommandSender to, Guild guild) {
+        this.to = to;
+        this.guild = guild;
     }
 
     @Override
-    public void run() {
-        List<String> temp = new ArrayList<String>();
-        for(UUID player : this.members.keySet()) {
-            temp.add((Util.player(player).isOnline() ? ChatColor.GREEN.toString() : "") + this.members.get(player));
+    public void onSuccess(Map<UUID, String> names) {
+        String membersString = ChatColor.BLUE + "Members" + ChatColor.GRAY + "[" + guild.getMembers().size() + "]" + ChatColor.BLUE + ": ";
+        String headerString = ChatColor.RED + "====== " + ChatColor.WHITE + guild.getName() + " " + ChatColor.GRAY + "[" + guild.getTag() + "]" + ChatColor.RED + " ======";
+        String footerString = ChatColor.RED + StringUtils.repeat("=", ChatColor.stripColor(headerString).length() - 3);
+
+        EcoManager eco = EcoManager.inst();
+        String balString = ChatColor.BLUE + "Bank: " + ChatColor.WHITE + eco.format(guild.getBalance());
+
+        List<String> members = new ArrayList<String>();
+        List<String> leaders = new ArrayList<String>();
+        for(UUID player : names.keySet()) {
+            members.add((Util.player(player).isOnline() ? ChatColor.GREEN.toString() : "") + names.get(player));
         }
-        membersString = Util.concatenate(membersString, temp, ChatColor.WHITE.toString(), ChatColor.RESET + ", " + ChatColor.WHITE);
-        String leaderString = Util.concatenate(ChatColor.BLUE + "Leader: " + ChatColor.WHITE, leaders.values(), "", ", ");
+        for(GuildMember member : guild.getMembersByRank(guild.getLeaderRank())) {
+            if(names.containsKey(member.getPlayer())) {
+                leaders.add(names.get(member.getPlayer()));
+            }
+        }
 
-        sender.sendMessage(titleString);
-        sender.sendMessage(leaderString);
+        membersString = Util.concatenate(membersString, members, ChatColor.WHITE.toString(), ChatColor.RESET + ", " + ChatColor.WHITE);
+        String leaderString = Util.concatenate(ChatColor.BLUE + "Leader: " + ChatColor.WHITE, leaders, "", ", ");
 
-        sender.sendMessage(balString);
-        sender.sendMessage(membersString);
-        sender.sendMessage(ChatColor.RED + StringUtils.repeat("=", ChatColor.stripColor(titleString).length() - 3));
+        to.sendMessage(headerString);
+        to.sendMessage(leaderString);
+        to.sendMessage(balString);
+        to.sendMessage(membersString);
+        to.sendMessage(footerString);
     }
 
-    private class InfoThread implements Runnable {
-
-        private List<UUID> members;
-        private List<UUID> leaders;
-
-        private InfoThread(List<UUID> members, List<UUID> leaders) {
-            this.members = members;
-            this.leaders = leaders;
-            new Thread(this, "NoirGuilds-InfoThread").start();
-        }
-
-        @Override
-        public void run() {
-            for(UUID uuid : members) {
-                InfoCallback.this.members.put(uuid, Util.name(uuid));
-            }
-            for(UUID uuid : leaders) {
-                InfoCallback.this.leaders.put(uuid, Util.name(uuid));
-            }
-            schedule();
-        }
+    @Override
+    public void onFailure(Throwable throwable) {
+        to.sendMessage(ChatColor.DARK_RED + "Internal error occurred!");
+        NoirGuilds.debug().warning("Could not get guild info for " + guild.getName(), throwable);
     }
-
 }
