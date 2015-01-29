@@ -19,12 +19,10 @@ public class GuildAcceptCommandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
-    private final GuildsConfig pConfig;
 
     public GuildAcceptCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
-        this.pConfig = GuildsConfig.inst();
     }
 
     /**
@@ -56,7 +54,7 @@ public class GuildAcceptCommandlet {
         inviteTask.cancel();
         gHandler.removeInvite(inviteTask);
 
-        if(data.getGuild().getMembers().size() >= pConfig.getInitialMemberLimit() && pConfig.getInitialMemberLimit() > 0) {
+        if(data.getGuild().getMembers().size() >= data.getGuild().getMemberLimit() && data.getGuild().getMemberLimit() > 0) {
             plugin.sendMessage(sender, GUILD_AT_MAX);
             return;
         }

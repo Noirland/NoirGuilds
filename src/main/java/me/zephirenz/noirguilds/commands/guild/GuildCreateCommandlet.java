@@ -3,6 +3,7 @@ package me.zephirenz.noirguilds.commands.guild;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
+import me.zephirenz.noirguilds.config.GuildsConfig;
 import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -79,7 +80,7 @@ public class GuildCreateCommandlet {
         }
 
         GuildsDatabase db = GuildsDatabase.inst();
-        Guild guild = new Guild(gHandler.createGuildID(), name, tag, 0, 0, 0, null, null);
+        Guild guild = new Guild(gHandler.createGuildID(), name, tag, 0, 0, 0, null, null, GuildsConfig.inst().getInitialMemberLimit());
         db.addGuild(guild);
 
         GuildRank leaderRank = new GuildRank(gHandler.createRankID(), guild, DEFAULT_LEADER, null, ChatColor.DARK_RED);

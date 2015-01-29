@@ -132,7 +132,7 @@ public class GuildsDatabase extends MySQLDatabase {
                 } catch (Exception ignored) {}
             }
 
-            Guild guild = new Guild(id, name, tag, balance, kills, deaths, motd, hq);
+            Guild guild = new Guild(id, name, tag, balance, kills, deaths, motd, hq, GuildsConfig.inst().getInitialMemberLimit()); //TODO: Change limit to database
             guilds.add(guild);
             for(GuildRank rank : getRanks(guild)) {
                 getMembers(rank);

@@ -18,12 +18,10 @@ public class GuildInviteCommandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
-    private final GuildsConfig pConfig;
 
     public GuildInviteCommandlet() {
         this.plugin = NoirGuilds.inst();
         this.gHandler = plugin.getGuildsHandler();
-        this.pConfig = GuildsConfig.inst();
     }
 
     /**
@@ -62,7 +60,7 @@ public class GuildInviteCommandlet {
             plugin.sendMessage(sender, GUILD_INVITE_NO_PERMS);
             return;
         }
-        if(inviterMember.getGuild().getMembers().size() >= pConfig.getInitialMemberLimit() && pConfig.getInitialMemberLimit() > 0) {
+        if(inviterMember.getGuild().getMembers().size() >= inviterMember.getGuild().getMemberLimit() && inviterMember.getGuild().getMemberLimit() > 0) {
             plugin.sendMessage(sender, GUILD_AT_MAX);
             return;
         }
