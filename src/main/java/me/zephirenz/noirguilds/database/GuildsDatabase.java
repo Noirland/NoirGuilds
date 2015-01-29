@@ -15,6 +15,7 @@ import me.zephirenz.noirguilds.database.queries.rank.GetRanksByGuildQuery;
 import me.zephirenz.noirguilds.database.queries.rank.RemoveRankQuery;
 import me.zephirenz.noirguilds.database.queries.rank.UpdateRankQuery;
 import me.zephirenz.noirguilds.database.schema.Schema1;
+import me.zephirenz.noirguilds.database.schema.Schema2;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -49,6 +50,7 @@ public class GuildsDatabase extends MySQLDatabase {
     private GuildsDatabase() {
         inst = this;
         schemas.put(1, new Schema1());
+        schemas.put(2, new Schema2());
     }
 
     @Override
@@ -107,6 +109,7 @@ public class GuildsDatabase extends MySQLDatabase {
             Double balance = ((Number) rawGuild.get("balance")).doubleValue();
             long kills = ((Number) rawGuild.get("kills")).longValue();
             long deaths = ((Number) rawGuild.get("deaths")).longValue();
+            int limit = ((Number) rawGuild.get("limit")).intValue();
 
             List motd = null;
             if(rawGuild.get("motd") != null) {
@@ -132,7 +135,7 @@ public class GuildsDatabase extends MySQLDatabase {
                 } catch (Exception ignored) {}
             }
 
-            Guild guild = new Guild(id, name, tag, balance, kills, deaths, motd, hq, GuildsConfig.inst().getInitialMemberLimit()); //TODO: Change limit to database
+            Guild guild = new Guild(id, name, tag, balance, kills, deaths, motd, hq, limit);
             guilds.add(guild);
             for(GuildRank rank : getRanks(guild)) {
                 getMembers(rank);

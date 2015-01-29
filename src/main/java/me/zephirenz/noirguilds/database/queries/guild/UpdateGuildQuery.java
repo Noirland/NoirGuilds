@@ -8,10 +8,10 @@ import org.json.simple.JSONValue;
 
 public class UpdateGuildQuery extends GuildsQuery {
 
-    private static final String QUERY = "UPDATE {PREFIX}_guilds SET tag=?, name=?, balance=?, motd=?, hq=?, kills=?, deaths=? WHERE id=?;";
+    private static final String QUERY = "UPDATE {PREFIX}_guilds SET tag=?, name=?, balance=?, motd=?, hq=?, kills=?, deaths=? limit=? WHERE id=?;";
 
     public UpdateGuildQuery(Guild guild) {
-        super(8, QUERY);
+        super(9, QUERY);
         setValue(1, guild.getTag());
         setValue(2, guild.getName());
         setValue(3, guild.getBalance());
@@ -32,7 +32,9 @@ public class UpdateGuildQuery extends GuildsQuery {
 
         setValue(6, guild.getKills());
         setValue(7, guild.getDeaths());
-        setValue(8, guild.getId());
+        setValue(8, guild.getMemberLimit());
+
+        setValue(9, guild.getId());
     }
 
 }
