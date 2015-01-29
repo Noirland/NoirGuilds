@@ -3,6 +3,7 @@ package me.zephirenz.noirguilds.commands.grank;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Strings;
+import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
@@ -12,7 +13,7 @@ import org.bukkit.entity.Player;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class RankSetCommandlet {
+public class RankSetCommandlet implements Commandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
@@ -26,10 +27,8 @@ public class RankSetCommandlet {
     /**
      *  The commandlet for changing a member's rank.
      *  Usage: /grank set [player] [rank]
-     *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);

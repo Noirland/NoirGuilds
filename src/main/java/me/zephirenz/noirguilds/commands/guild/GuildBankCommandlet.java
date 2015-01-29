@@ -4,6 +4,7 @@ import me.zephirenz.noirguilds.GuildBankManager;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
+import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
@@ -11,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildBankCommandlet {
+public class GuildBankCommandlet implements Commandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
@@ -25,11 +26,10 @@ public class GuildBankCommandlet {
 
     /**
      *  The commandlet for viewing the guild's bank.
-     *  Usage: /guild bank (guild)
      *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
+     *  Usage: /guild bank (guild)
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);

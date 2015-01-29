@@ -3,6 +3,7 @@ package me.zephirenz.noirguilds.commands.guild;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
+import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.config.GuildsConfig;
 import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildCreateCommandlet {
+public class GuildCreateCommandlet implements Commandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
@@ -30,11 +31,10 @@ public class GuildCreateCommandlet {
 
     /**
      *  The commandlet for creating guilds.
-     *  Usage: /guild create [guild] [tag] (leader)
      *
-     *  @param sender the sender of the command
-     *  @param args   commandlet specific args
+     *  Usage: /guild create [guild] [tag] (leader)
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
         if(args.length < 2) {
             plugin.sendMessage(sender, GUILD_CREATE_WRONG_ARGS);

@@ -3,6 +3,7 @@ package me.zephirenz.noirguilds.commands.guild;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.callbacks.InfoCallback;
+import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
@@ -10,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildInfoCommandlet {
+public class GuildInfoCommandlet implements Commandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
@@ -23,10 +24,8 @@ public class GuildInfoCommandlet {
     /**
      *  The commandlet for showing guild info.
      *  Usage: /guild info (guild)
-     *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
         Guild guild;
 

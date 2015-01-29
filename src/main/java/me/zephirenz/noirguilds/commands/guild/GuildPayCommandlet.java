@@ -3,6 +3,7 @@ package me.zephirenz.noirguilds.commands.guild;
 import me.zephirenz.noirguilds.GuildBankManager;
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -16,7 +17,7 @@ import java.text.DecimalFormat;
 import static me.zephirenz.noirguilds.Strings.*;
 import static nz.co.noirland.bankofnoir.Strings.AMOUNT_NAN;
 
-public class GuildPayCommandlet {
+public class GuildPayCommandlet implements Commandlet {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
@@ -34,10 +35,8 @@ public class GuildPayCommandlet {
     /**
      *  The commandlet for paying another guild.
      *  Usage: /guild pay [guild] [amount]
-     *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)) {
             plugin.sendMessage(sender, NO_CONSOLE);

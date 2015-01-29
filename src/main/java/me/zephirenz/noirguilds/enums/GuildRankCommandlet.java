@@ -2,9 +2,9 @@ package me.zephirenz.noirguilds.enums;
 
 public enum GuildRankCommandlet {
 
-    create,
-    delete,
-    edit,
-    set,
-    list
+    CREATE,
+    DELETE,
+    EDIT,
+    SET,
+    LIST
 }
