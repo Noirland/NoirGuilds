@@ -1,5 +1,5 @@
 noirguilds:
-  member-limit: 25
+  initial-member-limit: 10
   kill-money: 10
   db:
     host: localhost

@@ -56,7 +56,7 @@ public class GuildAcceptCommandlet {
         inviteTask.cancel();
         gHandler.removeInvite(inviteTask);
 
-        if(data.getGuild().getMembers().size() >= pConfig.getMemberLimit() && pConfig.getMemberLimit() > 0) {
+        if(data.getGuild().getMembers().size() >= pConfig.getInitialMemberLimit() && pConfig.getInitialMemberLimit() > 0) {
             plugin.sendMessage(sender, GUILD_AT_MAX);
             return;
         }

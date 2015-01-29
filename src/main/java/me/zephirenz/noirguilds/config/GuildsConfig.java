@@ -41,5 +41,5 @@ public class GuildsConfig extends Config {
     public String getDBHost()     { return config.getString("noirguilds.db.host", "localhost"); }
 
     public double getKillMoney()   { return config.getDouble("noirguilds.kill-money", 10); }
-    public int    getMemberLimit() { return config.getInt   ("noirguilds.member-limit", 0); }
+    public int getInitialMemberLimit() { return config.getInt   ("noirguilds.initial-member-limit", 0); }
 }
