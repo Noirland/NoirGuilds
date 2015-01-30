@@ -18,10 +18,8 @@ public class GuildLeaveCommandlet extends Commandlet {
      */
     @Override
     public void run(CommandSender sender, String[] args) {
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
+        if(!checkPlayer(sender, NO_CONSOLE)) return;
+
         GuildMember member = gHandler.getMember((Player) sender);
 
         if(member == null) {

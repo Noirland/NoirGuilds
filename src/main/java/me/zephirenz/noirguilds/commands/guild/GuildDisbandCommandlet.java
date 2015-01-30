@@ -25,10 +25,8 @@ public class GuildDisbandCommandlet extends Commandlet {
             name = args[0];
             guild = gHandler.getGuildByName(name);
         }else{
-            if (!(sender instanceof Player)) {
-                plugin.sendMessage(sender, GUILD_DISBAND_CONSOLE_GUILD);
-                return;
-            }
+            if(!checkPlayer(sender, GUILD_DISBAND_CONSOLE_GUILD)) return;
+
             GuildMember gMember = gHandler.getMember((Player) sender);
             if (gMember == null) {
                 plugin.sendMessage(sender, GUILD_DISBAND_NO_GUILD);

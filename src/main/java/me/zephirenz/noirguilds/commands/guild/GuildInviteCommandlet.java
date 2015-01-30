@@ -20,10 +20,8 @@ public class GuildInviteCommandlet extends Commandlet {
      */
     @Override
     public void run(CommandSender sender, String[] args) {
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
+        if(!checkPlayer(sender, NO_CONSOLE)) return;
+
         if(args.length != 1) {
             plugin.sendMessage(sender, GUILD_INVITE_WRONG_ARGS);
             return;

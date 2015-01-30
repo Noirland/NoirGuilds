@@ -36,10 +36,8 @@ public class GuildCreateCommandlet extends Commandlet {
         if(args.length == 3 && sender.hasPermission(Perms.CREATE_OTHER)) {
             leader = Util.uuid(args[2]);
         }else{
-            if (!(sender instanceof Player)) {
-                plugin.sendMessage(sender, GUILD_CREATE_CONSOLE_LEADER);
-                return;
-            }
+            if(!checkPlayer(sender, GUILD_CREATE_CONSOLE_LEADER)) return;
+
             leader = ((Player) sender).getUniqueId();
         }
 

@@ -20,11 +20,7 @@ public class GuildDenyCommandlet extends Commandlet {
      */
     @Override
     public void run(CommandSender sender, String[] args) {
-
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
+        if(!checkPlayer(sender, NO_CONSOLE)) return;
 
         InviteData data = null;
         GuildInviteTask inviteTask = null;

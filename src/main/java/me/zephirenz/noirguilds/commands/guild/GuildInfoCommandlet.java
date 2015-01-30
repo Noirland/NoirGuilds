@@ -32,10 +32,8 @@ public class GuildInfoCommandlet extends Commandlet {
                 return;
             }
         }else{
-            if(!(sender instanceof Player)) {
-                plugin.sendMessage(sender, NO_CONSOLE);
-                return;
-            }
+            if(!checkPlayer(sender, NO_CONSOLE)) return;
+
             Player player = (Player) sender;
             GuildMember member = gHandler.getMember(player.getName());
             if(member == null) {

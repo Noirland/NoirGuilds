@@ -21,12 +21,8 @@ public class RankListCommandlet extends Commandlet {
      */
     @Override
     public void run(CommandSender sender, String[] args) {
+        if(!checkPlayer(sender, NO_CONSOLE)) return;
 
-        if(!(sender instanceof Player)) {
-
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
         GuildMember gMember = gHandler.getMember((Player) sender);
 
         if(gMember == null) {

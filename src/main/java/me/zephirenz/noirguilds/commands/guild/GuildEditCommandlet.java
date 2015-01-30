@@ -16,11 +16,7 @@ public class GuildEditCommandlet extends Commandlet {
      */
     @Override
     public void run(CommandSender sender, String[] args) {
-
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
+        if(!checkPlayer(sender, NO_CONSOLE)) return;
 
         if(args.length != 2) {
             plugin.sendMessage(sender, GUILD_EDIT_WRONG_ARGS);

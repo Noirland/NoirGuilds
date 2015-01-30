@@ -18,10 +18,8 @@ public class RankCreateCommandlet extends Commandlet {
      */
     @Override
     public void run(CommandSender sender, String[] args) {
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
+        if(!checkPlayer(sender, NO_CONSOLE)) return;
+
         GuildMember gMember = gHandler.getMember((Player) sender);
 
         if(gMember == null) {
