@@ -1,7 +1,5 @@
 package me.zephirenz.noirguilds.commands.grank;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -13,16 +11,7 @@ import org.bukkit.entity.Player;
 import static me.zephirenz.noirguilds.Strings.NO_CONSOLE;
 import static me.zephirenz.noirguilds.Strings.RANK_LIST_NO_GUILD;
 
-public class RankListCommandlet implements Commandlet {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public RankListCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
-
+public class RankListCommandlet extends Commandlet {
 
     /**
      *  The commandlet for listing all ranks.

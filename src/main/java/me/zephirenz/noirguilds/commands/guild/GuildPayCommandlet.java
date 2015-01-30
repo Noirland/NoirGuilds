@@ -1,8 +1,6 @@
 package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildBankManager;
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
@@ -17,20 +15,10 @@ import java.text.DecimalFormat;
 import static me.zephirenz.noirguilds.Strings.*;
 import static nz.co.noirland.bankofnoir.Strings.AMOUNT_NAN;
 
-public class GuildPayCommandlet implements Commandlet {
+public class GuildPayCommandlet extends Commandlet {
 
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-    private final GuildBankManager bManager;
-    private final EcoManager eco;
-
-    public GuildPayCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-        this.bManager = plugin.getBankManager();
-        this.eco = EcoManager.inst();
-    }
-
+    private final GuildBankManager bManager = plugin.getBankManager();
+    private final EcoManager eco = EcoManager.inst();
 
     /**
      *  The commandlet for paying another guild.

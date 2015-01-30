@@ -1,7 +1,5 @@
 package me.zephirenz.noirguilds.commands.guild;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.database.GuildsDatabase;
@@ -15,16 +13,7 @@ import org.bukkit.entity.Player;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildAcceptCommandlet implements Commandlet {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public GuildAcceptCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
-
+public class GuildAcceptCommandlet extends Commandlet {
 
     /**
      *  The commandlet for accepting invites.

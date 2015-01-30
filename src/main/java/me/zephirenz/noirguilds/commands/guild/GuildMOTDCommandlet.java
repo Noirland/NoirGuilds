@@ -1,7 +1,5 @@
 package me.zephirenz.noirguilds.commands.guild;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -15,16 +13,7 @@ import java.util.List;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildMOTDCommandlet implements Commandlet {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public GuildMOTDCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
-
+public class GuildMOTDCommandlet extends Commandlet {
 
     /**
      *  The commandlet for editing guild motd.

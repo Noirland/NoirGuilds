@@ -1,7 +1,5 @@
 package me.zephirenz.noirguilds.commands.guild;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
 import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.config.GuildsConfig;
@@ -18,16 +16,7 @@ import java.util.UUID;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildCreateCommandlet implements Commandlet {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public GuildCreateCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
-
+public class GuildCreateCommandlet extends Commandlet {
 
     /**
      *  The commandlet for creating guilds.

@@ -1,8 +1,6 @@
 package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildBankManager;
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
 import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.objects.Guild;
@@ -12,17 +10,9 @@ import org.bukkit.entity.Player;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildBankCommandlet implements Commandlet {
+public class GuildBankCommandlet extends Commandlet {
 
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-    private final GuildBankManager bManager;
-
-    public GuildBankCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-        this.bManager = plugin.getBankManager();
-    }
+    private final GuildBankManager bManager = plugin.getBankManager();
 
     /**
      *  The commandlet for viewing the guild's bank.
