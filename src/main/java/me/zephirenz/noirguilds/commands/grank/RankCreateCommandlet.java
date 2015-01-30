@@ -22,10 +22,7 @@ public class RankCreateCommandlet extends Commandlet {
 
         GuildMember gMember = gHandler.getMember((Player) sender);
 
-        if(gMember == null) {
-            plugin.sendMessage(sender, RANK_CREATE_NO_GUILD);
-            return;
-        }
+        if(isNull(gMember, sender, RANK_CREATE_NO_GUILD)) return;
         if(!gMember.getRank().isLeader()) {
             plugin.sendMessage(sender, RANK_CREATE_NOT_LEADER);
             return;

@@ -32,14 +32,8 @@ public class RankSetCommandlet extends Commandlet {
         GuildMember mSender = gHandler.getMember((Player) sender);
         GuildMember mPromote = gHandler.getMember(promote);
 
-        if(mSender == null) {
-            plugin.sendMessage(sender, RANK_SET_NO_GUILD);
-            return;
-        }
-        if(mPromote == null) {
-            plugin.sendMessage(sender, RANK_SET_TARGET_NO_GUILD);
-            return;
-        }
+        if(isNull(mSender, sender, RANK_SET_NO_GUILD)) return;
+        if(isNull(mPromote, sender, RANK_SET_TARGET_NO_GUILD)) return;
 
         if(!mSender.getRank().isLeader()) {
             plugin.sendMessage(sender, RANK_SET_NOT_LEADER);
@@ -64,10 +58,7 @@ public class RankSetCommandlet extends Commandlet {
                 newRank = rank;
             }
         }
-        if(newRank == null) {
-            plugin.sendMessage(sender, RANK_NOT_EXISTS);
-            return;
-        }
+        if(isNull(newRank, sender, RANK_NOT_EXISTS)) return;
 
         mPromote.setRank(newRank);
         mPromote.updateDB();

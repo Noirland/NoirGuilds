@@ -27,19 +27,13 @@ public class GuildInfoCommandlet extends Commandlet {
                 guild = gHandler.getGuildByTag(gName);
             }
 
-            if(guild == null) {
-                plugin.sendMessage(sender, GUILD_NOT_EXISTS);
-                return;
-            }
+            if(isNull(guild, sender, GUILD_NOT_EXISTS)) return;
         }else{
             if(!checkPlayer(sender, NO_CONSOLE)) return;
 
             Player player = (Player) sender;
             GuildMember member = gHandler.getMember(player.getName());
-            if(member == null) {
-                plugin.sendMessage(sender, GUILD_LIST_NO_GUILD);
-                return;
-            }
+            if(isNull(member, sender, GUILD_LIST_NO_GUILD)) return;
             guild = member.getGuild();
         }
 

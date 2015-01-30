@@ -34,10 +34,7 @@ public class GuildAcceptCommandlet extends Commandlet {
             }
         }
 
-        if(data == null) {
-            plugin.sendMessage(sender, NO_INVITE);
-            return;
-        }
+        if(isNull(data, sender, NO_INVITE)) return;
 
         inviteTask.cancel();
         gHandler.removeInvite(inviteTask);

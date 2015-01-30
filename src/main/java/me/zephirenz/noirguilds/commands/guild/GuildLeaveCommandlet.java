@@ -22,10 +22,7 @@ public class GuildLeaveCommandlet extends Commandlet {
 
         GuildMember member = gHandler.getMember((Player) sender);
 
-        if(member == null) {
-            plugin.sendMessage(sender, GUILD_LEAVE_NO_GUILD);
-            return;
-        }
+        if(isNull(member, sender, GUILD_LEAVE_NO_GUILD)) return;
         Guild guild = member.getGuild();
         if(member.getRank().isLeader()) {
             plugin.sendMessage(sender, GUILD_LEAVE_LEADER);

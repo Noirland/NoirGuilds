@@ -19,4 +19,10 @@ public abstract class Commandlet {
         }
         return true;
     }
+
+    protected boolean isNull(Object object, CommandSender sender, String error) {
+        if(object != null) return false;
+        plugin.sendMessage(sender, error);
+        return true;
+    }
 }

@@ -28,10 +28,7 @@ public class GuildDisbandCommandlet extends Commandlet {
             if(!checkPlayer(sender, GUILD_DISBAND_CONSOLE_GUILD)) return;
 
             GuildMember gMember = gHandler.getMember((Player) sender);
-            if (gMember == null) {
-                plugin.sendMessage(sender, GUILD_DISBAND_NO_GUILD);
-                return;
-            }
+            if(isNull(gMember, sender, GUILD_DISBAND_NO_GUILD)) return;
             guild = gMember.getGuild();
             if(!gMember.getRank().isLeader()) {
                 plugin.sendMessage(sender, GUILD_DISBAND_NOT_LEADER);

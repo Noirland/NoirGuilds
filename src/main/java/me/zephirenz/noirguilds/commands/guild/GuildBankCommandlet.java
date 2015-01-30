@@ -26,16 +26,10 @@ public class GuildBankCommandlet extends Commandlet {
         Guild guild;
         if(args.length > 0 && sender.hasPermission(Perms.BANK_OTHER)) {
             guild = gHandler.getGuildByName(args[0]);
-            if(guild == null) {
-                plugin.sendMessage(sender, GUILD_NOT_EXISTS);
-                return;
-            }
+            if(isNull(guild, sender, GUILD_NOT_EXISTS)) return;
         } else {
             GuildMember member = gHandler.getMember((Player) sender);
-            if(member == null) {
-                plugin.sendMessage(sender, GUILD_BANK_NO_GUILD);
-                return;
-            }
+            if(isNull(member, sender, GUILD_BANK_NO_GUILD)) return;
             guild = member.getGuild();
         }
         Player p = (Player) sender;

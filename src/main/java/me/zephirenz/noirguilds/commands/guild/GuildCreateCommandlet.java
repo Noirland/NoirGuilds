@@ -46,10 +46,7 @@ public class GuildCreateCommandlet extends Commandlet {
             return;
         }
 
-        if(gHandler.getMember(leader) != null) {
-            plugin.sendMessage(sender, GUILD_CREATE_IN_GUILD);
-            return;
-        }
+        if(!isNull(gHandler.getMember(leader), sender, GUILD_CREATE_IN_GUILD)) return;
         if(tag.length() > 4) {
             plugin.sendMessage(sender, BIG_TAG);
             return;

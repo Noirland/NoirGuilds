@@ -29,10 +29,8 @@ public class RankEditCommandlet extends Commandlet {
         String value = args[2];
 
         GuildMember mSender = gHandler.getMember((Player) sender);
-        if(mSender == null) {
-            plugin.sendMessage(sender, RANK_EDIT_NO_GUILD);
-            return;
-        }
+
+        if(isNull(mSender, sender, RANK_EDIT_NO_GUILD)) return;
         if(!mSender.getRank().isLeader()) {
             plugin.sendMessage(sender, RANK_EDIT_NOT_LEADER);
             return;
@@ -45,10 +43,7 @@ public class RankEditCommandlet extends Commandlet {
                 break;
             }
         }
-        if(rank == null) {
-            plugin.sendMessage(sender, RANK_NOT_EXISTS);
-            return;
-        }
+        if(isNull(rank, sender, RANK_NOT_EXISTS)) return;
 
         if(option.equalsIgnoreCase("colour")) {
             editColour(sender, rank, value);
@@ -62,10 +57,7 @@ public class RankEditCommandlet extends Commandlet {
 
     private void editPerm(CommandSender sender, GuildRank rank, String permName, String value) {
         RankPerm perm = RankPerm.get(permName);
-        if(perm == null) {
-            plugin.sendMessage(sender, RANK_EDIT_BAD_OPTION);
-            return;
-        }
+        if(isNull(perm, sender, RANK_EDIT_BAD_OPTION)) return;
 
         boolean val = Boolean.valueOf(value);
         rank.setPerm(perm, val);

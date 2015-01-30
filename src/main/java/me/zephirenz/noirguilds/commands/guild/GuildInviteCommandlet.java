@@ -34,14 +34,8 @@ public class GuildInviteCommandlet extends Commandlet {
             plugin.sendMessage(sender, PLAYER_NOT_ONLINE);
             return;
         }
-        if(inviterMember == null) {
-            plugin.sendMessage(sender, GUILD_INVITE_NO_GUILD);
-            return;
-        }
-        if(inviteeMember != null) {
-            plugin.sendMessage(sender, GUILD_INVITE_TARGET_IN_GUILD);
-            return;
-        }
+        if(isNull(inviterMember, sender, GUILD_INVITE_NO_GUILD)) return;
+        if(!isNull(inviteeMember, sender, GUILD_INVITE_TARGET_IN_GUILD)) return;
         if(!inviterMember.hasPerm(RankPerm.INVITE)) {
             plugin.sendMessage(sender, GUILD_INVITE_NO_PERMS);
             return;

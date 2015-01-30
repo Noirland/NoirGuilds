@@ -25,10 +25,7 @@ public class RankListCommandlet extends Commandlet {
 
         GuildMember gMember = gHandler.getMember((Player) sender);
 
-        if(gMember == null) {
-            plugin.sendMessage(sender, RANK_LIST_NO_GUILD);
-            return;
-        }
+        if(isNull(gMember, sender, RANK_LIST_NO_GUILD)) return;
 
         Guild guild = gMember.getGuild();
 

@@ -28,10 +28,7 @@ public class GuildKickCommandlet extends Commandlet {
         GuildMember senderMember = gHandler.getMember((Player) sender);
         GuildMember kickeeMember = gHandler.getMember(kickee);
 
-        if(senderMember == null) {
-            plugin.sendMessage(sender, GUILD_KICK_NO_GUILD);
-            return;
-        }
+        if(isNull(senderMember, sender, GUILD_KICK_NO_GUILD)) return;
         Guild guild = senderMember.getGuild();
 
         if(!senderMember.hasPerm(RankPerm.KICK)) {

@@ -22,10 +22,7 @@ public class RankDeleteCommandlet extends Commandlet {
 
         GuildMember gMember = gHandler.getMember((Player) sender);
 
-        if(gMember == null) {
-            plugin.sendMessage(sender, RANK_DELETE_NO_GUILD);
-            return;
-        }
+        if(isNull(gMember, sender, RANK_DELETE_NO_GUILD)) return;
         if(!gMember.getRank().isLeader()) {
             plugin.sendMessage(sender, RANK_DELETE_NOT_LEADER);
             return;
@@ -45,10 +42,7 @@ public class RankDeleteCommandlet extends Commandlet {
                 rank = r;
             }
         }
-        if(rank == null) {
-            plugin.sendMessage(sender, RANK_NOT_EXISTS);
-            return;
-        }
+        if(isNull(rank, sender, RANK_NOT_EXISTS)) return;
 
         if(rank.isDefault()) {
             plugin.sendMessage(sender, RANK_DELETE_DEFAULT);

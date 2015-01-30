@@ -27,10 +27,7 @@ public class GuildEditCommandlet extends Commandlet {
         String value = args[1];
 
         GuildMember gMember = gHandler.getMember((Player) sender);
-        if (gMember == null) {
-            plugin.sendMessage(sender, GUILD_EDIT_NO_GUILD);
-            return;
-        }
+        if(isNull(gMember, sender, GUILD_EDIT_NO_GUILD)) return;
 
         Guild guild = gMember.getGuild();
         if(!gMember.getRank().isLeader()) {

@@ -29,10 +29,7 @@ public class GuildPayCommandlet extends Commandlet {
         if(!checkPlayer(sender, NO_CONSOLE)) return;
 
         GuildMember member = gHandler.getMember((Player) sender);
-        if(member == null) {
-            plugin.sendMessage(sender, GUILD_PAY_NO_GUILD);
-            return;
-        }
+        if(isNull(member, sender, GUILD_PAY_NO_GUILD)) return;
         Guild fromGuild = member.getGuild();
 
         if(args.length != 2) {
@@ -46,10 +43,7 @@ public class GuildPayCommandlet extends Commandlet {
         }
 
         Guild toGuild = gHandler.getGuildByName(args[0]);
-        if(toGuild == null) {
-            plugin.sendMessage(sender, GUILD_NOT_EXISTS);
-            return;
-        }
+        if(isNull(toGuild, sender, GUILD_NOT_EXISTS)) return;
 
         if(toGuild.equals(fromGuild)) {
             plugin.sendMessage(sender, GUILD_PAY_SELF);
