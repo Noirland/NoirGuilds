@@ -40,8 +40,8 @@ public class GuildInviteCommandlet extends Commandlet {
             plugin.sendMessage(sender, GUILD_INVITE_NO_PERMS);
             return;
         }
-        if(inviterMember.getGuild().getMembers().size() >= inviterMember.getGuild().getMemberLimit() && inviterMember.getGuild().getMemberLimit() > 0) {
-            plugin.sendMessage(sender, GUILD_AT_MAX);
+        if(inviterMember.getGuild().isFull()) {
+            plugin.sendMessage(sender, String.format(GUILD_AT_MAX, inviterMember.getGuild().getMemberLimit()));
             return;
         }
         InviteData inviteData = new InviteData(inviter.getUniqueId(), invitee.getUniqueId(), inviterMember.getGuild());

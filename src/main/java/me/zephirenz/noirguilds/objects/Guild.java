@@ -187,4 +187,8 @@ public class Guild {
     public void setMemberLimit(int limit) {
         this.limit = limit;
     }
+
+    public boolean isFull() {
+        return getMembers().size() >= getMemberLimit();
+    }
 }

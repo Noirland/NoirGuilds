@@ -12,7 +12,7 @@ public class Strings {
     public static final String RANK_EXISTS = "That rank already exists.";
     public static final String NO_CONSOLE = "The console cannot use that command.";
     public static final String NO_INVITE = "You have no pending guild invite.";
-    public static final String GUILD_AT_MAX = "The guild has the maximum number of members.";
+    public static final String GUILD_AT_MAX = "The guild has reached it's maximum of %s members.";
     public static final String GUILD_NOT_EXISTS = "That guild does not exist.";
     public static final String GUILD_EXISTS = "A guild with that name already exists.";
     public static final String TAG_EXISTS = "A guild with that tag already exists.";
