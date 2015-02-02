@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildAdminChatCommand implements CommandExecutor {
+public class GuildAdminChatCommand extends Commandlet implements CommandExecutor {
 
     private final NoirGuilds plugin;
     private final GuildsHandler gHandler;
@@ -27,16 +27,10 @@ public class GuildAdminChatCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return true;
-        }
+        if(!checkPlayer(sender, NO_CONSOLE)) return true;
         Player player = (Player) sender;
         GuildMember member = gHandler.getMember(player);
-        if(member == null) {
-            plugin.sendMessage(sender, GUILD_CHAT_NO_GUILD);
-            return true;
-        }
+        if(isNull(member, sender, GUILD_CHAT_NO_GUILD)) return true;
 
         GuildRank rank = member.getRank();
         if(!member.hasPerm(RankPerm.ADMINCHAT)) {
@@ -46,7 +40,7 @@ public class GuildAdminChatCommand implements CommandExecutor {
 
         String prefix = String.format(GUILD_ACHAT_FORMAT, rank.getColour(), rank.getName(), player.getName());
         String msg = Util.concatenate(prefix, Arrays.asList(args), "", " ");
-        msg = ChatColor.translateAlternateColorCodes("&".charAt(0), msg);
+        msg = ChatColor.translateAlternateColorCodes('&', msg);
         if (msg.length() == prefix.length()) {
             return false;
         }
@@ -58,5 +52,9 @@ public class GuildAdminChatCommand implements CommandExecutor {
         return true;
     }
 
+    @Override
+    public void run(CommandSender sender, String[] args) {
+        onCommand(sender, null, "", args);
+    }
 }
 

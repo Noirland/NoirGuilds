@@ -14,27 +14,13 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class HQCommand implements CommandExecutor {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public HQCommand() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
+public class HQCommand extends Commandlet implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return true;
-        }
+        if(!checkPlayer(sender, NO_CONSOLE)) return true;
 
         GuildMember gMember = gHandler.getMember(sender.getName());
-        if (gMember == null) {
-            plugin.sendMessage(sender, HQ_NO_GUILD);
-            return true;
-        }
+        if(isNull(gMember, sender, HQ_NO_GUILD)) return true;
 
         Guild guild = gMember.getGuild();
 
@@ -78,4 +64,8 @@ public class HQCommand implements CommandExecutor {
     }
 
 
+    @Override
+    public void run(CommandSender sender, String[] args) {
+        onCommand(sender, null, "", args);
+    }
 }

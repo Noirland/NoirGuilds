@@ -15,22 +15,10 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildTpCommand implements CommandExecutor {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public GuildTpCommand() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
-
+public class GuildTpCommand extends Commandlet implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return true;
-        }
+        if(!checkPlayer(sender, NO_CONSOLE)) return true;
 
         if(args.length != 1) {
             plugin.sendMessage(sender, TP_NO_PLAYER);
@@ -40,16 +28,10 @@ public class GuildTpCommand implements CommandExecutor {
         String tele = args[0];
         GuildMember mTele = gHandler.getMember(tele);
         Player pTele = Util.player(tele).getPlayer();
-        if(pTele == null) {
-            plugin.sendMessage(sender, PLAYER_NOT_ONLINE);
-            return true;
-        }
+        if(isNull(pTele, sender, PLAYER_NOT_ONLINE)) return true;
 
         GuildMember mSender = gHandler.getMember(sender.getName());
-        if (mSender == null) {
-            plugin.sendMessage(sender, TP_NO_GUILD);
-            return true;
-        }
+        if(isNull(mSender, sender, TP_NO_GUILD)) return true;
 
         if(mTele == null || !mTele.getGuild().equals(mSender.getGuild())) {
             plugin.sendMessage(sender, TP_NOT_IN_GUILD);
@@ -70,4 +52,8 @@ public class GuildTpCommand implements CommandExecutor {
         return true;
     }
 
+    @Override
+    public void run(CommandSender sender, String[] args) {
+        onCommand(sender, null, "", args);
+    }
 }

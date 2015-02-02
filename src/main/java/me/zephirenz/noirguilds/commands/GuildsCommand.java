@@ -8,16 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class GuildsCommand implements CommandExecutor {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public GuildsCommand() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
-
+public class GuildsCommand extends Commandlet implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         StringBuilder sb = new StringBuilder("Guilds: ");
@@ -31,4 +22,8 @@ public class GuildsCommand implements CommandExecutor {
         return true;
     }
 
+    @Override
+    public void run(CommandSender sender, String[] args) {
+        onCommand(sender, null, "", args);
+    }
 }
