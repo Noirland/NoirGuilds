@@ -28,6 +28,7 @@ public class GuildCommand implements CommandExecutor {
         commands.put(GuildCommandlet.MOTD, new GuildMOTDCommandlet());
         commands.put(GuildCommandlet.BANK, new GuildBankCommandlet());
         commands.put(GuildCommandlet.PAY, new GuildPayCommandlet());
+        commands.put(GuildCommandlet.UPGRADE, new GuildUpgradeCommandlet());
     }
 
     public GuildCommand() {

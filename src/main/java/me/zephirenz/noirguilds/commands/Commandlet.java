@@ -2,6 +2,7 @@ package me.zephirenz.noirguilds.commands;
 
 import me.zephirenz.noirguilds.GuildsHandler;
 import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -24,5 +25,11 @@ public abstract class Commandlet {
         if(object != null) return false;
         plugin.sendMessage(sender, error);
         return true;
+    }
+
+    protected boolean isLeader(GuildMember member, CommandSender sender, String error) {
+        if(member.getRank().isLeader()) return true;
+        plugin.sendMessage(sender, error);
+        return false;
     }
 }

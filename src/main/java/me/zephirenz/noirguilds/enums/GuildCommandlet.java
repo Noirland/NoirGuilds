@@ -12,5 +12,6 @@ public enum GuildCommandlet {
     DENY,
     MOTD,
     BANK,
-    PAY
+    PAY,
+    UPGRADE
 }
