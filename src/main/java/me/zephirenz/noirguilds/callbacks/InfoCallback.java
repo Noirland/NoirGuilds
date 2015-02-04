@@ -39,7 +39,7 @@ class InfoResult implements FutureCallback<Map<UUID, String>> {
 
     @Override
     public void onSuccess(Map<UUID, String> names) {
-        String membersString = ChatColor.BLUE + "Members" + ChatColor.GRAY + "[" + guild.getMembers().size() + "]" + ChatColor.BLUE + ": ";
+        String membersString = ChatColor.BLUE + "Members" + ChatColor.GRAY + "[" + guild.getMembers().size() + "/" + guild.getMemberLimit() + "]" + ChatColor.BLUE + ": ";
         String headerString = ChatColor.RED + "====== " + ChatColor.WHITE + guild.getName() + " " + ChatColor.GRAY + "[" + guild.getTag() + "]" + ChatColor.RED + " ======";
         String footerString = ChatColor.RED + StringUtils.repeat("=", ChatColor.stripColor(headerString).length() - 3);
 
