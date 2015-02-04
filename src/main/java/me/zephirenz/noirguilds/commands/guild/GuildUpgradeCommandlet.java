@@ -47,7 +47,7 @@ public class GuildUpgradeCommandlet extends Commandlet {
 
             guild.setMemberLimit(guild.getMemberLimit() + 1);
 
-            plugin.sendMessage(sender, GUILD_UPGRADE_COMPLETE);
+            plugin.sendMessage(sender, String.format(GUILD_UPGRADE_COMPLETE, guild.getMemberLimit()));
             return;
         }
 
