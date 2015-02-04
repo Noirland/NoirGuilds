@@ -42,10 +42,11 @@ public class GuildUpgradeCommandlet extends Commandlet {
             double newBalance = balance - cost;
 
             guild.setBalance(newBalance);
-            guild.updateDB();
             bank.updateBank(guild, -cost);
 
             guild.setMemberLimit(guild.getMemberLimit() + 1);
+
+            guild.updateDB();
 
             plugin.sendMessage(sender, String.format(GUILD_UPGRADE_COMPLETE, guild.getMemberLimit()));
             return;
