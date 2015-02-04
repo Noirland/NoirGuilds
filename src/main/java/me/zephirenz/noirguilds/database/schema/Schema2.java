@@ -13,6 +13,7 @@ public class Schema2 implements Schema {
     public void run() {
         try {
             addMemberLimit();
+            updateSchema();
         } catch(SQLException e) {
             NoirGuilds.debug().disable("Unable to upgrade database to schema 2!", e);
         }
@@ -20,9 +21,9 @@ public class Schema2 implements Schema {
 
 
     private void addMemberLimit() throws SQLException {
-        new GuildsQuery("ALTER TABLE `{PREFIX}_guilds` ADD COLUMN `limit` INT UNSIGNED");
+        new GuildsQuery("ALTER TABLE `{PREFIX}_guilds` ADD COLUMN `limit` INT UNSIGNED").execute();
         int limit = GuildsConfig.inst().getInitialMemberLimit();
-        new GuildsQuery("UPDATE `{PREFIX}_guilds` SET `limit` = " + limit);
+        new GuildsQuery("UPDATE `{PREFIX}_guilds` SET `limit` = " + limit).execute();
     }
 
     private void updateSchema() throws SQLException {
