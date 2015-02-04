@@ -8,7 +8,7 @@ import org.json.simple.JSONValue;
 
 public class UpdateGuildQuery extends GuildsQuery {
 
-    private static final String QUERY = "UPDATE {PREFIX}_guilds SET tag=?, name=?, balance=?, motd=?, hq=?, kills=?, deaths=? limit=? WHERE id=?;";
+    private static final String QUERY = "UPDATE {PREFIX}_guilds SET tag=?, name=?, balance=?, motd=?, hq=?, kills=?, deaths=?, limit=? WHERE id=?;";
 
     public UpdateGuildQuery(Guild guild) {
         super(9, QUERY);
