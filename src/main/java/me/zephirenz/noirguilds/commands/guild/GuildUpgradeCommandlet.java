@@ -6,6 +6,7 @@ import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.config.GuildsConfig;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
+import nz.co.noirland.bankofnoir.EcoManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -52,7 +53,8 @@ public class GuildUpgradeCommandlet extends Commandlet {
             return;
         }
 
-        plugin.sendMessage(sender, String.format(GUILD_UPGRADE_INFO, guild.getMemberLimit() + 1, getUpgradeCost(guild)));
+        EcoManager eco = EcoManager.inst();
+        plugin.sendMessage(sender, String.format(GUILD_UPGRADE_INFO, guild.getMemberLimit() + 1, eco.format(getUpgradeCost(guild))));
 
         confirming.put(sender, new UpgradeConfirmTask(sender));
 
@@ -78,7 +80,7 @@ public class GuildUpgradeCommandlet extends Commandlet {
         int diffMembers = members - initMembers;
         int cost = config.getInitialUpgradeCost();
         double mult = config.getUpgradeMultiplier();
-        return cost * (int) Math.pow(mult, diffMembers);
+        return (int) (cost * Math.pow(mult, diffMembers));
     }
 
     class UpgradeConfirmTask extends BukkitRunnable {
