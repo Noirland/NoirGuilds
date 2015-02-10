@@ -13,11 +13,9 @@ public abstract class Commandlet {
 
     public abstract void run(CommandSender sender, String[] args);
 
-    protected boolean checkPlayer(CommandSender sender, String error) {
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, error);
-            return false;
-        }
+    protected boolean isNotPlayer(CommandSender sender, String error) {
+        if(sender instanceof Player) return false;
+        plugin.sendMessage(sender, error);
         return true;
     }
 
@@ -27,9 +25,15 @@ public abstract class Commandlet {
         return true;
     }
 
-    protected boolean isLeader(GuildMember member, CommandSender sender, String error) {
-        if(member.getRank().isLeader()) return true;
+    protected boolean isNotNull(Object object, CommandSender sender, String error) {
+        if(object == null) return false;
         plugin.sendMessage(sender, error);
-        return false;
+        return true;
+    }
+
+    protected boolean isNotLeader(GuildMember member, CommandSender sender, String error) {
+        if(member.getRank().isLeader()) return false;
+        plugin.sendMessage(sender, error);
+        return true;
     }
 }

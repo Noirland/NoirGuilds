@@ -26,7 +26,7 @@ public class GuildPayCommandlet extends Commandlet {
      */
     @Override
     public void run(CommandSender sender, String[] args) {
-        if(!checkPlayer(sender, NO_CONSOLE)) return;
+        if(isNotPlayer(sender, NO_CONSOLE)) return;
 
         GuildMember member = gHandler.getMember((Player) sender);
         if(isNull(member, sender, GUILD_PAY_NO_GUILD)) return;

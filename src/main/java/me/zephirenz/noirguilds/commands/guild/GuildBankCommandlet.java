@@ -21,7 +21,7 @@ public class GuildBankCommandlet extends Commandlet {
      */
     @Override
     public void run(CommandSender sender, String[] args) {
-        if(!checkPlayer(sender, NO_CONSOLE)) return;
+        if(isNotPlayer(sender, NO_CONSOLE)) return;
 
         Guild guild;
         if(args.length > 0 && sender.hasPermission(Perms.BANK_OTHER)) {

@@ -21,7 +21,7 @@ public class GuildMOTDCommandlet extends Commandlet {
      */
     @Override
     public void run(CommandSender sender, String[] args) {
-        if(!checkPlayer(sender, NO_CONSOLE)) return;
+        if(isNotPlayer(sender, NO_CONSOLE)) return;
 
         if (args.length < 1) {
             plugin.sendMessage(sender, GUILD_MOTD_WRONG_ARGS);

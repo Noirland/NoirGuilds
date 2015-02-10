@@ -36,7 +36,7 @@ public class GuildCreateCommandlet extends Commandlet {
         if(args.length == 3 && sender.hasPermission(Perms.CREATE_OTHER)) {
             leader = Util.uuid(args[2]);
         }else{
-            if(!checkPlayer(sender, GUILD_CREATE_CONSOLE_LEADER)) return;
+            if(isNotPlayer(sender, GUILD_CREATE_CONSOLE_LEADER)) return;
 
             leader = ((Player) sender).getUniqueId();
         }
@@ -46,7 +46,7 @@ public class GuildCreateCommandlet extends Commandlet {
             return;
         }
 
-        if(!isNull(gHandler.getMember(leader), sender, GUILD_CREATE_IN_GUILD)) return;
+        if(isNotNull(gHandler.getMember(leader), sender, GUILD_CREATE_IN_GUILD)) return;
         if(tag.length() > 4) {
             plugin.sendMessage(sender, BIG_TAG);
             return;

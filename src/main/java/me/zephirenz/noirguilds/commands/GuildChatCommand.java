@@ -1,7 +1,5 @@
 package me.zephirenz.noirguilds.commands;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
 import nz.co.noirland.zephcore.Util;
@@ -18,7 +16,7 @@ import static me.zephirenz.noirguilds.Strings.*;
 public class GuildChatCommand extends Commandlet implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(!checkPlayer(sender, NO_CONSOLE)) return true;
+        if(isNotPlayer(sender, NO_CONSOLE)) return true;
         Player player = (Player) sender;
         GuildMember member = gHandler.getMember(player);
         if(isNull(member, sender, GUILD_CHAT_NO_GUILD)) return true;

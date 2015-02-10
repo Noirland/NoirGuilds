@@ -27,7 +27,7 @@ public class GuildAdminChatCommand extends Commandlet implements CommandExecutor
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(!checkPlayer(sender, NO_CONSOLE)) return true;
+        if(isNotPlayer(sender, NO_CONSOLE)) return true;
         Player player = (Player) sender;
         GuildMember member = gHandler.getMember(player);
         if(isNull(member, sender, GUILD_CHAT_NO_GUILD)) return true;

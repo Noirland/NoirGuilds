@@ -23,12 +23,12 @@ public class GuildUpgradeCommandlet extends Commandlet {
 
     @Override
     public void run(CommandSender sender, String[] args) {
-        if(!checkPlayer(sender, NO_CONSOLE)) return;
+        if(isNotPlayer(sender, NO_CONSOLE)) return;
 
         GuildMember member = gHandler.getMember((Player) sender);
         if(isNull(member, sender, GUILD_UPGRADE_NO_GUILD)) return;
         Guild guild = member.getGuild();
-        if(!isLeader(member, sender, GUILD_UPGRADE_NOT_LEADER)) return;
+        if(isNotLeader(member, sender, GUILD_UPGRADE_NOT_LEADER)) return;
 
         if(confirming.containsKey(sender)) {
             confirming.remove(sender);

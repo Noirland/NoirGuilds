@@ -29,7 +29,7 @@ public class GuildInfoCommandlet extends Commandlet {
 
             if(isNull(guild, sender, GUILD_NOT_EXISTS)) return;
         }else{
-            if(!checkPlayer(sender, NO_CONSOLE)) return;
+            if(isNotPlayer(sender, NO_CONSOLE)) return;
 
             Player player = (Player) sender;
             GuildMember member = gHandler.getMember(player.getName());

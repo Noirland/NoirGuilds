@@ -18,7 +18,7 @@ public class RankEditCommandlet extends Commandlet {
      */
     @Override
     public void run(CommandSender sender, String[] args) {
-        if(!checkPlayer(sender, NO_CONSOLE)) return;
+        if(isNotPlayer(sender, NO_CONSOLE)) return;
 
         if(args.length != 3) {
             plugin.sendMessage(sender, RANK_EDIT_WRONG_ARGS);

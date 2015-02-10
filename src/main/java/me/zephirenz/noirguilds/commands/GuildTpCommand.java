@@ -1,7 +1,5 @@
 package me.zephirenz.noirguilds.commands;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Strings;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -18,7 +16,7 @@ import static me.zephirenz.noirguilds.Strings.*;
 public class GuildTpCommand extends Commandlet implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-        if(!checkPlayer(sender, NO_CONSOLE)) return true;
+        if(isNotPlayer(sender, NO_CONSOLE)) return true;
 
         if(args.length != 1) {
             plugin.sendMessage(sender, TP_NO_PLAYER);
