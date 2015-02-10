@@ -20,7 +20,7 @@ public class GuildCommand implements CommandExecutor {
         commands.put(GuildCommandlet.CREATE, new GuildCreateCommandlet());
         commands.put(GuildCommandlet.INVITE, new GuildInviteCommandlet());
         commands.put(GuildCommandlet.KICK, new GuildKickCommandlet());
-//        commands.put(GuildCommandlet.EDIT, new GuildEditCommandlet());
+        commands.put(GuildCommandlet.EDIT, new GuildEditCommandlet());
         commands.put(GuildCommandlet.LEAVE, new GuildLeaveCommandlet());
         commands.put(GuildCommandlet.DISBAND, new GuildDisbandCommandlet());
         commands.put(GuildCommandlet.ACCEPT, new GuildAcceptCommandlet());
