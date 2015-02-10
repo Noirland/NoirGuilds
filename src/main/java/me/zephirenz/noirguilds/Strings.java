@@ -132,15 +132,6 @@ public class Strings {
     public static final String GUILD_ACHAT_FORMAT = ChatColor.GREEN + "[A]" + GUILD_CHAT_NAME_FORMAT;
     public static final String GUILD_ACHAT_NO_PERMS = "You haven't got permission to use Guild Admin chat.";
 
-    public static final String TP_NO_PLAYER = "Must specify a player to teleport to.";
-    public static final String TP_NO_GUILD = "You must be in a guild to teleport.";
-    public static final String TP_NOT_IN_GUILD = "Player is not in your guild.";
-    public static final String TP_NO_PERMS = "You don't have permission to teleport.";
-    public static final String TP_TELEPORTING = ChatColor.GOLD + "Teleporting to %s...";
-
-    public static final String TPHERE_NO_PLAYER = "Must specify a player to teleport.";
-    public static final String TPHERE_TELEPORTING = ChatColor.GOLD + "Teleporting %s to you...";
-
     public static final String HQ_NO_GUILD = "You must be in a guild to use HQ's.";
     public static final String HQ_NO_PERMS = "You don't have permission to teleport to the HQ.";
     public static final String HQ_NOT_LEADER = "You must be the leader of your guild to create HQ's.";
