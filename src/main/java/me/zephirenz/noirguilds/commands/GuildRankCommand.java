@@ -9,10 +9,21 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GuildRankCommand implements CommandExecutor {
 
     private final NoirGuilds plugin;
+    private final Map<GuildRankCommandlet, Commandlet> commandlets = new HashMap<GuildRankCommandlet, Commandlet>();
+
+    {
+        commandlets.put(GuildRankCommandlet.CREATE, new RankCreateCommandlet());
+        commandlets.put(GuildRankCommandlet.DELETE, new RankDeleteCommandlet());
+        commandlets.put(GuildRankCommandlet.EDIT, new RankEditCommandlet());
+        commandlets.put(GuildRankCommandlet.SET, new RankSetCommandlet());
+        commandlets.put(GuildRankCommandlet.LIST, new RankListCommandlet());
+    }
 
     public GuildRankCommand() {
         this.plugin = NoirGuilds.inst();
@@ -20,38 +31,19 @@ public class GuildRankCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         if(args.length == 0) {
-//            helpCommandlet();
+            //TODO: Help
             return true;
         }
         GuildRankCommandlet cmd;
         try{
-            cmd = GuildRankCommandlet.valueOf(args[0].toLowerCase());
+            cmd = GuildRankCommandlet.valueOf(args[0].toUpperCase());
         }catch(IllegalArgumentException e) {
             plugin.sendMessage(sender, Strings.NO_COMMAND);
             return true;
         }
 
-
         String[] cmdletArgs = Arrays.copyOfRange(args, 1, args.length);
-        switch(cmd) {
-            case create:
-                new RankCreateCommandlet().run(sender, cmdletArgs);
-                break;
-            case delete:
-                new RankDeleteCommandlet().run(sender, cmdletArgs);
-                break;
-            case edit:
-                new RankEditCommandlet().run(sender, cmdletArgs);
-                break;
-            case set:
-                new RankSetCommandlet().run(sender, cmdletArgs);
-                break;
-            case list:
-                new RankListCommandlet().run(sender);
-                break;
-            default:
-                break;
-        }
+        commandlets.get(cmd).run(sender, cmdletArgs);
         return true;
     }
 

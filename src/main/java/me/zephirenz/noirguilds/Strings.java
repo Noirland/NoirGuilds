@@ -12,7 +12,7 @@ public class Strings {
     public static final String RANK_EXISTS = "That rank already exists.";
     public static final String NO_CONSOLE = "The console cannot use that command.";
     public static final String NO_INVITE = "You have no pending guild invite.";
-    public static final String GUILD_AT_MAX = "The guild has the maximum number of members.";
+    public static final String GUILD_AT_MAX = "The guild has reached it's maximum of %s members.";
     public static final String GUILD_NOT_EXISTS = "That guild does not exist.";
     public static final String GUILD_EXISTS = "A guild with that name already exists.";
     public static final String TAG_EXISTS = "A guild with that tag already exists.";
@@ -120,20 +120,17 @@ public class Strings {
     public static final String GUILD_MOTD_BAD_LINE = "Not a valid line number.";
     public static final String GUILD_MOTD_UPDATED = "Updated guild MOTD.";
 
+    public static final String GUILD_UPGRADE_NO_GUILD = "You must be in a guild to upgrade it.";
+    public static final String GUILD_UPGRADE_NOT_LEADER = "You must be the leader of your guild to upgrade it.";
+    public static final String GUILD_UPGRADE_INFO = "To upgrade to %s members you must have %s in your guild's bank. Run " + ChatColor.ITALIC + "/guild upgrade" + ChatColor.RESET +" again to upgrade.";
+    public static final String GUILD_UPGRADE_INSUFFICIENT_MONEY = "Your guild does not have enough money to upgrade.";
+    public static final String GUILD_UPGRADE_COMPLETE = "Your guild has now been upgraded to %s members.";
+
     public static final String GUILD_CHAT_NO_GUILD = "You are not currently in a guild.";
     public static final String GUILD_CHAT_NAME_FORMAT = ChatColor.GRAY + " [%s%s" + ChatColor.GRAY + "] " + ChatColor.RESET + "%s"+ ChatColor.RED + ":" + ChatColor.RESET + " ";
     public static final String GUILD_CHAT_FORMAT = ChatColor.RED + "[G]" + GUILD_CHAT_NAME_FORMAT;
     public static final String GUILD_ACHAT_FORMAT = ChatColor.GREEN + "[A]" + GUILD_CHAT_NAME_FORMAT;
     public static final String GUILD_ACHAT_NO_PERMS = "You haven't got permission to use Guild Admin chat.";
-
-    public static final String TP_NO_PLAYER = "Must specify a player to teleport to.";
-    public static final String TP_NO_GUILD = "You must be in a guild to teleport.";
-    public static final String TP_NOT_IN_GUILD = "Player is not in your guild.";
-    public static final String TP_NO_PERMS = "You don't have permission to teleport.";
-    public static final String TP_TELEPORTING = ChatColor.GOLD + "Teleporting to %s...";
-
-    public static final String TPHERE_NO_PLAYER = "Must specify a player to teleport.";
-    public static final String TPHERE_TELEPORTING = ChatColor.GOLD + "Teleporting %s to you...";
 
     public static final String HQ_NO_GUILD = "You must be in a guild to use HQ's.";
     public static final String HQ_NO_PERMS = "You don't have permission to teleport to the HQ.";

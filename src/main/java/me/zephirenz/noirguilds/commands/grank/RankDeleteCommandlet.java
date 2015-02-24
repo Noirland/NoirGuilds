@@ -1,7 +1,6 @@
 package me.zephirenz.noirguilds.commands.grank;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -11,35 +10,19 @@ import org.bukkit.entity.Player;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class RankDeleteCommandlet {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public RankDeleteCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
-
+public class RankDeleteCommandlet extends Commandlet {
 
     /**
      *  The commandlet for deleting a rank.
      *  Usage: /grank delete [rank]
-     *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
+        if(isNotPlayer(sender, NO_CONSOLE)) return;
+
         GuildMember gMember = gHandler.getMember((Player) sender);
 
-        if(gMember == null) {
-            plugin.sendMessage(sender, RANK_DELETE_NO_GUILD);
-            return;
-        }
+        if(isNull(gMember, sender, RANK_DELETE_NO_GUILD)) return;
         if(!gMember.getRank().isLeader()) {
             plugin.sendMessage(sender, RANK_DELETE_NOT_LEADER);
             return;
@@ -59,10 +42,7 @@ public class RankDeleteCommandlet {
                 rank = r;
             }
         }
-        if(rank == null) {
-            plugin.sendMessage(sender, RANK_NOT_EXISTS);
-            return;
-        }
+        if(isNull(rank, sender, RANK_NOT_EXISTS)) return;
 
         if(rank.isDefault()) {
             plugin.sendMessage(sender, RANK_DELETE_DEFAULT);

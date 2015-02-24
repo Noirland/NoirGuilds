@@ -1,8 +1,7 @@
 package me.zephirenz.noirguilds.commands.guild;
 
 import me.zephirenz.noirguilds.GuildBankManager;
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -16,39 +15,21 @@ import java.text.DecimalFormat;
 import static me.zephirenz.noirguilds.Strings.*;
 import static nz.co.noirland.bankofnoir.Strings.AMOUNT_NAN;
 
-public class GuildPayCommandlet {
+public class GuildPayCommandlet extends Commandlet {
 
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-    private final GuildBankManager bManager;
-    private final EcoManager eco;
-
-    public GuildPayCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-        this.bManager = plugin.getBankManager();
-        this.eco = EcoManager.inst();
-    }
-
+    private final GuildBankManager bManager = plugin.getBankManager();
+    private final EcoManager eco = EcoManager.inst();
 
     /**
      *  The commandlet for paying another guild.
      *  Usage: /guild pay [guild] [amount]
-     *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
+        if(isNotPlayer(sender, NO_CONSOLE)) return;
 
         GuildMember member = gHandler.getMember((Player) sender);
-        if(member == null) {
-            plugin.sendMessage(sender, GUILD_PAY_NO_GUILD);
-            return;
-        }
+        if(isNull(member, sender, GUILD_PAY_NO_GUILD)) return;
         Guild fromGuild = member.getGuild();
 
         if(args.length != 2) {
@@ -62,10 +43,7 @@ public class GuildPayCommandlet {
         }
 
         Guild toGuild = gHandler.getGuildByName(args[0]);
-        if(toGuild == null) {
-            plugin.sendMessage(sender, GUILD_NOT_EXISTS);
-            return;
-        }
+        if(isNull(toGuild, sender, GUILD_NOT_EXISTS)) return;
 
         if(toGuild.equals(fromGuild)) {
             plugin.sendMessage(sender, GUILD_PAY_SELF);
