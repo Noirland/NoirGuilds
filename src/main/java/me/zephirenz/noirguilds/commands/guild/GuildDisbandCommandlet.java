@@ -1,8 +1,7 @@
 package me.zephirenz.noirguilds.commands.guild;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
+import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -12,23 +11,13 @@ import org.bukkit.entity.Player;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildDisbandCommandlet {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public GuildDisbandCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
+public class GuildDisbandCommandlet extends Commandlet {
 
     /**
      * The commandlet for disbanding a guild.
      * Usage: /guild disband (guild)
-     *
-     * @param sender the sender of the command
-     * @param args   commandlet-specific args
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
         String name;
         Guild guild;
@@ -36,15 +25,10 @@ public class GuildDisbandCommandlet {
             name = args[0];
             guild = gHandler.getGuildByName(name);
         }else{
-            if (!(sender instanceof Player)) {
-                plugin.sendMessage(sender, GUILD_DISBAND_CONSOLE_GUILD);
-                return;
-            }
+            if(isNotPlayer(sender, GUILD_DISBAND_CONSOLE_GUILD)) return;
+
             GuildMember gMember = gHandler.getMember((Player) sender);
-            if (gMember == null) {
-                plugin.sendMessage(sender, GUILD_DISBAND_NO_GUILD);
-                return;
-            }
+            if(isNull(gMember, sender, GUILD_DISBAND_NO_GUILD)) return;
             guild = gMember.getGuild();
             if(!gMember.getRank().isLeader()) {
                 plugin.sendMessage(sender, GUILD_DISBAND_NOT_LEADER);

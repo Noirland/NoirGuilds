@@ -22,14 +22,8 @@ commands:
     ga:
         description: Private guild admin chat
         usage: /ga [your message here]
-    gtp:
-        description: teleport to another guild member
-        usage: /gtp [player]
-    gtphere:
-        description: teleport another guild member to you
-        usage: /gtphere [player]
     hq:
-        description: "teleport to  or set your guild's HQ"
+        description: "teleport to or set your guild's HQ"
         usage: /hq (set)
 permissions:
     noirguilds.create:

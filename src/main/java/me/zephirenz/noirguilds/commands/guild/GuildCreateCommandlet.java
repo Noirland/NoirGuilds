@@ -1,8 +1,8 @@
 package me.zephirenz.noirguilds.commands.guild;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
 import me.zephirenz.noirguilds.Perms;
+import me.zephirenz.noirguilds.commands.Commandlet;
+import me.zephirenz.noirguilds.config.GuildsConfig;
 import me.zephirenz.noirguilds.database.GuildsDatabase;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
@@ -16,24 +16,14 @@ import java.util.UUID;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildCreateCommandlet {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public GuildCreateCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
-
+public class GuildCreateCommandlet extends Commandlet {
 
     /**
      *  The commandlet for creating guilds.
-     *  Usage: /guild create [guild] [tag] (leader)
      *
-     *  @param sender the sender of the command
-     *  @param args   commandlet specific args
+     *  Usage: /guild create [guild] [tag] (leader)
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
         if(args.length < 2) {
             plugin.sendMessage(sender, GUILD_CREATE_WRONG_ARGS);
@@ -46,10 +36,8 @@ public class GuildCreateCommandlet {
         if(args.length == 3 && sender.hasPermission(Perms.CREATE_OTHER)) {
             leader = Util.uuid(args[2]);
         }else{
-            if (!(sender instanceof Player)) {
-                plugin.sendMessage(sender, GUILD_CREATE_CONSOLE_LEADER);
-                return;
-            }
+            if(isNotPlayer(sender, GUILD_CREATE_CONSOLE_LEADER)) return;
+
             leader = ((Player) sender).getUniqueId();
         }
 
@@ -58,10 +46,7 @@ public class GuildCreateCommandlet {
             return;
         }
 
-        if(gHandler.getMember(leader) != null) {
-            plugin.sendMessage(sender, GUILD_CREATE_IN_GUILD);
-            return;
-        }
+        if(isNotNull(gHandler.getMember(leader), sender, GUILD_CREATE_IN_GUILD)) return;
         if(tag.length() > 4) {
             plugin.sendMessage(sender, BIG_TAG);
             return;
@@ -79,7 +64,7 @@ public class GuildCreateCommandlet {
         }
 
         GuildsDatabase db = GuildsDatabase.inst();
-        Guild guild = new Guild(gHandler.createGuildID(), name, tag, 0, 0, 0, null, null);
+        Guild guild = new Guild(gHandler.createGuildID(), name, tag, 0, 0, 0, null, null, GuildsConfig.inst().getInitialMemberLimit());
         db.addGuild(guild);
 
         GuildRank leaderRank = new GuildRank(gHandler.createRankID(), guild, DEFAULT_LEADER, null, ChatColor.DARK_RED);

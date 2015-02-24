@@ -8,11 +8,28 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class GuildCommand implements CommandExecutor {
 
     private final NoirGuilds plugin;
+    private final Map<GuildCommandlet, Commandlet> commands = new HashMap<GuildCommandlet, Commandlet>();
+
+    {
+        commands.put(GuildCommandlet.INFO, new GuildInfoCommandlet());
+        commands.put(GuildCommandlet.CREATE, new GuildCreateCommandlet());
+        commands.put(GuildCommandlet.INVITE, new GuildInviteCommandlet());
+        commands.put(GuildCommandlet.KICK, new GuildKickCommandlet());
+        commands.put(GuildCommandlet.EDIT, new GuildEditCommandlet());
+        commands.put(GuildCommandlet.LEAVE, new GuildLeaveCommandlet());
+        commands.put(GuildCommandlet.DISBAND, new GuildDisbandCommandlet());
+        commands.put(GuildCommandlet.ACCEPT, new GuildAcceptCommandlet());
+        commands.put(GuildCommandlet.DENY, new GuildDenyCommandlet());
+        commands.put(GuildCommandlet.MOTD, new GuildMOTDCommandlet());
+        commands.put(GuildCommandlet.BANK, new GuildBankCommandlet());
+        commands.put(GuildCommandlet.PAY, new GuildPayCommandlet());
+        commands.put(GuildCommandlet.UPGRADE, new GuildUpgradeCommandlet());
+    }
 
     public GuildCommand() {
         this.plugin = NoirGuilds.inst();
@@ -20,60 +37,21 @@ public class GuildCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         if(args.length == 0) {
-//            helpCommandlet();
+            //TODO: Display help
             return true;
         }
 
         GuildCommandlet cmd;
         try{
-            cmd = GuildCommandlet.valueOf(args[0].toLowerCase());
+            cmd = GuildCommandlet.valueOf(args[0].toUpperCase());
         }catch(IllegalArgumentException e) {
             plugin.sendMessage(sender, Strings.NO_COMMAND);
             return true;
         }
 
         String[] cmdletArgs = Arrays.copyOfRange(args, 1, args.length);
-        switch(cmd) {
-            case info:
-                new GuildInfoCommandlet().run(sender, cmdletArgs);
-                break;
-            case create:
-                new GuildCreateCommandlet().run(sender, cmdletArgs);
-                break;
-            case invite:
-                new GuildInviteCommandlet().run(sender, cmdletArgs);
-                break;
-            case kick:
-                new GuildKickCommandlet().run(sender, cmdletArgs);
-                break;
-            case edit:
-//                new GuildEditCommandlet().run(sender, cmdletArgs);
-                break;
-            case leave:
-                new GuildLeaveCommandlet().run(sender);
-                break;
-            case disband:
-                new GuildDisbandCommandlet().run(sender, cmdletArgs);
-                break;
-            case accept:
-                new GuildAcceptCommandlet().run(sender);
-                break;
-            case deny:
-                new GuildDenyCommandlet().run(sender);
-                break;
-            case motd:
-                new GuildMOTDCommandlet().run(sender, cmdletArgs);
-                break;
-            case bank:
-                new GuildBankCommandlet().run(sender, cmdletArgs);
-                break;
-            case pay:
-                new GuildPayCommandlet().run(sender, cmdletArgs);
-                break;
-            default:
-                //helpCommandlet(sender, cmdletArgs, null);
-                break;
-        }
+
+        commands.get(cmd).run(sender, cmdletArgs);
         return true;
     }
 }

@@ -1,7 +1,6 @@
 package me.zephirenz.noirguilds.commands.grank;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.enums.RankPerm;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import me.zephirenz.noirguilds.objects.GuildRank;
@@ -11,29 +10,15 @@ import org.bukkit.entity.Player;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class RankEditCommandlet {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public RankEditCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
-
+public class RankEditCommandlet extends Commandlet {
 
     /**
      *  The commandlet for editing a rank.
      *  Usage: /grank edit [rank] [option] [value]
-     *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
+        if(isNotPlayer(sender, NO_CONSOLE)) return;
 
         if(args.length != 3) {
             plugin.sendMessage(sender, RANK_EDIT_WRONG_ARGS);
@@ -44,10 +29,8 @@ public class RankEditCommandlet {
         String value = args[2];
 
         GuildMember mSender = gHandler.getMember((Player) sender);
-        if(mSender == null) {
-            plugin.sendMessage(sender, RANK_EDIT_NO_GUILD);
-            return;
-        }
+
+        if(isNull(mSender, sender, RANK_EDIT_NO_GUILD)) return;
         if(!mSender.getRank().isLeader()) {
             plugin.sendMessage(sender, RANK_EDIT_NOT_LEADER);
             return;
@@ -60,10 +43,7 @@ public class RankEditCommandlet {
                 break;
             }
         }
-        if(rank == null) {
-            plugin.sendMessage(sender, RANK_NOT_EXISTS);
-            return;
-        }
+        if(isNull(rank, sender, RANK_NOT_EXISTS)) return;
 
         if(option.equalsIgnoreCase("colour")) {
             editColour(sender, rank, value);
@@ -77,10 +57,7 @@ public class RankEditCommandlet {
 
     private void editPerm(CommandSender sender, GuildRank rank, String permName, String value) {
         RankPerm perm = RankPerm.get(permName);
-        if(perm == null) {
-            plugin.sendMessage(sender, RANK_EDIT_BAD_OPTION);
-            return;
-        }
+        if(isNull(perm, sender, RANK_EDIT_BAD_OPTION)) return;
 
         boolean val = Boolean.valueOf(value);
         rank.setPerm(perm, val);

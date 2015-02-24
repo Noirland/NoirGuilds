@@ -8,12 +8,12 @@ import org.json.simple.JSONValue;
 
 public class AddGuildQuery extends GuildsQuery {
 
-    private static final String QUERY = "INSERT INTO {PREFIX}_guilds (id, tag, name, balance, motd, hq, kills, deaths) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    private static final String QUERY = "INSERT INTO {PREFIX}_guilds " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 
     public AddGuildQuery(Guild guild) {
-        super(8, QUERY);
+        super(9, QUERY);
         setValue(1, guild.getId());
         setValue(2, guild.getTag());
         setValue(3, guild.getName());
@@ -35,5 +35,6 @@ public class AddGuildQuery extends GuildsQuery {
 
         setValue(7, guild.getKills());
         setValue(8, guild.getDeaths());
+        setValue(9, guild.getMemberLimit());
     }
 }

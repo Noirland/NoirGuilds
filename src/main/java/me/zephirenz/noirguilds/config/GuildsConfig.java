@@ -31,8 +31,6 @@ public class GuildsConfig extends Config {
         return instance;
     }
 
-    // MYSQL
-
     public String getDBPrefix()   { return config.getString("noirguilds.db.prefix", "guild"); }
     public String getDBName()     { return config.getString("noirguilds.db.name"); }
     public String getDBUser()     { return config.getString("noirguilds.db.username"); }
@@ -40,6 +38,10 @@ public class GuildsConfig extends Config {
     public int    getDBPort()     { return config.getInt   ("noirguilds.db.port", 3306); }
     public String getDBHost()     { return config.getString("noirguilds.db.host", "localhost"); }
 
-    public double getKillMoney()   { return config.getDouble("noirguilds.kill-money", 10); }
-    public int    getMemberLimit() { return config.getInt   ("noirguilds.member-limit", 0); }
+    public double getKillMoney() { return config.getDouble("noirguilds.kill-money", 10); }
+
+    public int    getInitialMemberLimit() { return config.getInt   ("noirguilds.initial-member-limit", 0); }
+    public int    getInitialUpgradeCost() { return config.getInt   ("noirguilds.upgrade.initial-cost", 10000); }
+    public double getUpgradeMultiplier()  { return config.getDouble("noirguilds.upgrade.multiplier", 1.3); }
+
 }

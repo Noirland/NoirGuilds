@@ -1,7 +1,6 @@
 package me.zephirenz.noirguilds.commands.guild;
 
-import me.zephirenz.noirguilds.GuildsHandler;
-import me.zephirenz.noirguilds.NoirGuilds;
+import me.zephirenz.noirguilds.commands.Commandlet;
 import me.zephirenz.noirguilds.objects.Guild;
 import me.zephirenz.noirguilds.objects.GuildMember;
 import org.bukkit.command.CommandSender;
@@ -9,30 +8,15 @@ import org.bukkit.entity.Player;
 
 import static me.zephirenz.noirguilds.Strings.*;
 
-public class GuildEditCommandlet {
-
-    private final NoirGuilds plugin;
-    private final GuildsHandler gHandler;
-
-    public GuildEditCommandlet() {
-        this.plugin = NoirGuilds.inst();
-        this.gHandler = plugin.getGuildsHandler();
-    }
-
+public class GuildEditCommandlet extends Commandlet {
 
     /**
      *  The commandlet for editing guild options.
      *  Usage: /guild edit [name|tag] [value]
-     *
-     *  @param sender the sender of the command
-     *  @param args   commandlet-specific args
      */
+    @Override
     public void run(CommandSender sender, String[] args) {
-
-        if(!(sender instanceof Player)) {
-            plugin.sendMessage(sender, NO_CONSOLE);
-            return;
-        }
+        if(isNotPlayer(sender, NO_CONSOLE)) return;
 
         if(args.length != 2) {
             plugin.sendMessage(sender, GUILD_EDIT_WRONG_ARGS);
@@ -43,10 +27,7 @@ public class GuildEditCommandlet {
         String value = args[1];
 
         GuildMember gMember = gHandler.getMember((Player) sender);
-        if (gMember == null) {
-            plugin.sendMessage(sender, GUILD_EDIT_NO_GUILD);
-            return;
-        }
+        if(isNull(gMember, sender, GUILD_EDIT_NO_GUILD)) return;
 
         Guild guild = gMember.getGuild();
         if(!gMember.getRank().isLeader()) {

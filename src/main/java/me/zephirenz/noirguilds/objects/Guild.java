@@ -25,8 +25,9 @@ public class Guild {
     private Location hq;
     private long kills;
     private long deaths;
+    private int limit;
 
-    public Guild(int id, String name, String tag, double balance, long kills, long deaths, List<String> motd, Location hq) {
+    public Guild(int id, String name, String tag, double balance, long kills, long deaths, List<String> motd, Location hq, int memberLimit) {
         this.id = id;
         this.name = name;
         this.tag = tag;
@@ -35,6 +36,7 @@ public class Guild {
         this.deaths = deaths;
         this.motd = motd;
         this.hq = hq;
+        this.limit = memberLimit;
     }
 
     public void setName(String name) {
@@ -176,5 +178,17 @@ public class Guild {
     @Override
     public String toString() {
         return name;
+    }
+
+    public int getMemberLimit() {
+        return limit;
+    }
+
+    public void setMemberLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public boolean isFull() {
+        return getMembers().size() >= getMemberLimit();
     }
 }
