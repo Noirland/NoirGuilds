@@ -2,7 +2,7 @@ noirguilds:
   initial-member-limit: 10
   upgrade:
     initial-cost: 10000
-    multiplier: 1.5
+    multiplier: 1.3
   kill-money: 10
   db:
     host: localhost

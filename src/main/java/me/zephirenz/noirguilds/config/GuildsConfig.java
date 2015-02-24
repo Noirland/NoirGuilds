@@ -42,6 +42,6 @@ public class GuildsConfig extends Config {
 
     public int    getInitialMemberLimit() { return config.getInt   ("noirguilds.initial-member-limit", 0); }
     public int    getInitialUpgradeCost() { return config.getInt   ("noirguilds.upgrade.initial-cost", 10000); }
-    public double getUpgradeMultiplier()  { return config.getDouble("noirguilds.upgrade.multiplier", 1.5); }
+    public double getUpgradeMultiplier()  { return config.getDouble("noirguilds.upgrade.multiplier", 1.3); }
 
 }
